@@ -187,9 +187,18 @@
         }
 
         /* ================================================================
-           BACKGROUND WATERMARKS — Grid-Aligned Cryptographic Elements
+           CYBERSECURITY BACKGROUND — Mesh & Matrix Streams
            ================================================================ */
-        .crypto-grid {
+        .cyber-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.04;
+        }
+
+        .matrix-streams {
             position: fixed;
             inset: 0;
             z-index: 1;
@@ -197,46 +206,22 @@
             overflow: hidden;
         }
 
-        .crypto-mesh {
+        .matrix-column {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            opacity: 0.04;
-        }
-        
-        .crypto-mesh svg { 
-            width: 100%; 
-            height: 100%; 
-            stroke: #1A2B4C; 
-            stroke-width: 1.5; 
-            fill: none; 
-        }
-        
-        .crypto-mesh.tl { top: -40px; left: -40px; }
-        .crypto-mesh.tr { top: -40px; right: -40px; transform: scaleX(-1); }
-        .crypto-mesh.bl { bottom: -40px; left: -40px; transform: scaleY(-1); }
-        .crypto-mesh.br { bottom: -40px; right: -40px; transform: scale(-1, -1); }
-
-        .crypto-stream {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
+            top: -100%;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 10px;
+            font-size: 14px;
             font-weight: bold;
             color: #1A2B4C;
-            opacity: 0.05;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            letter-spacing: 6px;
             text-align: center;
             line-height: 1.5;
-            white-space: nowrap;
+            animation: matrixFall linear infinite;
         }
-        
-        .crypto-stream.left { left: 12px; }
-        .crypto-stream.right { right: 12px; }
+
+        @keyframes matrixFall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(200vh); }
+        }
 
         /* ================================================================
            GLOBAL ELEMENTS
@@ -447,9 +432,9 @@
             width: 460px;
             max-width: calc(100vw - 40px);
             padding: 48px 44px;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px) saturate(1.2);
-            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px) saturate(120%);
+            -webkit-backdrop-filter: blur(24px) saturate(120%);
             border-radius: var(--radius-xl);
             box-shadow:
                 0 8px 32px rgba(0, 0, 0, 0.06),
@@ -622,10 +607,10 @@
             padding: 20px 14px;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px) saturate(120%);
+            -webkit-backdrop-filter: blur(24px) saturate(120%);
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 2px 0 12px rgba(0, 0, 0, 0.03);
             z-index: 20;
         }
@@ -1281,7 +1266,9 @@
             width: 480px;
             max-width: calc(100vw - 32px);
             max-height: 90vh;
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px) saturate(120%);
+            -webkit-backdrop-filter: blur(24px) saturate(120%);
             border-radius: var(--radius-xl);
             padding: 36px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -2051,74 +2038,40 @@
     <div class="bg-vignette"></div>
 
     <!-- ============================================================
-         BACKGROUND WATERMARKS — Grid-Aligned Cryptographic Elements
+         CYBERSECURITY BACKGROUND — Mesh & Matrix Streams
          ============================================================ -->
-    <div class="crypto-grid">
-        <!-- Top Left Mesh -->
-        <div class="crypto-mesh tl">
-            <svg viewBox="0 0 100 100">
-                <circle cx="20" cy="20" r="2" fill="#1A2B4C" />
-                <circle cx="80" cy="30" r="1.5" fill="#1A2B4C" />
-                <circle cx="40" cy="70" r="2" fill="#1A2B4C" />
-                <circle cx="90" cy="80" r="1.5" fill="#1A2B4C" />
-                <polyline points="20,20 80,30 40,70 90,80" />
-                <polyline points="20,20 40,70" />
-            </svg>
-        </div>
-        
-        <!-- Top Right Mesh -->
-        <div class="crypto-mesh tr">
-            <svg viewBox="0 0 100 100">
-                <circle cx="20" cy="20" r="2" fill="#1A2B4C" />
-                <circle cx="80" cy="30" r="1.5" fill="#1A2B4C" />
-                <circle cx="40" cy="70" r="2" fill="#1A2B4C" />
-                <circle cx="90" cy="80" r="1.5" fill="#1A2B4C" />
-                <polyline points="20,20 80,30 40,70 90,80" />
-                <polyline points="20,20 40,70" />
-            </svg>
-        </div>
-        
-        <!-- Bottom Left Mesh -->
-        <div class="crypto-mesh bl">
-            <svg viewBox="0 0 100 100">
-                <circle cx="20" cy="20" r="2" fill="#1A2B4C" />
-                <circle cx="80" cy="30" r="1.5" fill="#1A2B4C" />
-                <circle cx="40" cy="70" r="2" fill="#1A2B4C" />
-                <circle cx="90" cy="80" r="1.5" fill="#1A2B4C" />
-                <polyline points="20,20 80,30 40,70 90,80" />
-                <polyline points="20,20 40,70" />
-            </svg>
-        </div>
-        
-        <!-- Bottom Right Mesh -->
-        <div class="crypto-mesh br">
-            <svg viewBox="0 0 100 100">
-                <circle cx="20" cy="20" r="2" fill="#1A2B4C" />
-                <circle cx="80" cy="30" r="1.5" fill="#1A2B4C" />
-                <circle cx="40" cy="70" r="2" fill="#1A2B4C" />
-                <circle cx="90" cy="80" r="1.5" fill="#1A2B4C" />
-                <polyline points="20,20 80,30 40,70 90,80" />
-                <polyline points="20,20 40,70" />
-            </svg>
-        </div>
-
-        <!-- Left Data Stream -->
-        <div class="crypto-stream left">
-            4A 6F 68 6E<br>
-            2E 44 6F 65<br>
-            73 65 63 75<br>
-            72 69 74 79<br>
-            32 30 32 34
-        </div>
-        
-        <!-- Right Data Stream -->
-        <div class="crypto-stream right">
-            73 79 73 74<br>
-            65 6D 20 6F<br>
-            6E 6C 69 6E<br>
-            65 2E 2E 2E<br>
-            41 45 53 32
-        </div>
+    <div class="cyber-mesh">
+        <svg width="100%" height="100%">
+            <defs>
+                <pattern id="hex-pattern" x="0" y="0" width="100" height="173.2" patternUnits="userSpaceOnUse">
+                    <path d="M50 0 L100 28.86 V86.6 L50 115.47 L0 86.6 V28.86 Z" fill="none" stroke="#1A2B4C" stroke-width="0.5" opacity="0.3"/>
+                    <circle cx="50" cy="0" r="1.5" fill="#1A2B4C" opacity="0.5"/>
+                    <circle cx="100" cy="28.86" r="1.5" fill="#1A2B4C" opacity="0.5"/>
+                    <circle cx="0" cy="28.86" r="1.5" fill="#1A2B4C" opacity="0.5"/>
+                </pattern>
+            </defs>
+            <!-- Full background hex grid -->
+            <rect width="100%" height="100%" fill="url(#hex-pattern)"></rect>
+            
+            <!-- Decentralized network nodes (scattered) -->
+            <g stroke="#1A2B4C" stroke-width="1.2" fill="none" opacity="0.6">
+                <!-- Top left cluster -->
+                <circle cx="15%" cy="20%" r="3"/>
+                <circle cx="25%" cy="15%" r="2"/>
+                <circle cx="20%" cy="30%" r="4"/>
+                <polyline points="15%,20% 25%,15% 20%,30% 15%,20%" />
+                
+                <!-- Bottom right cluster -->
+                <circle cx="85%" cy="75%" r="4"/>
+                <circle cx="75%" cy="85%" r="3"/>
+                <circle cx="80%" cy="65%" r="2"/>
+                <polyline points="85%,75% 75%,85% 80%,65% 85%,75%" />
+            </g>
+        </svg>
+    </div>
+    
+    <div id="matrix-streams" class="matrix-streams">
+        <!-- JS will populate this -->
     </div>
 
     <!-- GLOBAL BRANDING WATERMARK -->
@@ -2788,6 +2741,57 @@
             };
             return map[cat] || 'cat-other';
         }
+
+        // ==================================================================
+        // Matrix Cyber Background Engine
+        // ==================================================================
+        function initMatrixBackground() {
+            const container = document.getElementById('matrix-streams');
+            if (!container) return;
+            
+            const cols = Math.floor(window.innerWidth / 60); // roughly one column every 60px
+            const cryptoTokens = ['0x4A', '0x1B', 'E3', '9F', 'AES-256', 'SHA-2', '01101', '10110', 'RSA-4096', '0x00', 'FF', '7C', 'SALT', 'HMAC'];
+            
+            for (let i = 0; i < cols; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'matrix-column';
+                stream.style.left = `${(i * 100) / cols}%`;
+                
+                // Randomize animation duration between 15s and 45s for organic drifting
+                const duration = 15 + Math.random() * 30;
+                stream.style.animationDuration = `${duration}s`;
+                stream.style.animationDelay = `-${Math.random() * duration}s`; // start scattered
+                
+                // Random opacity for depth
+                stream.style.opacity = (0.02 + Math.random() * 0.04).toFixed(3);
+                
+                // Create string content
+                let content = '';
+                const rows = 10 + Math.floor(Math.random() * 20);
+                for (let j = 0; j < rows; j++) {
+                    content += cryptoTokens[Math.floor(Math.random() * cryptoTokens.length)] + '<br>';
+                }
+                
+                stream.innerHTML = content;
+                container.appendChild(stream);
+            }
+        }
+        
+        // Initialize Matrix Effect
+        window.addEventListener('DOMContentLoaded', initMatrixBackground);
+        
+        // Regenerate on resize to avoid gaps
+        let matrixResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(matrixResizeTimer);
+            matrixResizeTimer = setTimeout(() => {
+                const container = document.getElementById('matrix-streams');
+                if (container) {
+                    container.innerHTML = '';
+                    initMatrixBackground();
+                }
+            }, 300);
+        });
 
         // ==================================================================
         // Initialization
