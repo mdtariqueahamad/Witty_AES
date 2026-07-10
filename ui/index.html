@@ -2596,7 +2596,6 @@
                         <div class="categories-section" id="categories-content">
                             <!-- Category folders rendered by JS -->
                         </div>
-                        <div id="category-list-container" class="fade-in-container"></div>
                     </div>
 
                     <!-- Section 4: SECURITY AUDIT -->
@@ -2613,7 +2612,6 @@
                         <div class="security-section" id="security-content">
                             <!-- Security report rendered by JS -->
                         </div>
-                        <div id="security-list-container" class="fade-in-container"></div>
                     </div>
                     </div>
 
@@ -2708,6 +2706,22 @@
             <button class="mobile-fab" onclick="openAddModal()" title="Add Password">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
+            
+        <!-- ============================================================
+         LIST MODAL (Expanding Transition)
+         ============================================================ -->
+    <div id="list-modal" class="modal-overlay">
+        <div class="modal-card" style="max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 id="list-modal-title" class="modal-title" style="margin: 0; font-size: 1.5rem;"></h2>
+                <button class="btn-icon" onclick="closeModal('list-modal')" title="Close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div id="list-modal-content"></div>
         </div>
     </div>
 
@@ -3248,8 +3262,9 @@
             }).join('');
         }
 
-        function renderDynamicList(items, containerId, title) {
-            const container = document.getElementById(containerId);
+        function renderDynamicList(items, title) {
+            document.getElementById('list-modal-title').textContent = title;
+            const container = document.getElementById('list-modal-content');
             if (!items || items.length === 0) {
                 container.innerHTML = `
                     <div style="margin-top: 24px; text-align: center; color: var(--text-muted);">
@@ -3258,8 +3273,7 @@
                 `;
             } else {
                 let html = `
-                    <h3 style="margin: 32px 0 16px 0; font-size: 1.1rem; color: var(--text-primary);">${title}</h3>
-                    <div class="data-table-container">
+                    <div class="data-table-container" style="margin-top: 16px;">
                         <table class="data-table">
                             <thead>
                                 <tr>
@@ -3327,26 +3341,28 @@
                 html += `</div>`;
                 container.innerHTML = html;
             }
-            
-            container.classList.remove('active');
-            void container.offsetWidth;
-            container.classList.add('active');
+            openModal('list-modal');
         }
 
         function renderDynamicListForCategory(category) {
             const items = credentials.filter(c => c.category.toLowerCase() === category.toLowerCase());
-            renderDynamicList(items, 'category-list-container', `Category: ${category}`);
+            renderDynamicList(items, `Category: ${category}`);
         }
 
         async function loadCategories() {
             const result = await window.pywebview.api.get_categories_summary();
             const categories = result.categories || {};
             const container = document.getElementById('categories-content');
-            document.getElementById('category-list-container').classList.remove('active');
             
             const icons = {
-                'Social': '💬', 'Finance': '🏦', 'Work': '💼', 'Shopping': '🛍️',
-                'Email': '📧', 'Entertainment': '🎮', 'Education': '🎓', 'Other': '📦'
+                'Social': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+                'Finance': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 12h-4v4h4"/><path d="M18 12a2 2 0 0 0-2-2"/></svg>',
+                'Work': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+                'Shopping': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+                'Email': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+                'Entertainment': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M8 10v4"/><path d="M15 13h.01"/><path d="M18 11h.01"/></svg>',
+                'Education': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+                'Other': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A2B4C" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
             };
 
             let html = '<div class="category-grid">';
@@ -3381,7 +3397,7 @@
                 items = currentSecurityData.weak;
                 title = 'Weak Passwords';
             }
-            renderDynamicList(items, 'security-list-container', title);
+            renderDynamicList(items, title);
         }
 
         async function loadSecurity() {
@@ -3391,7 +3407,6 @@
             currentSecurityData = result;
 
             const container = document.getElementById('security-content');
-            document.getElementById('security-list-container').classList.remove('active');
             
             const total = result.total || 0;
             const strong = result.strong ? result.strong.length : 0;
