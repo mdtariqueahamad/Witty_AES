@@ -1520,12 +1520,18 @@
         }
 
         .settings-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1000px;
             margin: 0 auto;
             width: 100%;
+        }
+
+        @media (max-width: 800px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .settings-card {
@@ -2616,7 +2622,7 @@
                     </div>
 
                     <!-- Section 5: SETTINGS -->
-                    <div id="section-settings" class="hidden settings-section">
+                    <div id="section-settings" class="hidden">
                         <div class="main-header">
                             <button class="hamburger-btn" onclick="openSidebar()">
                                 <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -2626,12 +2632,11 @@
                                 <div class="subtitle">Manage your vault preferences</div>
                             </div>
                         </div>
-                        <div style="padding: 0 5% 5%;">
+                        <div class="settings-section">
                             <div class="settings-grid">
                                 <!-- Card A: Change Master Password -->
                                 <div class="settings-card">
                                     <div class="settings-card-header">
-                                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                                         <h3>Change Master Password</h3>
                                     </div>
                                     <p>Update your vault's primary encryption key. All stored passwords will be automatically re-encrypted with your new master password.</p>
@@ -2827,7 +2832,7 @@
          ============================================================ -->
     <div id="change-pw-modal" class="modal-overlay">
         <div class="modal-card">
-            <h2 class="modal-title">🔑 Change Master Password</h2>
+            <h2 class="modal-title">Change Master Password</h2>
             <p class="modal-subtitle">All stored passwords will be re-encrypted with the new key. This may take a moment.</p>
 
             <div class="input-group">
@@ -2850,7 +2855,7 @@
 
             <div class="modal-actions">
                 <button id="change-pw-btn" class="btn btn-primary" onclick="handleChangeMasterPassword()">
-                    🔄 Change Password
+                    Change Password
                 </button>
                 <button class="btn btn-ghost" onclick="closeModal('change-pw-modal')">Cancel</button>
             </div>
@@ -3776,8 +3781,8 @@
             } else {
                 errorEl.textContent = result.error || 'Failed to change password.';
             }
-
-            btn.innerHTML = '🔄&nbsp; Change Password';
+            
+            btn.innerHTML = 'Change Password';
             btn.disabled = false;
         }
 
