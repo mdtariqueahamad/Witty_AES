@@ -1431,23 +1431,52 @@
             flex: 1;
         }
 
+        .settings-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
         .settings-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 24px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 100%;
+        }
+
+        .settings-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .settings-card-header svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 1.5;
         }
 
         .settings-card h3 {
-            margin-bottom: 8px;
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-primary);
         }
 
         .settings-card p {
-            font-size: 0.8125rem;
-            color: var(--text-muted);
-            margin-bottom: 16px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         /* ================================================================
@@ -1674,13 +1703,15 @@
            ABOUT CARD (Apple-style)
            ================================================================ */
         .about-card {
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: var(--radius-xl);
-            padding: 40px 32px;
+            padding: 2.5rem 2rem;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             text-align: center;
-            max-width: 520px;
+            width: 100%;
         }
 
         .about-logo {
@@ -1731,9 +1762,16 @@
         }
 
         .about-feature-icon {
-            font-size: 1.1rem;
             flex-shrink: 0;
-            margin-top: 1px;
+            margin-top: 2px;
+        }
+
+        .about-feature-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 1.5;
         }
 
         .about-feature-content strong {
@@ -2499,62 +2537,73 @@
                                 <div class="subtitle">Manage your vault preferences</div>
                             </div>
                         </div>
-                        <div style="padding: 0 28px 28px;">
-                            <!-- Card A: Change Master Password -->
-                            <div class="settings-card">
-                                <h3>🔑 Change Master Password</h3>
-                                <p>All stored passwords will be re-encrypted with the new key.</p>
-                                <button class="btn btn-primary" onclick="openChangeMasterPasswordModal()">Change Master Password</button>
-                            </div>
-
-                            <!-- Card B: About (Apple-style) -->
-                            <div class="about-card">
-                                <div class="about-logo">
-                                    <svg viewBox="0 0 36 42">
-                                        <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="2"/>
-                                        <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="2"/>
-                                        <circle cx="18" cy="28" r="2.5" stroke-width="1.5"/>
-                                        <line x1="18" y1="30.5" x2="18" y2="34" stroke-width="1.5"/>
-                                    </svg>
-                                </div>
-                                <div class="about-app-name">Witty AES</div>
-                                <div class="about-version">Version 1.0 • Secure Offline Vault</div>
-                                <div class="about-tagline">"Remember exactly one password. We'll remember the rest."</div>
-
-                                <div class="about-features">
-                                    <div class="about-feature">
-                                        <span class="about-feature-icon">🔒</span>
-                                        <div class="about-feature-content">
-                                            <strong>100% Offline</strong>
-                                            <span>No clouds, no servers, no trackers. Your data never leaves your device.</span>
-                                        </div>
+                        <div style="padding: 0 5% 5%;">
+                            <div class="settings-grid">
+                                <!-- Card A: Change Master Password -->
+                                <div class="settings-card">
+                                    <div class="settings-card-header">
+                                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                        <h3>Change Master Password</h3>
                                     </div>
-                                    <div class="about-feature">
-                                        <span class="about-feature-icon">🛡️</span>
-                                        <div class="about-feature-content">
-                                            <strong>Unbreakable</strong>
-                                            <span>Bank-level security protecting your everyday accounts.</span>
-                                        </div>
-                                    </div>
-                                    <div class="about-feature">
-                                        <span class="about-feature-icon">✨</span>
-                                        <div class="about-feature-content">
-                                            <strong>Clutter-Free</strong>
-                                            <span>Instantly organize, grade, and secure your entire digital life.</span>
-                                        </div>
-                                    </div>
+                                    <p>Update your vault's primary encryption key. All stored passwords will be automatically re-encrypted with your new master password.</p>
+                                    <button class="btn btn-primary" onclick="openChangeMasterPasswordModal()">Update Password</button>
                                 </div>
 
-                                <div class="about-trust-badge">
-                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-                                    <p>Your passwords are yours alone. Not even the developer can access, read, or recover them. Ever.</p>
-                                </div>
+                                <!-- Card B: About (Apple-style) -->
+                                <div class="about-card">
+                                    <div class="about-logo">
+                                        <svg viewBox="0 0 36 42">
+                                            <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="1.5"/>
+                                            <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="1.5"/>
+                                            <circle cx="18" cy="28" r="2.5" stroke-width="1.5"/>
+                                            <line x1="18" y1="30.5" x2="18" y2="34" stroke-width="1.5"/>
+                                        </svg>
+                                    </div>
+                                    <div class="about-app-name">Witty AES</div>
+                                    <div class="about-version">Version 1.0 • Secure Offline Vault</div>
+                                    <div class="about-tagline">"Remember exactly one password. We'll remember the rest."</div>
 
-                                <div class="about-developer">
-                                    <div class="about-developer-name">Developer: Md Tariq (WittyArtist)</div>
-                                    <div class="about-developer-contact">
-                                        <a href="mailto:mdtariqbist@gmail.com">mdtariqbist@gmail.com</a>
-                                        <span> — For feedback and support</span>
+                                    <div class="about-features">
+                                        <div class="about-feature">
+                                            <div class="about-feature-icon">
+                                                <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                                            </div>
+                                            <div class="about-feature-content">
+                                                <strong>100% Offline Architecture</strong>
+                                                <span>No clouds, no servers, no trackers. Your encrypted data never leaves your personal device.</span>
+                                            </div>
+                                        </div>
+                                        <div class="about-feature">
+                                            <div class="about-feature-icon">
+                                                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                            </div>
+                                            <div class="about-feature-content">
+                                                <strong>Unbreakable Encryption</strong>
+                                                <span>AES-256 bank-level security protecting your everyday digital accounts.</span>
+                                            </div>
+                                        </div>
+                                        <div class="about-feature">
+                                            <div class="about-feature-icon">
+                                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                            </div>
+                                            <div class="about-feature-content">
+                                                <strong>Clutter-Free Organization</strong>
+                                                <span>Instantly categorize, grade, and secure your entire digital life with ease.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="about-trust-badge">
+                                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                                        <p>Your passwords are yours alone. Not even the developer can access, read, or recover them. Ever.</p>
+                                    </div>
+
+                                    <div class="about-developer">
+                                        <div class="about-developer-name">Developer: Md Tariq (WittyArtist)</div>
+                                        <div class="about-developer-contact">
+                                            <a href="mailto:mdtariqbist@gmail.com">mdtariqbist@gmail.com</a>
+                                            <span> — For feedback and support</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
