@@ -1315,6 +1315,59 @@
             margin-bottom: 24px;
         }
 
+        .health-bar-wrapper {
+            background: rgba(255,255,255,0.3);
+            border-radius: 999px;
+            height: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .health-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #EF4444, #F59E0B, #10B981);
+            transition: width 1s ease-out;
+        }
+
+        .sec-dashboard-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .sec-dashboard-card:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+        .sec-card-strong { border-bottom: 4px solid #10B981; }
+        .sec-card-strong:hover { box-shadow: 0 10px 20px rgba(16, 185, 129, 0.15); }
+        .sec-card-good { border-bottom: 4px solid #F59E0B; }
+        .sec-card-good:hover { box-shadow: 0 10px 20px rgba(245, 158, 11, 0.15); }
+        .sec-card-weak { border-bottom: 4px solid #EF4444; }
+        .sec-card-weak:hover { box-shadow: 0 10px 20px rgba(239, 68, 68, 0.15); }
+
+        .fade-in-container {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            margin-top: 24px;
+            display: none;
+        }
+        .fade-in-container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
         .modal-actions {
             display: flex;
             gap: 10px;
@@ -2543,6 +2596,7 @@
                         <div class="categories-section" id="categories-content">
                             <!-- Category folders rendered by JS -->
                         </div>
+                        <div id="category-list-container" class="fade-in-container"></div>
                     </div>
 
                     <!-- Section 4: SECURITY AUDIT -->
@@ -2559,6 +2613,8 @@
                         <div class="security-section" id="security-content">
                             <!-- Security report rendered by JS -->
                         </div>
+                        <div id="security-list-container" class="fade-in-container"></div>
+                    </div>
                     </div>
 
                     <!-- Section 5: SETTINGS -->
@@ -2721,6 +2777,12 @@
             <div class="input-group">
                 <label class="input-label" for="modal-user">Username / Email</label>
                 <input type="text" id="modal-user" class="input" placeholder="e.g., user@example.com" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="modal-cat">Category (Optional)</label>
+                <input type="text" id="modal-cat" class="input" list="category-options" placeholder="Select or type a category" autocomplete="off">
+                <datalist id="category-options"></datalist>
             </div>
 
             <div class="input-group">
@@ -3186,10 +3248,101 @@
             }).join('');
         }
 
+        function renderDynamicList(items, containerId, title) {
+            const container = document.getElementById(containerId);
+            if (!items || items.length === 0) {
+                container.innerHTML = `
+                    <div style="margin-top: 24px; text-align: center; color: var(--text-muted);">
+                        No items found for ${title}.
+                    </div>
+                `;
+            } else {
+                let html = `
+                    <h3 style="margin: 32px 0 16px 0; font-size: 1.1rem; color: var(--text-primary);">${title}</h3>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Website</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Category</th>
+                                    <th>Last Modified</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                html += items.map(c => {
+                    const colorIdx = hashCode(c.website) % 8;
+                    const initial = c.website.charAt(0).toUpperCase();
+                    const catClass = getCategoryClass(c.category);
+                    return `
+                        <tr class="clickable-row" onclick="openDetailModal(${c.id})">
+                            <td>
+                                <div class="table-website">
+                                    <div class="table-favicon avatar-${colorIdx}">${initial}</div>
+                                    <div>
+                                        <div class="table-site-name">${escapeHtml(c.website)}</div>
+                                        <div class="table-site-url">${escapeHtml(c.website.toLowerCase().replace(/\s+/g, '') + '.com')}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="table-username">${escapeHtml(c.username)}</td>
+                            <td>
+                                <div class="table-password">
+                                    <span class="table-pw-dots">••••••••••</span>
+                                </div>
+                            </td>
+                            <td><span class="cat-pill ${catClass}">${escapeHtml(c.category)}</span></td>
+                            <td class="table-date">${formatDate(c.updated_at)}</td>
+                        </tr>`;
+                }).join('');
+                html += `</tbody></table></div>`;
+                
+                html += `<div class="mobile-cred-cards" style="margin-top: 16px; display: none;">`;
+                html += items.map(c => {
+                    const colorIdx = hashCode(c.website) % 8;
+                    const initial = c.website.charAt(0).toUpperCase();
+                    const catClass = getCategoryClass(c.category);
+                    return `
+                        <div class="mobile-cred-card clickable-row" onclick="openDetailModal(${c.id})">
+                            <div class="mobile-cred-header">
+                                <div class="table-favicon avatar-${colorIdx}" style="width:36px;height:36px;font-size:0.9rem;">${initial}</div>
+                                <div style="flex:1;min-width:0;">
+                                    <div class="table-site-name" style="font-size:0.875rem;">${escapeHtml(c.website)}</div>
+                                    <div class="table-site-url">${escapeHtml(c.username)}</div>
+                                </div>
+                                <span class="cat-pill ${catClass}" style="font-size:0.65rem;">${escapeHtml(c.category)}</span>
+                            </div>
+                            <div class="mobile-cred-body">
+                                <div class="mobile-cred-row">
+                                    <span class="mobile-cred-label">Password</span>
+                                    <div class="table-password">
+                                        <span class="table-pw-dots">••••••••••</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                }).join('');
+                html += `</div>`;
+                container.innerHTML = html;
+            }
+            
+            container.classList.remove('active');
+            void container.offsetWidth;
+            container.classList.add('active');
+        }
+
+        function renderDynamicListForCategory(category) {
+            const items = credentials.filter(c => c.category.toLowerCase() === category.toLowerCase());
+            renderDynamicList(items, 'category-list-container', `Category: ${category}`);
+        }
+
         async function loadCategories() {
             const result = await window.pywebview.api.get_categories_summary();
             const categories = result.categories || {};
             const container = document.getElementById('categories-content');
+            document.getElementById('category-list-container').classList.remove('active');
             
             const icons = {
                 'Social': '💬', 'Finance': '🏦', 'Work': '💼', 'Shopping': '🛍️',
@@ -3201,7 +3354,7 @@
                 const icon = icons[cat] || icons['Other'];
                 const cssClass = getCategoryClass(cat).replace('cat-', 'cat-icon-');
                 html += `
-                    <div class="category-folder" onclick="switchNav(document.querySelector('[data-nav=all]'), 'all'); filterCategory(null, '${cat.toLowerCase()}');">
+                    <div class="category-folder" onclick="renderDynamicListForCategory('${cat.replace(/'/g, "\\'")}')">
                         <div class="category-folder-icon ${cssClass}">${icon}</div>
                         <div class="category-folder-name">${escapeHtml(cat)}</div>
                         <div class="category-folder-count">${count} password${count !== 1 ? 's' : ''}</div>
@@ -3212,64 +3365,68 @@
             container.innerHTML = html;
         }
 
+        let currentSecurityData = null;
+
+        function renderDynamicListForSecurity(type) {
+            if (!currentSecurityData) return;
+            let items = [];
+            let title = '';
+            if (type === 'strong') {
+                items = currentSecurityData.strong;
+                title = 'Strong Passwords';
+            } else if (type === 'good') {
+                items = currentSecurityData.good;
+                title = 'Good Passwords';
+            } else if (type === 'weak') {
+                items = currentSecurityData.weak;
+                title = 'Weak Passwords';
+            }
+            renderDynamicList(items, 'security-list-container', title);
+        }
+
         async function loadSecurity() {
             const result = await window.pywebview.api.get_security_report();
             if (!result.success) return;
 
+            currentSecurityData = result;
+
             const container = document.getElementById('security-content');
+            document.getElementById('security-list-container').classList.remove('active');
+            
             const total = result.total || 0;
             const strong = result.strong ? result.strong.length : 0;
             const good = result.good ? result.good.length : 0;
             const weak = result.weak ? result.weak.length : 0;
+            
+            const safeCount = strong + good;
+            const healthPercent = total > 0 ? Math.round((safeCount / total) * 100) : 100;
 
             let html = `
-                <div class="security-summary">
-                    <div class="security-summary-card strong">
-                        <div class="security-count">${strong}</div>
-                        <div class="security-label">Strong</div>
+                <div style="margin-bottom: 32px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span style="font-size:0.9rem; color:var(--text-secondary); font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Vault Health</span>
+                        <span style="font-size:0.9rem; color:var(--text-primary); font-weight:600;">${healthPercent}% Secure</span>
                     </div>
-                    <div class="security-summary-card good">
-                        <div class="security-count">${good}</div>
-                        <div class="security-label">Good</div>
+                    <div class="health-bar-wrapper">
+                        <div class="health-bar-fill" style="width: ${healthPercent}%;"></div>
                     </div>
-                    <div class="security-summary-card weak">
-                        <div class="security-count">${weak}</div>
-                        <div class="security-label">Weak</div>
+                </div>
+                
+                <div style="display:flex; gap:16px; margin-bottom:32px; flex-wrap:wrap;">
+                    <div class="sec-dashboard-card sec-card-strong" onclick="renderDynamicListForSecurity('strong')">
+                        <div style="font-size: 2rem; font-weight: 700; color: #10B981;">${strong}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">Strong</div>
+                    </div>
+                    <div class="sec-dashboard-card sec-card-good" onclick="renderDynamicListForSecurity('good')">
+                        <div style="font-size: 2rem; font-weight: 700; color: #F59E0B;">${good}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">Good</div>
+                    </div>
+                    <div class="sec-dashboard-card sec-card-weak" onclick="renderDynamicListForSecurity('weak')">
+                        <div style="font-size: 2rem; font-weight: 700; color: #EF4444;">${weak}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">Weak (Action)</div>
                     </div>
                 </div>
             `;
-
-            // Helper to render a group
-            const renderGroup = (title, items, typeClass) => {
-                if (!items || items.length === 0) return '';
-                let groupHtml = `
-                    <div class="security-group">
-                        <div class="security-group-header ${typeClass}">
-                            <div class="security-group-dot ${typeClass}"></div>
-                            <div class="security-group-title">${title}</div>
-                            <div class="security-group-count">${items.length} items</div>
-                        </div>
-                `;
-                items.forEach(c => {
-                    groupHtml += `
-                        <div class="security-item clickable-row" onclick="openDetailModal(${c.id})">
-                            <div class="security-item-info">
-                                <div class="security-item-site">${escapeHtml(c.website)}</div>
-                                <div class="security-item-user">${escapeHtml(c.username)}</div>
-                            </div>
-                            <div class="security-item-meta">
-                                Length: ${c.password_length}<br>
-                            </div>
-                        </div>
-                    `;
-                });
-                groupHtml += `</div>`;
-                return groupHtml;
-            };
-
-            html += renderGroup('Weak Passwords (Needs Action)', result.weak, 'weak');
-            html += renderGroup('Good Passwords', result.good, 'good');
-            html += renderGroup('Strong Passwords', result.strong, 'strong');
 
             container.innerHTML = html;
         }
@@ -3460,6 +3617,20 @@
         // ==================================================================
         // CREDENTIAL MODAL (Add/Edit)
         // ==================================================================
+        async function populateCategoryOptions() {
+            const result = await window.pywebview.api.get_categories_summary();
+            const datalist = document.getElementById('category-options');
+            if (!datalist) return;
+            datalist.innerHTML = '';
+            if (result.categories) {
+                for (const cat of Object.keys(result.categories)) {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    datalist.appendChild(option);
+                }
+            }
+        }
+
         function openAddModal() {
             editMode = false;
             editCredId = null;
@@ -3468,7 +3639,9 @@
             document.getElementById('modal-site').value = '';
             document.getElementById('modal-user').value = '';
             document.getElementById('modal-pass').value = '';
+            document.getElementById('modal-cat').value = '';
             document.getElementById('cred-modal-error').textContent = '';
+            populateCategoryOptions();
             openModal('cred-modal');
             document.getElementById('modal-site').focus();
         }
@@ -3485,9 +3658,11 @@
                 const c = result.credential;
                 document.getElementById('modal-site').value = c.website;
                 document.getElementById('modal-user').value = c.username;
+                document.getElementById('modal-cat').value = c.category || '';
                 const pwResult = await window.pywebview.api.show_password(id);
                 document.getElementById('modal-pass').value = pwResult.success ? pwResult.password : '';
             }
+            populateCategoryOptions();
             openModal('cred-modal');
         }
 
@@ -3495,6 +3670,7 @@
             const site = document.getElementById('modal-site').value.trim();
             const user = document.getElementById('modal-user').value.trim();
             const pass = document.getElementById('modal-pass').value.trim();
+            const cat = document.getElementById('modal-cat').value.trim();
             const errorEl = document.getElementById('cred-modal-error');
 
             if (!site) { errorEl.textContent = '⚠ Please enter a website or service name.'; return; }
@@ -3505,9 +3681,9 @@
 
             let result;
             if (editMode) {
-                result = await window.pywebview.api.edit_credential(editCredId, site, user, pass);
+                result = await window.pywebview.api.edit_credential(editCredId, site, user, pass, cat);
             } else {
-                result = await window.pywebview.api.add_credential(site, user, pass);
+                result = await window.pywebview.api.add_credential(site, user, pass, cat);
             }
 
             if (result.success) {
