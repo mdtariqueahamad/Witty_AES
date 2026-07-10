@@ -1,0 +1,3492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witty AES — Secure Offline Vault</title>
+    <meta name="description" content="Witty AES: A premium offline password manager with AES-256 encryption, neumorphic design, and zero-cloud storage.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================================
+           WITTY AES — Premium Neumorphic Design System
+           ================================================================ */
+
+        :root {
+            /* Background & Surface */
+            --bg-base: #F7F6F2;
+            --bg-card: #FAFAFA;
+            --bg-sidebar: #FFFFFF;
+            --bg-input: #F0EFEB;
+
+            /* Brand Colors */
+            --navy: #1B365D;
+            --navy-light: #2A4A7F;
+            --navy-dark: #122541;
+            --navy-hover: #152D50;
+
+            /* Text */
+            --text-primary: #1B365D;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --text-light: #B0B5BD;
+
+            /* Accents */
+            --accent-blue: #3B82F6;
+            --accent-green: #22C55E;
+            --accent-yellow: #F59E0B;
+            --accent-red: #EF4444;
+            --accent-purple: #8B5CF6;
+
+            /* Category Pastels */
+            --cat-social-bg: #DBEAFE;
+            --cat-social-text: #1D4ED8;
+            --cat-work-bg: #EDE9FE;
+            --cat-work-text: #6D28D9;
+            --cat-banking-bg: #D1FAE5;
+            --cat-banking-text: #059669;
+            --cat-shopping-bg: #FED7AA;
+            --cat-shopping-text: #C2410C;
+            --cat-email-bg: #FCE7F3;
+            --cat-email-text: #BE185D;
+            --cat-other-bg: #F3F4F6;
+            --cat-other-text: #4B5563;
+
+            /* Neumorphic Shadows */
+            --shadow-card: 6px 6px 16px rgba(0, 0, 0, 0.06), -4px -4px 12px rgba(255, 255, 255, 0.9);
+            --shadow-card-hover: 8px 8px 24px rgba(0, 0, 0, 0.08), -6px -6px 16px rgba(255, 255, 255, 0.95);
+            --shadow-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.06), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+            --shadow-btn: 4px 4px 10px rgba(0, 0, 0, 0.08), -2px -2px 6px rgba(255, 255, 255, 0.8);
+            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            /* Spacing & Radius */
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-pill: 50px;
+
+            /* Sidebar */
+            --sidebar-width: 250px;
+        }
+
+        /* --- Reset --- */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-primary);
+            /* Layer 0: Base warm gradient */
+            background:
+                /* Subtle radial vignette */
+                radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.03) 100%),
+                /* Warm directional gradient */
+                linear-gradient(160deg, #F8F7F4 0%, #F2F1ED 25%, #EBEAE5 50%, #E6E4DF 75%, #E1DFDA 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ================================================================
+           LAYER 0a: Paper/Linen Grain Texture
+           Creates that 'printed on security paper' tactile feel
+           ================================================================ */
+        .bg-texture-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Sub-layer 1: SVG Noise Grain (paper fiber texture) */
+        .bg-texture-layer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* SVG feTurbulence noise for organic paper grain */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            opacity: 1;
+            mix-blend-mode: multiply;
+        }
+
+        /* Sub-layer 2: Security paper micro-grid (faint ruled lines) */
+        .bg-texture-layer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* Repeating cross-hatch grid like banknote/certificate paper */
+            background-image:
+                /* Horizontal lines */
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(158, 155, 148, 0.05) 39px,
+                    rgba(158, 155, 148, 0.05) 40px
+                ),
+                /* Vertical lines */
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(158, 155, 148, 0.05) 39px,
+                    rgba(158, 155, 148, 0.05) 40px
+                ),
+                /* Finer diagonal hatching for paper weave feel */
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 79px,
+                    rgba(158, 155, 148, 0.03) 79px,
+                    rgba(158, 155, 148, 0.03) 80px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 79px,
+                    rgba(158, 155, 148, 0.03) 79px,
+                    rgba(158, 155, 148, 0.03) 80px
+                );
+            opacity: 1;
+        }
+
+        /* Sub-layer 3: Corner vignette overlay for depth */
+        .bg-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                /* Top-left corner shadow */
+                radial-gradient(ellipse at 0% 0%, rgba(158, 155, 148, 0.08) 0%, transparent 50%),
+                /* Top-right corner shadow */
+                radial-gradient(ellipse at 100% 0%, rgba(158, 155, 148, 0.08) 0%, transparent 50%),
+                /* Bottom-left corner shadow */
+                radial-gradient(ellipse at 0% 100%, rgba(158, 155, 148, 0.1) 0%, transparent 50%),
+                /* Bottom-right corner shadow */
+                radial-gradient(ellipse at 100% 100%, rgba(158, 155, 148, 0.12) 0%, transparent 50%),
+                /* Edge fade */
+                radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.02) 100%);
+        }
+
+        /* ================================================================
+           BACKGROUND WATERMARKS — Printed-on-paper style
+           Warm grey (#B8B5AE) watermarks at 6-8% opacity
+           ================================================================ */
+        .bg-watermarks {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-watermarks svg {
+            position: absolute;
+            opacity: 0.07;
+            fill: none;
+            stroke: #9E9B94;
+            stroke-width: 1.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Shield with lock (top center) */
+        .wm-shield-lock-tc { top: 4%; left: 38%; width: 110px; height: 120px; opacity: 0.06; }
+
+        /* Large padlock (bottom-left area) */
+        .wm-lock-bl { bottom: 18%; left: 8%; width: 120px; height: 130px; opacity: 0.06; }
+
+        /* Key icon (top-right area) */
+        .wm-key-tr { top: 8%; right: 15%; width: 90px; height: 90px; opacity: 0.06; transform: rotate(-15deg); }
+
+        /* Fingerprint (right side) */
+        .wm-fingerprint-r { top: 22%; right: 10%; width: 100px; height: 100px; opacity: 0.055; }
+
+        /* Leaf branch (left side, large) */
+        .wm-leaf-l { top: 10%; left: -2%; width: 200px; height: 340px; opacity: 0.055; stroke-width: 1; }
+
+        /* Leaf branch (bottom-right, large) */
+        .wm-leaf-br { bottom: -3%; right: 2%; width: 220px; height: 360px; opacity: 0.05; stroke-width: 1; transform: scaleX(-1) rotate(-5deg); }
+
+        /* Binary text blocks */
+        .wm-binary-1 { top: 32%; left: 32%; font-family: 'Courier New', monospace; font-size: 13px; fill: #9E9B94; stroke: none; opacity: 0.06; letter-spacing: 2px; }
+        .wm-binary-2 { bottom: 12%; right: 4%; font-family: 'Courier New', monospace; font-size: 12px; fill: #9E9B94; stroke: none; opacity: 0.055; letter-spacing: 2px; }
+        .wm-binary-3 { top: 5%; right: 2%; font-family: 'Courier New', monospace; font-size: 11px; fill: #9E9B94; stroke: none; opacity: 0.045; letter-spacing: 2px; }
+
+        /* Simple circuit traces */
+        .wm-circuit-1 { top: 28%; right: 6%; width: 80px; height: 70px; opacity: 0.06; }
+        .wm-circuit-2 { top: 50%; left: 3%; width: 90px; height: 80px; opacity: 0.055; }
+        .wm-circuit-3 { bottom: 30%; left: 5%; width: 75px; height: 65px; opacity: 0.05; }
+        .wm-circuit-4 { bottom: 8%; left: 25%; width: 70px; height: 60px; opacity: 0.045; }
+
+        /* Hexagonal molecule */
+        .wm-molecule { bottom: 35%; left: 6%; width: 130px; height: 110px; opacity: 0.055; stroke-width: 1; }
+
+        /* Dot grid clusters */
+        .wm-dots-1 { top: 6%; right: 6%; width: 60px; height: 60px; opacity: 0.06; }
+        .wm-dots-2 { bottom: 22%; left: 18%; width: 50px; height: 50px; opacity: 0.05; }
+
+        /* Signal/pulse line */
+        .wm-signal { top: 38%; left: 20%; width: 80px; height: 40px; opacity: 0.05; stroke-width: 1; }
+
+        /* ================================================================
+           GLOBAL ELEMENTS
+           ================================================================ */
+
+        /* Global watermark branding */
+        .global-watermark {
+            position: fixed;
+            bottom: 12px;
+            right: 18px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            z-index: 10;
+            opacity: 0.7;
+            user-select: none;
+        }
+
+        /* App container */
+        .app-container {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view {
+            display: none;
+            height: 100%;
+        }
+
+        .view.active {
+            display: flex;
+        }
+
+        /* ================================================================
+           TYPOGRAPHY
+           ================================================================ */
+        h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+        h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text-primary); }
+        h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary {
+            background: var(--navy);
+            color: #FFFFFF;
+            box-shadow: var(--shadow-btn);
+        }
+        .btn-primary:hover {
+            background: var(--navy-hover);
+            box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -3px -3px 8px rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-pill {
+            border-radius: var(--radius-pill);
+            padding: 14px 32px;
+            font-size: 0.9375rem;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid #E5E7EB;
+        }
+        .btn-ghost:hover {
+            background: #F3F4F6;
+            color: var(--text-primary);
+            border-color: #D1D5DB;
+        }
+
+        .btn-danger {
+            background: var(--accent-red);
+            color: white;
+        }
+        .btn-danger:hover { background: #DC2626; }
+
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.8125rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon:hover { color: var(--text-primary); background: #F3F4F6; }
+
+        /* ================================================================
+           INPUTS (Neumorphic Inset Style)
+           ================================================================ */
+        .input {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--bg-input);
+            border: 1px solid #E8E7E3;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-inset);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .input:focus {
+            border-color: var(--navy);
+            box-shadow: var(--shadow-inset), 0 0 0 3px rgba(27, 54, 93, 0.08);
+        }
+
+        .input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        /* Input with icons */
+        .input-with-icons {
+            position: relative;
+        }
+
+        .input-with-icons .input {
+            padding-left: 44px;
+            padding-right: 44px;
+        }
+
+        .input-icon-left {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon-right {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+            border-radius: 6px;
+            transition: color 0.2s;
+        }
+        .input-icon-right:hover { color: var(--text-primary); }
+
+        /* ================================================================
+           AUTH VIEWS — Lock Screen (Setup & Login)
+           ================================================================ */
+        .auth-view {
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+
+        .auth-card {
+            width: 460px;
+            max-width: calc(100vw - 40px);
+            padding: 48px 44px;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px) saturate(1.2);
+            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            border-radius: var(--radius-xl);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.06),
+                0 2px 8px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            text-align: center;
+            animation: cardAppear 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            position: relative;
+            z-index: 3;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Padlock icon */
+        .auth-lock-icon {
+            margin-bottom: 16px;
+        }
+        .auth-lock-icon svg {
+            width: 64px;
+            height: 72px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .auth-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .auth-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        /* Shield divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .auth-divider svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.5;
+        }
+
+        .auth-prompt {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+
+
+        /* Auth button */
+        .auth-btn {
+            width: 100%;
+            padding: 15px 24px;
+            font-size: 0.9375rem;
+            border-radius: var(--radius-pill);
+            background: var(--navy);
+            color: white;
+            border: none;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .auth-btn:hover {
+            background: var(--navy-hover);
+            box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.1), -3px -3px 8px rgba(255, 255, 255, 0.7);
+        }
+        .auth-btn:active { transform: scale(0.98); }
+
+        .auth-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Auth footer */
+        .auth-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .auth-footer svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+        }
+
+        /* Strength indicator */
+        .strength-indicator {
+            font-size: 0.8125rem;
+            margin-top: 6px;
+            min-height: 20px;
+            text-align: left;
+            transition: color 0.2s;
+        }
+        .strength-weak { color: var(--accent-red); }
+        .strength-fair { color: var(--accent-yellow); }
+        .strength-strong { color: var(--accent-green); }
+
+        /* Error message */
+        .error-msg {
+            color: var(--accent-red);
+            font-size: 0.8125rem;
+            margin-top: 4px;
+            min-height: 20px;
+            text-align: left;
+        }
+
+        @keyframes shakeX {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .shake { animation: shakeX 0.5s ease; }
+
+        /* ================================================================
+           DASHBOARD VIEW
+           ================================================================ */
+        .dashboard-view {
+            flex-direction: column;
+        }
+
+        .dashboard-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-sidebar);
+            border-right: 1px solid #EEEDE9;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.03);
+            z-index: 20;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px 16px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-brand-icon svg {
+            width: 32px;
+            height: 36px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sidebar-brand-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+        }
+
+        .sidebar-brand-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Nav items */
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #F5F4F0;
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: rgba(27, 54, 93, 0.08);
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .nav-item .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-item .nav-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Sidebar footer */
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 12px;
+        }
+
+        .vault-status-card {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: #F0FAF0;
+            border: 1px solid #D1E7D1;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .vault-status-icon {
+            margin-bottom: 4px;
+        }
+        .vault-status-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent-green);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .vault-status-title {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 2px;
+        }
+
+        .vault-status-sub {
+            font-size: 0.7rem;
+            color: #6B7280;
+        }
+
+        .sidebar-lock-btn {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .sidebar-footer-stamp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
+        }
+        .sidebar-footer-stamp svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.5;
+        }
+
+        /* --- Mobile Sidebar --- */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 49;
+        }
+        .sidebar-overlay.active { display: block; }
+
+        .hamburger-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            color: var(--navy);
+        }
+        .hamburger-btn:hover { background: #F3F4F6; }
+        .hamburger-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        /* --- Main Content Panel --- */
+        .main-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--bg-base);
+        }
+
+        /* Main Header */
+        .main-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 28px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .main-header-left {
+            flex: 0 0 auto;
+        }
+
+        .main-header-left h1 {
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
+
+        .main-header-left .subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .main-header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-bar {
+            position: relative;
+            min-width: 220px;
+        }
+
+        .search-bar .input {
+            padding-left: 40px;
+            padding-right: 16px;
+            border-radius: var(--radius-pill);
+            font-size: 0.875rem;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .search-bar .search-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .filter-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #E5E7EB;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-soft);
+        }
+        .filter-btn:hover { border-color: var(--navy); }
+        .filter-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .add-btn {
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- Stats Cards Row --- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 0 28px 16px;
+            flex-shrink: 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: box-shadow 0.25s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .stat-card:hover { box-shadow: var(--shadow-card-hover); }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .stat-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.8;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stat-icon.blue { background: #DBEAFE; }
+        .stat-icon.blue svg { stroke: #2563EB; }
+        .stat-icon.green { background: #D1FAE5; }
+        .stat-icon.green svg { stroke: #059669; }
+        .stat-icon.yellow { background: #FEF3C7; }
+        .stat-icon.yellow svg { stroke: #D97706; }
+        .stat-icon.purple { background: #EDE9FE; }
+        .stat-icon.purple svg { stroke: #7C3AED; }
+
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .stat-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Category Filter Chips --- */
+        .category-chips-wrapper {
+            padding: 0 28px 16px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .category-chips {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .category-chips::-webkit-scrollbar { display: none; }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #E5E7EB;
+            background: white;
+            color: var(--text-secondary);
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .chip:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .chip.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+        .chip svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* --- Data Table --- */
+        .table-wrapper {
+            flex: 1;
+            overflow: auto;
+            padding: 0 28px 28px;
+        }
+
+        .table-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
+        .table-wrapper::-webkit-scrollbar-track { background: transparent; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .data-table thead th {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: #FAFAF8;
+            border-bottom: 1px solid #EEEDE9;
+            white-space: nowrap;
+        }
+
+        .data-table thead th:first-child { padding-left: 24px; }
+        .data-table thead th:last-child { padding-right: 24px; }
+
+        .data-table tbody tr {
+            transition: background 0.15s ease;
+        }
+        .data-table tbody tr:hover { background: #FAFAF8; }
+        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid #F3F2EE; }
+
+        .data-table tbody td {
+            padding: 14px 18px;
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+        .data-table tbody td:first-child { padding-left: 24px; }
+        .data-table tbody td:last-child { padding-right: 24px; }
+
+        /* Table cell - Website/App */
+        .table-website {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .table-favicon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .table-site-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        .table-site-url {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .table-username {
+            color: var(--text-secondary);
+        }
+
+        /* Password cell */
+        .table-password {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .table-pw-dots {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.08em;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .pw-toggle-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .pw-toggle-btn:hover { color: var(--navy); background: #F3F4F6; }
+        .pw-toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Category pills */
+        .cat-pill {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .cat-social { background: var(--cat-social-bg); color: var(--cat-social-text); }
+        .cat-work { background: var(--cat-work-bg); color: var(--cat-work-text); }
+        .cat-banking { background: var(--cat-banking-bg); color: var(--cat-banking-text); }
+        .cat-shopping { background: var(--cat-shopping-bg); color: var(--cat-shopping-text); }
+        .cat-email { background: var(--cat-email-bg); color: var(--cat-email-text); }
+        .cat-other { background: var(--cat-other-bg); color: var(--cat-other-text); }
+
+        .table-date {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Table action buttons */
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .table-actions .btn-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .table-actions .btn-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+        }
+        .table-actions .btn-icon.fav-btn { color: var(--text-light); }
+        .table-actions .btn-icon.fav-btn:hover { color: var(--accent-yellow); }
+        .table-actions .btn-icon.edit-btn:hover { color: var(--navy); }
+        .table-actions .btn-icon.delete-btn:hover { color: var(--accent-red); }
+
+        /* Empty state */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+        .empty-title { font-size: 1.05rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+        .empty-sub { font-size: 0.875rem; color: var(--text-muted); }
+
+        /* --- Mobile Credentials Cards (replaces table on small screens) --- */
+        .mobile-cred-cards { display: none; }
+
+        .mobile-cred-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #EEEDE9;
+            margin-bottom: 10px;
+        }
+
+        .mobile-cred-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mobile-cred-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.8125rem;
+        }
+
+        .mobile-cred-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-cred-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .mobile-cred-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .mobile-cred-actions {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px solid #F3F2EE;
+            justify-content: flex-end;
+        }
+
+        /* ================================================================
+           MODALS
+           ================================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-overlay.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-card {
+            width: 480px;
+            max-width: calc(100vw - 32px);
+            max-height: 90vh;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 36px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: modalSlide 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(16px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .modal-actions .btn { flex: 1; }
+
+        .password-gen-row {
+            display: flex;
+            gap: 8px;
+        }
+        .password-gen-row .input { flex: 1; }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+        }
+        .slider-label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .slider-row input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: #E5E7EB;
+            outline: none;
+        }
+        .slider-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--navy);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ================================================================
+           TOAST NOTIFICATIONS
+           ================================================================ */
+        .toast-container {
+            position: fixed;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toast {
+            padding: 11px 24px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .toast-success { background: var(--navy); color: white; }
+        .toast-error { background: var(--accent-red); color: white; }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Utility */
+        .hidden { display: none !important; }
+
+        /* Avatar colors */
+        .avatar-0 { background: #6366F1; }
+        .avatar-1 { background: #EC4899; }
+        .avatar-2 { background: #8B5CF6; }
+        .avatar-3 { background: #3B82F6; }
+        .avatar-4 { background: #14B8A6; }
+        .avatar-5 { background: #F59E0B; }
+        .avatar-6 { background: #EF4444; }
+        .avatar-7 { background: #10B981; }
+
+        /* Settings section styles */
+        .settings-section {
+            padding: 28px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .settings-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .settings-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .settings-card p {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* ================================================================
+           SECURITY AUDIT SECTION
+           ================================================================ */
+        .security-section {
+            padding: 0 28px 28px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .security-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .security-summary-card {
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .security-summary-card .security-count {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .security-summary-card .security-label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .security-summary-card.strong {
+            background: linear-gradient(135deg, #F0FFF4 0%, #DCFCE7 100%);
+            border-color: #BBF7D0;
+        }
+        .security-summary-card.strong .security-count { color: #16A34A; }
+        .security-summary-card.strong .security-label { color: #166534; }
+
+        .security-summary-card.good {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border-color: #FDE68A;
+        }
+        .security-summary-card.good .security-count { color: #D97706; }
+        .security-summary-card.good .security-label { color: #92400E; }
+
+        .security-summary-card.weak {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FEE2E2 100%);
+            border-color: #FECACA;
+        }
+        .security-summary-card.weak .security-count { color: #DC2626; }
+        .security-summary-card.weak .security-label { color: #991B1B; }
+
+        .security-group {
+            margin-bottom: 20px;
+        }
+
+        .security-group-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+        }
+
+        .security-group-header.strong { background: #F0FFF4; }
+        .security-group-header.good { background: #FFFBEB; }
+        .security-group-header.weak { background: #FFF5F5; }
+
+        .security-group-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .security-group-dot.strong { background: #22C55E; }
+        .security-group-dot.good { background: #F59E0B; }
+        .security-group-dot.weak { background: #EF4444; }
+
+        .security-group-title {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .security-group-count {
+            margin-left: auto;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .security-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .security-item-site {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .security-item-user {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .security-item-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* ================================================================
+           CATEGORIES FOLDER VIEW
+           ================================================================ */
+        .categories-section {
+            padding: 0 28px 28px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .category-folder {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+
+        .category-folder:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .category-folder.active-folder {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.15), var(--shadow-card);
+        }
+
+        .category-folder-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 1.3rem;
+        }
+
+        .category-folder-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .category-folder-count {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* Category folder icon colors */
+        .cat-icon-social { background: var(--cat-social-bg); color: var(--cat-social-text); }
+        .cat-icon-finance { background: var(--cat-banking-bg); color: var(--cat-banking-text); }
+        .cat-icon-work { background: var(--cat-work-bg); color: var(--cat-work-text); }
+        .cat-icon-shopping { background: var(--cat-shopping-bg); color: var(--cat-shopping-text); }
+        .cat-icon-email { background: var(--cat-email-bg); color: var(--cat-email-text); }
+        .cat-icon-entertainment { background: #DBEAFE; color: #1D4ED8; }
+        .cat-icon-education { background: #EDE9FE; color: #6D28D9; }
+        .cat-icon-other { background: var(--cat-other-bg); color: var(--cat-other-text); }
+
+        .category-detail-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--navy);
+            cursor: pointer;
+            margin-bottom: 16px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            transition: background 0.2s;
+        }
+        .category-detail-back:hover { background: rgba(27, 54, 93, 0.06); }
+        .category-detail-back svg {
+            width: 16px; height: 16px;
+            stroke: currentColor; fill: none; stroke-width: 2;
+        }
+
+        /* ================================================================
+           ABOUT CARD (Apple-style)
+           ================================================================ */
+        .about-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 40px 32px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            max-width: 520px;
+        }
+
+        .about-logo {
+            margin-bottom: 8px;
+        }
+
+        .about-logo svg {
+            width: 48px;
+            height: 52px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .about-app-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
+        }
+
+        .about-version {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .about-tagline {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .about-features {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .about-feature {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            align-items: flex-start;
+        }
+
+        .about-feature-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .about-feature-content strong {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .about-feature-content span {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .about-trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: #F0FAF0;
+            border: 1px solid #D1E7D1;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .about-trust-badge svg {
+            width: 28px;
+            height: 28px;
+            stroke: #16A34A;
+            fill: none;
+            stroke-width: 1.8;
+            flex-shrink: 0;
+        }
+
+        .about-trust-badge p {
+            font-size: 0.8125rem;
+            color: #166534;
+            line-height: 1.4;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .about-developer {
+            padding-top: 16px;
+            border-top: 1px solid #EEEDE9;
+        }
+
+        .about-developer-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .about-developer-contact {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .about-developer-contact a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .about-developer-contact a:hover {
+            text-decoration: underline;
+        }
+
+        /* Favorite star active state */
+        .fav-btn.active svg {
+            fill: #F59E0B;
+            stroke: #F59E0B;
+        }
+
+        /* Window title bar area (for close button reference) */
+        .window-controls {
+            position: fixed;
+            top: 10px;
+            right: 14px;
+            z-index: 50;
+            display: flex;
+            gap: 6px;
+        }
+
+        .window-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: var(--text-muted);
+            transition: all 0.15s;
+        }
+        .window-btn:hover { background: #EEEDE9; color: var(--text-primary); }
+        .window-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Mobile FAB for add button */
+        .mobile-fab {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 16px rgba(27, 54, 93, 0.3);
+            cursor: pointer;
+            z-index: 30;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .mobile-fab:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(27, 54, 93, 0.4); }
+
+        /* ================================================================
+           RESPONSIVE — MOBILE
+           ================================================================ */
+        @media (max-width: 900px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                height: 100%;
+                width: 270px;
+                z-index: 50;
+                transition: left 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+            }
+            .sidebar.open { left: 0; }
+            .hamburger-btn { display: flex; }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 16px 12px;
+            }
+
+            .main-header {
+                padding: 14px 16px;
+            }
+
+            .main-header-right { width: 100%; margin-left: 0; }
+            .main-header-right .search-bar { flex: 1; min-width: unset; }
+            .main-header-right .add-btn { display: none; }
+            .mobile-fab { display: flex; }
+
+            .category-chips-wrapper { padding: 0 16px 12px; }
+
+            .table-wrapper { padding: 0 16px 80px; }
+
+            /* Hide desktop table, show mobile cards */
+            .data-table { display: none; }
+            .mobile-cred-cards { display: block; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .stat-card { padding: 14px 16px; }
+            .stat-number { font-size: 1.3rem; }
+            .auth-card { padding: 32px 24px; }
+            .main-header-left h1 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         LAYER 0: Paper/Linen Texture + Security Grid
+         ============================================================ -->
+    <div class="bg-texture-layer"></div>
+    <div class="bg-vignette"></div>
+
+    <!-- ============================================================
+         BACKGROUND WATERMARKS — Printed-on-paper style
+         ============================================================ -->
+    <div class="bg-watermarks">
+
+        <!-- ===== SHIELD WITH LOCK INSIDE (top-center) ===== -->
+        <svg class="wm-shield-lock-tc" viewBox="0 0 80 95">
+            <path d="M40 5 L72 18 V48 C72 68 40 88 40 88 C40 88 8 68 8 48 V18 Z" stroke-width="1.5"/>
+            <!-- Padlock inside shield -->
+            <rect x="27" y="45" width="26" height="22" rx="3" stroke-width="1.2"/>
+            <path d="M33 45V38a7 7 0 0 1 14 0v7" stroke-width="1.2"/>
+            <circle cx="40" cy="55" r="2.5" stroke-width="1"/>
+            <line x1="40" y1="57.5" x2="40" y2="61" stroke-width="1"/>
+        </svg>
+
+        <!-- ===== LARGE PADLOCK (bottom-left) ===== -->
+        <svg class="wm-lock-bl" viewBox="0 0 70 85">
+            <rect x="10" y="38" width="50" height="38" rx="5" stroke-width="1.5"/>
+            <path d="M22 38V28a13 13 0 0 1 26 0v10" stroke-width="1.5"/>
+            <circle cx="35" cy="56" r="3.5" stroke-width="1.2"/>
+            <line x1="35" y1="59.5" x2="35" y2="66" stroke-width="1.2"/>
+        </svg>
+
+        <!-- ===== KEY ICON (top-right area) ===== -->
+        <svg class="wm-key-tr" viewBox="0 0 80 50">
+            <circle cx="60" cy="20" r="14" stroke-width="1.3"/>
+            <circle cx="60" cy="20" r="6" stroke-width="1"/>
+            <line x1="46" y1="20" x2="10" y2="20" stroke-width="1.3"/>
+            <line x1="18" y1="20" x2="18" y2="30" stroke-width="1.2"/>
+            <line x1="26" y1="20" x2="26" y2="28" stroke-width="1.2"/>
+        </svg>
+
+        <!-- ===== FINGERPRINT (right side) ===== -->
+        <svg class="wm-fingerprint-r" viewBox="0 0 60 60">
+            <path d="M30 6 C12 6 4 20 4 30 C4 48 16 54 30 54 C44 54 56 48 56 30 C56 20 48 6 30 6" stroke-width="1"/>
+            <path d="M30 14 C18 14 12 22 12 30 C12 42 20 48 30 48 C40 48 48 42 48 30" stroke-width="1"/>
+            <path d="M30 22 C24 22 18 26 18 30 C18 38 22 42 30 42" stroke-width="1"/>
+            <path d="M30 28 C27 28 24 29 24 32 C24 35 26 37 30 37" stroke-width="1"/>
+            <path d="M30 32 C29 33 30 34 31 33" stroke-width="0.8"/>
+        </svg>
+
+        <!-- ===== LEAF BRANCH (left side, tall) ===== -->
+        <svg class="wm-leaf-l" viewBox="0 0 120 280">
+            <!-- Main stem -->
+            <path d="M85 280 C80 240 65 180 55 140 C45 100 50 60 60 20" stroke-width="1.5" fill="none"/>
+            <!-- Left leaves -->
+            <path d="M55 240 C30 235 20 220 25 210 C30 200 45 205 55 220" stroke-width="1" fill="none"/>
+            <path d="M50 200 C25 195 15 180 20 170 C25 160 40 165 50 180" stroke-width="1" fill="none"/>
+            <path d="M48 160 C28 152 20 138 24 128 C28 118 42 125 48 140" stroke-width="1" fill="none"/>
+            <path d="M50 120 C35 112 28 98 32 88 C36 78 48 86 50 100" stroke-width="1" fill="none"/>
+            <path d="M55 82 C42 72 38 58 42 50 C46 42 55 50 55 65" stroke-width="1" fill="none"/>
+            <!-- Right leaves -->
+            <path d="M62 220 C82 212 90 198 85 190 C80 182 67 190 62 205" stroke-width="1" fill="none"/>
+            <path d="M58 180 C78 172 86 158 81 150 C76 142 63 150 58 165" stroke-width="1" fill="none"/>
+            <path d="M53 142 C70 132 78 118 73 110 C68 102 56 112 53 125" stroke-width="1" fill="none"/>
+            <path d="M55 102 C70 92 75 78 70 72 C65 66 56 75 55 88" stroke-width="1" fill="none"/>
+            <path d="M58 65 C68 55 70 42 66 38 C62 34 57 44 58 55" stroke-width="0.8" fill="none"/>
+        </svg>
+
+        <!-- ===== LEAF BRANCH (bottom-right, tall) ===== -->
+        <svg class="wm-leaf-br" viewBox="0 0 120 280">
+            <!-- Main stem -->
+            <path d="M85 280 C80 240 65 180 55 140 C45 100 50 60 60 20" stroke-width="1.5" fill="none"/>
+            <!-- Left leaves -->
+            <path d="M55 240 C30 235 20 220 25 210 C30 200 45 205 55 220" stroke-width="1" fill="none"/>
+            <path d="M50 200 C25 195 15 180 20 170 C25 160 40 165 50 180" stroke-width="1" fill="none"/>
+            <path d="M48 160 C28 152 20 138 24 128 C28 118 42 125 48 140" stroke-width="1" fill="none"/>
+            <path d="M50 120 C35 112 28 98 32 88 C36 78 48 86 50 100" stroke-width="1" fill="none"/>
+            <!-- Right leaves -->
+            <path d="M62 220 C82 212 90 198 85 190 C80 182 67 190 62 205" stroke-width="1" fill="none"/>
+            <path d="M58 180 C78 172 86 158 81 150 C76 142 63 150 58 165" stroke-width="1" fill="none"/>
+            <path d="M53 142 C70 132 78 118 73 110 C68 102 56 112 53 125" stroke-width="1" fill="none"/>
+            <path d="M55 102 C70 92 75 78 70 72 C65 66 56 75 55 88" stroke-width="1" fill="none"/>
+        </svg>
+
+        <!-- ===== BINARY TEXT BLOCKS ===== -->
+        <svg class="wm-binary-1" viewBox="0 0 80 50">
+            <text x="0" y="14">010101</text>
+            <text x="5" y="30">010101</text>
+            <text x="10" y="46">010101</text>
+        </svg>
+
+        <svg class="wm-binary-2" viewBox="0 0 80 50">
+            <text x="0" y="14">01001</text>
+            <text x="0" y="30">01001</text>
+            <text x="0" y="46">01001</text>
+        </svg>
+
+        <svg class="wm-binary-3" viewBox="0 0 60 50">
+            <text x="0" y="14">1010</text>
+            <text x="0" y="30">0101</text>
+            <text x="0" y="46">1010</text>
+        </svg>
+
+        <!-- ===== SIMPLE CIRCUIT TRACES (L-shapes with dots) ===== -->
+        <svg class="wm-circuit-1" viewBox="0 0 60 50">
+            <line x1="5" y1="5" x2="5" y2="30" stroke-width="1.2"/>
+            <line x1="5" y1="30" x2="40" y2="30" stroke-width="1.2"/>
+            <circle cx="5" cy="5" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+            <circle cx="40" cy="30" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+        </svg>
+
+        <svg class="wm-circuit-2" viewBox="0 0 70 60">
+            <line x1="10" y1="10" x2="50" y2="10" stroke-width="1.2"/>
+            <line x1="50" y1="10" x2="50" y2="45" stroke-width="1.2"/>
+            <line x1="50" y1="45" x2="65" y2="45" stroke-width="1.2"/>
+            <circle cx="10" cy="10" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+            <circle cx="65" cy="45" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+            <circle cx="50" cy="10" r="2" fill="#9E9B94" stroke="none" opacity="0.5"/>
+        </svg>
+
+        <svg class="wm-circuit-3" viewBox="0 0 60 50">
+            <rect x="5" y="5" width="30" height="25" rx="3" stroke-width="1.2" fill="none"/>
+            <line x1="35" y1="18" x2="55" y2="18" stroke-width="1.2"/>
+            <circle cx="55" cy="18" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+            <line x1="5" y1="30" x2="5" y2="45" stroke-width="1.2"/>
+            <circle cx="5" cy="45" r="3" fill="#9E9B94" stroke="none" opacity="0.7"/>
+        </svg>
+
+        <svg class="wm-circuit-4" viewBox="0 0 55 45">
+            <rect x="5" y="5" width="25" height="20" rx="2" stroke-width="1.2" fill="none"/>
+            <line x1="30" y1="15" x2="50" y2="15" stroke-width="1.2"/>
+            <circle cx="50" cy="15" r="2.5" fill="#9E9B94" stroke="none" opacity="0.7"/>
+            <line x1="17" y1="25" x2="17" y2="40" stroke-width="1.2"/>
+            <circle cx="17" cy="40" r="2.5" fill="#9E9B94" stroke="none" opacity="0.7"/>
+        </svg>
+
+        <!-- ===== HEXAGONAL MOLECULE STRUCTURE ===== -->
+        <svg class="wm-molecule" viewBox="0 0 130 110">
+            <!-- Hexagon 1 (large, center-bottom) -->
+            <polygon points="50,65 65,56 65,40 50,31 35,40 35,56" stroke-width="1.2" fill="none"/>
+            <!-- Hexagon 2 (connected right) -->
+            <polygon points="80,56 95,47 95,31 80,22 65,31 65,47" stroke-width="1.2" fill="none"/>
+            <!-- Hexagon 3 (small, top-left) -->
+            <polygon points="30,35 40,29 40,19 30,13 20,19 20,29" stroke-width="1" fill="none"/>
+            <!-- Connection lines -->
+            <line x1="65" y1="40" x2="65" y2="31" stroke-width="1"/>
+            <line x1="40" y1="29" x2="50" y2="31" stroke-width="1"/>
+            <line x1="95" y1="47" x2="110" y2="50" stroke-width="1"/>
+            <line x1="50" y1="65" x2="45" y2="80" stroke-width="1"/>
+            <!-- Node dots at connections -->
+            <circle cx="110" cy="50" r="3" fill="#9E9B94" stroke="none" opacity="0.6"/>
+            <circle cx="45" cy="80" r="3" fill="#9E9B94" stroke="none" opacity="0.6"/>
+            <circle cx="30" cy="13" r="2.5" fill="#9E9B94" stroke="none" opacity="0.5"/>
+        </svg>
+
+        <!-- ===== DOT GRID CLUSTERS ===== -->
+        <svg class="wm-dots-1" viewBox="0 0 50 50">
+            <circle cx="8" cy="8" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="18" cy="8" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="28" cy="8" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="38" cy="8" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="8" cy="18" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="18" cy="18" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="28" cy="18" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="38" cy="18" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="8" cy="28" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="18" cy="28" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="28" cy="28" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="38" cy="28" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="8" cy="38" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="18" cy="38" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="28" cy="38" r="2" fill="#9E9B94" stroke="none"/>
+            <circle cx="38" cy="38" r="2" fill="#9E9B94" stroke="none"/>
+        </svg>
+
+        <svg class="wm-dots-2" viewBox="0 0 40 40">
+            <circle cx="6" cy="6" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="16" cy="6" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="26" cy="6" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="6" cy="16" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="16" cy="16" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="26" cy="16" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="6" cy="26" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="16" cy="26" r="1.8" fill="#9E9B94" stroke="none"/>
+            <circle cx="26" cy="26" r="1.8" fill="#9E9B94" stroke="none"/>
+        </svg>
+
+        <!-- ===== SIGNAL/PULSE LINE ===== -->
+        <svg class="wm-signal" viewBox="0 0 80 35">
+            <polyline points="5,25 20,25 28,8 36,28 44,12 52,22 60,18 75,18" stroke-width="1.2" fill="none"/>
+            <line x1="5" y1="25" x2="5" y2="30" stroke-width="1"/>
+            <line x1="5" y1="30" x2="35" y2="30" stroke-width="1"/>
+        </svg>
+
+    </div>
+
+    <!-- GLOBAL BRANDING WATERMARK -->
+    <div class="global-watermark">Secured by WittyArtist</div>
+
+    <div class="app-container">
+
+        <!-- ============================================================
+             SETUP VIEW — First-run master password creation
+             ============================================================ -->
+        <div id="setup-view" class="view auth-view">
+            <div class="auth-card">
+                <!-- Padlock Icon -->
+                <div class="auth-lock-icon">
+                    <svg viewBox="0 0 64 80">
+                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="2.5"/>
+                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="2.5"/>
+                        <circle cx="32" cy="52" r="4" stroke-width="2"/>
+                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="2"/>
+                    </svg>
+                </div>
+
+                <h1 class="auth-title">Witty AES</h1>
+                <p class="auth-subtitle">Secure Offline Vault</p>
+
+                <!-- Shield divider -->
+                <div class="auth-divider">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2 L20 6 V12 C20 17 12 22 12 22 C12 22 4 17 4 12 V6 Z"/>
+                    </svg>
+                </div>
+
+                <p class="auth-prompt">Create a strong master password to protect your vault.<br>This password cannot be recovered — memorize it.</p>
+
+                <div class="input-group" style="text-align: left;">
+                    <label class="input-label" for="setup-password">Master Password</label>
+                    <div class="input-with-icons">
+                        <span class="input-icon-left">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </span>
+                        <input type="password" id="setup-password" class="input" placeholder="Enter master password (min 8 chars)" autocomplete="off">
+                        <span class="input-icon-right" onclick="togglePasswordVisibility('setup-password', this)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div id="setup-strength" class="strength-indicator"></div>
+                </div>
+
+                <div class="input-group" style="text-align: left;">
+                    <label class="input-label" for="setup-confirm">Confirm Password</label>
+                    <div class="input-with-icons">
+                        <span class="input-icon-left">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </span>
+                        <input type="password" id="setup-confirm" class="input" placeholder="Re-enter master password" autocomplete="off">
+                    </div>
+                    <div id="setup-error" class="error-msg"></div>
+                </div>
+
+                <button id="setup-btn" class="auth-btn" onclick="handleSetup()">
+                    Create Vault
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+
+                <div class="auth-footer">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2 L20 6 V12 C20 17 12 22 12 22 C12 22 4 17 4 12 V6 Z"/>
+                        <polyline points="9 12 11 14 15 10"/>
+                    </svg>
+                    <span>All data is encrypted and stored only on your device.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             LOGIN VIEW — Unlock vault
+             ============================================================ -->
+        <div id="login-view" class="view auth-view">
+            <div id="login-card" class="auth-card">
+                <!-- Padlock Icon -->
+                <div class="auth-lock-icon">
+                    <svg viewBox="0 0 64 80">
+                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="2.5"/>
+                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="2.5"/>
+                        <circle cx="32" cy="52" r="4" stroke-width="2"/>
+                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="2"/>
+                    </svg>
+                </div>
+
+                <h1 class="auth-title">Witty AES</h1>
+                <p class="auth-subtitle">Secure Offline Vault</p>
+
+                <!-- Shield divider -->
+                <div class="auth-divider">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2 L20 6 V12 C20 17 12 22 12 22 C12 22 4 17 4 12 V6 Z"/>
+                    </svg>
+                </div>
+
+                <p class="auth-prompt">Enter your master password to unlock your vault</p>
+
+                <div class="input-group" style="text-align: left;">
+                    <div class="input-with-icons">
+                        <span class="input-icon-left">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </span>
+                        <input type="password" id="login-password" class="input" placeholder="Enter Master Password" autocomplete="off">
+                        <span class="input-icon-right" onclick="togglePasswordVisibility('login-password', this)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div id="login-error" class="error-msg"></div>
+                </div>
+
+
+                <button id="login-btn" class="auth-btn" onclick="handleLogin()">
+                    Unlock Vault
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+
+                <div class="auth-footer">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2 L20 6 V12 C20 17 12 22 12 22 C12 22 4 17 4 12 V6 Z"/>
+                        <polyline points="9 12 11 14 15 10"/>
+                    </svg>
+                    <span>All data is encrypted and stored only on your device.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             DASHBOARD VIEW
+             ============================================================ -->
+        <div id="dashboard-view" class="view dashboard-view">
+            <div class="dashboard-layout">
+                <!-- Mobile sidebar overlay -->
+                <div id="sidebar-overlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+                <!-- SIDEBAR -->
+                <div id="sidebar" class="sidebar">
+                    <div class="sidebar-brand">
+                        <div class="sidebar-brand-icon">
+                            <svg viewBox="0 0 36 42">
+                                <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="2"/>
+                                <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="2"/>
+                                <circle cx="18" cy="28" r="2.5" stroke-width="1.5"/>
+                                <line x1="18" y1="30.5" x2="18" y2="34" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="sidebar-brand-title">Witty AES</div>
+                            <div class="sidebar-brand-sub">Secure Offline Vault</div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-nav">
+                        <div class="nav-item active" data-nav="all" onclick="switchNav(this, 'all')">
+                            <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                            All Passwords
+                        </div>
+                        <div class="nav-item" data-nav="favorites" onclick="switchNav(this, 'favorites')">
+                            <span class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                            Favorites
+                        </div>
+                        <div class="nav-item" data-nav="categories" onclick="switchNav(this, 'categories')">
+                            <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+                            Categories
+                        </div>
+                        <div class="nav-item" data-nav="security" onclick="switchNav(this, 'security')">
+                            <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                            Security
+                        </div>
+                        <div class="nav-item" data-nav="settings" onclick="switchNav(this, 'settings')">
+                            <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+                            Settings
+                        </div>
+                    </div>
+
+                    <div class="sidebar-footer">
+                        <div class="vault-status-card">
+                            <div class="vault-status-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <polyline points="9 12 11 14 15 10"/>
+                                </svg>
+                            </div>
+                            <div class="vault-status-title">Your vault is secure</div>
+                            <div class="vault-status-sub">All data is encrypted and<br>stored only on your device.</div>
+                        </div>
+                        <button class="btn btn-ghost btn-sm sidebar-lock-btn" onclick="handleLock()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            Lock Now
+                        </button>
+                        <div class="sidebar-footer-stamp">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN CONTENT -->
+                <div class="main-panel">
+
+                    <!-- Section 1: ALL PASSWORDS (default) -->
+                    <div id="section-all">
+                        <div class="main-header">
+                            <button class="hamburger-btn" onclick="openSidebar()">
+                                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <div class="main-header-left">
+                                <h1>All Passwords</h1>
+                                <div class="subtitle">Your complete credential vault</div>
+                            </div>
+                            <div class="main-header-right">
+                                <div class="search-bar">
+                                    <span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                                    <input type="text" id="search-input" class="input" placeholder="Search passwords..." oninput="handleSearch()">
+                                </div>
+                                <button class="btn btn-primary add-btn" onclick="openAddModal()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Add Password
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Cards -->
+                        <div class="stats-row">
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Total Passwords</div>
+                                    <div class="stat-number" id="stat-total">0</div>
+                                    <div class="stat-sub">All saved credentials</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon green">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Strong Passwords</div>
+                                    <div class="stat-number" id="stat-strong">0</div>
+                                    <div class="stat-sub" id="stat-strong-pct">0% of total</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon yellow">
+                                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Weak Passwords</div>
+                                    <div class="stat-number" id="stat-weak">0</div>
+                                    <div class="stat-sub">Review recommended</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon purple">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Favorites</div>
+                                    <div class="stat-number" id="stat-favorites">0</div>
+                                    <div class="stat-sub">Starred credentials</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Table -->
+                        <div class="table-wrapper">
+                            <table class="data-table" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Website / App</th>
+                                        <th>Username / Email</th>
+                                        <th>Password</th>
+                                        <th>Category</th>
+                                        <th>Updated</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                </tbody>
+                            </table>
+
+                            <!-- Mobile credential cards (shown on small screens) -->
+                            <div class="mobile-cred-cards" id="mobile-cred-cards"></div>
+
+                            <!-- Empty state -->
+                            <div id="empty-state" class="empty-state hidden">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </div>
+                                <div class="empty-title" id="empty-title">Your vault is empty</div>
+                                <div class="empty-sub" id="empty-sub">Click "+ Add Password" to store your first credential.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: FAVORITES -->
+                    <div id="section-favorites" class="hidden">
+                        <div class="main-header">
+                            <button class="hamburger-btn" onclick="openSidebar()">
+                                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <div class="main-header-left">
+                                <h1>Favorites</h1>
+                                <div class="subtitle">Your starred credentials</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="data-table" id="fav-table">
+                                <thead>
+                                    <tr>
+                                        <th>Website / App</th>
+                                        <th>Username / Email</th>
+                                        <th>Password</th>
+                                        <th>Category</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fav-table-body"></tbody>
+                            </table>
+                            <div class="mobile-cred-cards" id="fav-mobile-cards"></div>
+                            <div id="fav-empty" class="empty-state hidden">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </div>
+                                <div class="empty-title">No favorites yet</div>
+                                <div class="empty-sub">Star a password to add it here for quick access.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: CATEGORIES -->
+                    <div id="section-categories" class="hidden">
+                        <div class="main-header">
+                            <button class="hamburger-btn" onclick="openSidebar()">
+                                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <div class="main-header-left">
+                                <h1>Categories</h1>
+                                <div class="subtitle">Organized by type</div>
+                            </div>
+                        </div>
+                        <div class="categories-section" id="categories-content">
+                            <!-- Category folders rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Section 4: SECURITY AUDIT -->
+                    <div id="section-security" class="hidden">
+                        <div class="main-header">
+                            <button class="hamburger-btn" onclick="openSidebar()">
+                                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <div class="main-header-left">
+                                <h1>Security Audit</h1>
+                                <div class="subtitle">Password strength analysis</div>
+                            </div>
+                        </div>
+                        <div class="security-section" id="security-content">
+                            <!-- Security report rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Section 5: SETTINGS -->
+                    <div id="section-settings" class="hidden settings-section">
+                        <div class="main-header">
+                            <button class="hamburger-btn" onclick="openSidebar()">
+                                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <div class="main-header-left">
+                                <h1>Settings</h1>
+                                <div class="subtitle">Manage your vault preferences</div>
+                            </div>
+                        </div>
+                        <div style="padding: 0 28px 28px;">
+                            <!-- Card A: Change Master Password -->
+                            <div class="settings-card">
+                                <h3>🔑 Change Master Password</h3>
+                                <p>All stored passwords will be re-encrypted with the new key.</p>
+                                <button class="btn btn-primary" onclick="openChangeMasterPasswordModal()">Change Master Password</button>
+                            </div>
+
+                            <!-- Card B: About (Apple-style) -->
+                            <div class="about-card">
+                                <div class="about-logo">
+                                    <svg viewBox="0 0 36 42">
+                                        <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="2"/>
+                                        <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="2"/>
+                                        <circle cx="18" cy="28" r="2.5" stroke-width="1.5"/>
+                                        <line x1="18" y1="30.5" x2="18" y2="34" stroke-width="1.5"/>
+                                    </svg>
+                                </div>
+                                <div class="about-app-name">Witty AES</div>
+                                <div class="about-version">Version 1.0 • Secure Offline Vault</div>
+                                <div class="about-tagline">"Remember exactly one password. We'll remember the rest."</div>
+
+                                <div class="about-features">
+                                    <div class="about-feature">
+                                        <span class="about-feature-icon">🔒</span>
+                                        <div class="about-feature-content">
+                                            <strong>100% Offline</strong>
+                                            <span>No clouds, no servers, no trackers. Your data never leaves your device.</span>
+                                        </div>
+                                    </div>
+                                    <div class="about-feature">
+                                        <span class="about-feature-icon">🛡️</span>
+                                        <div class="about-feature-content">
+                                            <strong>Unbreakable</strong>
+                                            <span>Bank-level security protecting your everyday accounts.</span>
+                                        </div>
+                                    </div>
+                                    <div class="about-feature">
+                                        <span class="about-feature-icon">✨</span>
+                                        <div class="about-feature-content">
+                                            <strong>Clutter-Free</strong>
+                                            <span>Instantly organize, grade, and secure your entire digital life.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="about-trust-badge">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                                    <p>Your passwords are yours alone. Not even the developer can access, read, or recover them. Ever.</p>
+                                </div>
+
+                                <div class="about-developer">
+                                    <div class="about-developer-name">Developer: Md Tariq (WittyArtist)</div>
+                                    <div class="about-developer-contact">
+                                        <a href="mailto:mdtariqbist@gmail.com">mdtariqbist@gmail.com</a>
+                                        <span> — For feedback and support</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Mobile FAB (floating add button) -->
+            <button class="mobile-fab" onclick="openAddModal()" title="Add Password">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         ADD/EDIT CREDENTIAL MODAL
+         ============================================================ -->
+    <div id="cred-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h2 id="cred-modal-title" class="modal-title">Add New Password</h2>
+            <p class="modal-subtitle">Save a new password to your encrypted vault.</p>
+
+            <div class="input-group">
+                <label class="input-label" for="modal-site">Website / Service</label>
+                <input type="text" id="modal-site" class="input" placeholder="e.g., github.com" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="modal-user">Username / Email</label>
+                <input type="text" id="modal-user" class="input" placeholder="e.g., user@example.com" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="modal-pass">Password</label>
+                <div class="password-gen-row">
+                    <input type="text" id="modal-pass" class="input" style="font-family: monospace; font-size: 0.875rem;" placeholder="Enter or generate a password" autocomplete="off">
+                    <button class="btn btn-primary btn-sm" onclick="handleGenerate()">Generate</button>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-label">Length: <span id="slider-val">20</span></span>
+                    <input type="range" id="pass-length" min="8" max="64" value="20" oninput="document.getElementById('slider-val').textContent = this.value">
+                </div>
+            </div>
+
+            <div id="cred-modal-error" class="error-msg" style="margin-bottom: 8px;"></div>
+
+            <div class="modal-actions">
+                <button id="cred-save-btn" class="btn btn-primary" onclick="handleSaveCredential()">
+                    Save Password
+                </button>
+                <button class="btn btn-ghost" onclick="closeModal('cred-modal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         CHANGE MASTER PASSWORD MODAL
+         ============================================================ -->
+    <div id="change-pw-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h2 class="modal-title">🔑 Change Master Password</h2>
+            <p class="modal-subtitle">All stored passwords will be re-encrypted with the new key. This may take a moment.</p>
+
+            <div class="input-group">
+                <label class="input-label" for="change-current">Current Master Password</label>
+                <input type="password" id="change-current" class="input" placeholder="Enter current password" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="change-new">New Master Password</label>
+                <input type="password" id="change-new" class="input" placeholder="Enter new password (min 8 chars)" autocomplete="off">
+                <div id="change-strength" class="strength-indicator"></div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="change-confirm">Confirm New Password</label>
+                <input type="password" id="change-confirm" class="input" placeholder="Re-enter new password" autocomplete="off">
+            </div>
+
+            <div id="change-pw-error" class="error-msg" style="margin-bottom: 8px;"></div>
+
+            <div class="modal-actions">
+                <button id="change-pw-btn" class="btn btn-primary" onclick="handleChangeMasterPassword()">
+                    🔄 Change Password
+                </button>
+                <button class="btn btn-ghost" onclick="closeModal('change-pw-modal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ============================================================
+         JAVASCRIPT — Application Logic
+         ============================================================ -->
+    <script>
+        // ==================================================================
+        // State
+        // ==================================================================
+        let credentials = [];
+        let selectedCredId = null;
+        let editMode = false;
+        let editCredId = null;
+        let sortOrder = 'recent';
+        let failedAttempts = 0;
+        let activeCategory = 'all';
+        let revealedPasswords = {}; // track which row passwords are shown
+
+        // ==================================================================
+        // Category Heuristics
+        // ==================================================================
+        const categoryRules = [
+            { pattern: /facebook|instagram|twitter|x\.com|tiktok|snapchat|reddit|linkedin|pinterest|tumblr|discord|whatsapp|telegram|mastodon|threads/i, category: 'Social' },
+            { pattern: /bank|hdfc|icici|sbi|chase|paypal|razorpay|stripe|gpay|paytm|phonepe|wise|revolut|venmo|capital\s*one|wells\s*fargo|citi|barclays|hsbc/i, category: 'Banking' },
+            { pattern: /github|gitlab|bitbucket|jira|confluence|slack|notion|figma|vercel|netlify|heroku|aws|azure|gcp|docker|trello|asana|linear|stackoverflow|codepen/i, category: 'Work' },
+            { pattern: /amazon|flipkart|ebay|walmart|shopify|myntra|ajio|zara|nike|adidas|etsy|aliexpress|wish|target|bestbuy|swiggy|zomato/i, category: 'Shopping' },
+            { pattern: /gmail|outlook|hotmail|yahoo|proton|zoho|mail|icloud|fastmail|tutanota/i, category: 'Email' },
+        ];
+
+        function guessCategory(website) {
+            const w = website.toLowerCase();
+            for (const rule of categoryRules) {
+                if (rule.pattern.test(w)) return rule.category;
+            }
+            return 'Other';
+        }
+
+        function getCategoryClass(cat) {
+            const map = {
+                'Social': 'cat-social',
+                'Banking': 'cat-banking',
+                'Work': 'cat-work',
+                'Shopping': 'cat-shopping',
+                'Email': 'cat-email',
+                'Other': 'cat-other',
+            };
+            return map[cat] || 'cat-other';
+        }
+
+        // ==================================================================
+        // Initialization
+        // ==================================================================
+        window.addEventListener('pywebviewready', async () => {
+            const result = await window.pywebview.api.check_vault();
+            if (result.exists) {
+                showView('login-view');
+                document.getElementById('login-password').focus();
+            } else {
+                showView('setup-view');
+                document.getElementById('setup-password').focus();
+            }
+        });
+
+        // ==================================================================
+        // View Management
+        // ==================================================================
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // ==================================================================
+        // Password Visibility Toggle
+        // ==================================================================
+        function togglePasswordVisibility(inputId, iconEl) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            iconEl.innerHTML = isPassword
+                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        }
+
+        // ==================================================================
+        // Password Strength Checker
+        // ==================================================================
+        function checkStrength(password) {
+            if (!password) return { level: '', text: '', cssClass: '' };
+            const len = password.length;
+            if (len < 8) return { level: 'weak', text: '⚠ Too short (min 8 characters)', cssClass: 'strength-weak' };
+
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            const variety = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
+
+            if (len >= 12 && variety >= 4) return { level: 'strong', text: '🟢 Strong password', cssClass: 'strength-strong' };
+            if (len >= 8 && variety >= 3) return { level: 'fair', text: '🟡 Fair — add special chars & length', cssClass: 'strength-fair' };
+            return { level: 'weak', text: '🟡 Weak — add variety (upper, lower, digits, symbols)', cssClass: 'strength-fair' };
+        }
+
+        document.getElementById('setup-password').addEventListener('input', function() {
+            const s = checkStrength(this.value);
+            const el = document.getElementById('setup-strength');
+            el.textContent = s.text;
+            el.className = 'strength-indicator ' + s.cssClass;
+        });
+
+        document.getElementById('change-new').addEventListener('input', function() {
+            const s = checkStrength(this.value);
+            const el = document.getElementById('change-strength');
+            el.textContent = s.text;
+            el.className = 'strength-indicator ' + s.cssClass;
+        });
+
+        document.getElementById('setup-confirm').addEventListener('keydown', e => { if (e.key === 'Enter') handleSetup(); });
+        document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+        // ==================================================================
+        // AUTH HANDLERS
+        // ==================================================================
+        async function handleSetup() {
+            const pw = document.getElementById('setup-password').value;
+            const confirm = document.getElementById('setup-confirm').value;
+            const errorEl = document.getElementById('setup-error');
+
+            if (pw.length < 8) {
+                errorEl.textContent = '⚠ Password must be at least 8 characters.';
+                return;
+            }
+            if (pw !== confirm) {
+                errorEl.textContent = '✕ Passwords do not match.';
+                return;
+            }
+
+            errorEl.textContent = '';
+            const btn = document.getElementById('setup-btn');
+            btn.innerHTML = '<span class="spinner"></span>&nbsp; Creating...';
+            btn.disabled = true;
+
+            const result = await window.pywebview.api.setup_vault(pw);
+            if (result.success) {
+                showToast('Vault created successfully!', 'success');
+                await loadDashboard();
+                showView('dashboard-view');
+            } else {
+                errorEl.textContent = result.error || 'Failed to create vault.';
+                btn.innerHTML = 'Create Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+                btn.disabled = false;
+            }
+        }
+
+        async function handleLogin() {
+            const pw = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+            const card = document.getElementById('login-card');
+
+            if (!pw) {
+                errorEl.textContent = '⚠ Please enter your master password.';
+                return;
+            }
+
+            const btn = document.getElementById('login-btn');
+            btn.innerHTML = '<span class="spinner"></span>&nbsp; Unlocking...';
+            btn.disabled = true;
+
+            const result = await window.pywebview.api.login(pw);
+            if (result.success) {
+                failedAttempts = 0;
+                await loadDashboard();
+                showView('dashboard-view');
+            } else {
+                failedAttempts++;
+                const remaining = Math.max(0, 5 - failedAttempts);
+                errorEl.textContent = `✕ Incorrect password. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.`;
+                document.getElementById('login-password').value = '';
+
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 500);
+
+                if (failedAttempts >= 5) {
+                    errorEl.textContent = '🔒 Too many failed attempts. Closing for security.';
+                    setTimeout(() => window.pywebview.api.close_app(), 2000);
+                }
+            }
+
+            btn.innerHTML = 'Unlock Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+            btn.disabled = false;
+        }
+
+        // ==================================================================
+        // DASHBOARD
+        // ==================================================================
+        async function loadDashboard() {
+            const result = await window.pywebview.api.get_credentials();
+            credentials = result.credentials || [];
+            updateStats();
+            renderTable();
+        }
+
+        function updateStats() {
+            const total = credentials.length;
+            const strong = credentials.filter(c => (c.password_length || 0) >= 16).length;
+            const weak = credentials.filter(c => (c.password_length || 0) < 10).length;
+            const favs = credentials.filter(c => c.is_favorite === 1).length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-strong').textContent = strong;
+            document.getElementById('stat-weak').textContent = weak;
+            document.getElementById('stat-favorites').textContent = favs;
+
+            const pct = total > 0 ? Math.round((strong / total) * 100) : 0;
+            document.getElementById('stat-strong-pct').textContent = `${pct}% of total`;
+        }
+
+        function getPasswordStrength(length) {
+            if (length >= 16) return { label: 'Strong', class: 'strength-strong-badge' };
+            if (length >= 10) return { label: 'Medium', class: 'strength-medium-badge' };
+            return { label: 'Weak', class: 'strength-weak-badge' };
+        }
+
+        function renderTable(searchFilter = '') {
+            let items = [...credentials];
+
+            // Search filter
+            if (searchFilter) {
+                const q = searchFilter.toLowerCase();
+                items = items.filter(c =>
+                    c.website.toLowerCase().includes(q) ||
+                    c.username.toLowerCase().includes(q)
+                );
+            }
+
+            // Sort by most recent
+            items.sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''));
+
+            const tbody = document.getElementById('table-body');
+            const mobileCards = document.getElementById('mobile-cred-cards');
+            const emptyState = document.getElementById('empty-state');
+            const table = document.getElementById('data-table');
+
+            if (items.length === 0) {
+                tbody.innerHTML = '';
+                mobileCards.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                table.style.display = 'none';
+                mobileCards.style.display = 'none';
+
+                if (searchFilter) {
+                    document.getElementById('empty-title').textContent = 'No matching credentials';
+                    document.getElementById('empty-sub').textContent = 'Try a different search term.';
+                } else {
+                    document.getElementById('empty-title').textContent = 'Your vault is empty';
+                    document.getElementById('empty-sub').textContent = 'Click "+ Add Password" to store your first credential.';
+                }
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            table.style.display = '';
+            mobileCards.style.display = '';
+
+            // Desktop table rows
+            tbody.innerHTML = items.map(c => {
+                const colorIdx = hashCode(c.website) % 8;
+                const initial = c.website.charAt(0).toUpperCase();
+                const catClass = getCategoryClass(c.category);
+                const revealed = revealedPasswords[c.id];
+                const favClass = c.is_favorite ? 'active' : '';
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="table-website">
+                                <div class="table-favicon avatar-${colorIdx}">${initial}</div>
+                                <div>
+                                    <div class="table-site-name">${escapeHtml(c.website)}</div>
+                                    <div class="table-site-url">${escapeHtml(c.website.toLowerCase().replace(/\s+/g, '') + '.com')}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="table-username">${escapeHtml(c.username)}</td>
+                        <td>
+                            <div class="table-password">
+                                <span class="table-pw-dots" id="pw-display-${c.id}">${revealed || '••••••••••'}</span>
+                                <button class="pw-toggle-btn" onclick="toggleTablePassword(${c.id})" title="Show/Hide">
+                                    <svg viewBox="0 0 24 24" id="pw-icon-${c.id}">
+                                        ${revealedPasswords[c.id] 
+                                            ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+                                            : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+                                        }
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                        <td><span class="cat-pill ${catClass}">${escapeHtml(c.category)}</span></td>
+                        <td class="table-date">${formatDate(c.updated_at)}</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn-icon fav-btn ${favClass}" title="Favorite" onclick="toggleFavorite(${c.id}, ${c.is_favorite})">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </button>
+                                <button class="btn-icon edit-btn" title="Edit" onclick="openEditModal(${c.id})">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="btn-icon delete-btn" title="Delete" onclick="handleDelete(${c.id})">
+                                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+            }).join('');
+
+            // Mobile cards
+            mobileCards.innerHTML = items.map(c => {
+                const colorIdx = hashCode(c.website) % 8;
+                const initial = c.website.charAt(0).toUpperCase();
+                const catClass = getCategoryClass(c.category);
+
+                return `
+                    <div class="mobile-cred-card">
+                        <div class="mobile-cred-header">
+                            <div class="table-favicon avatar-${colorIdx}" style="width:36px;height:36px;font-size:0.9rem;">${initial}</div>
+                            <div style="flex:1;min-width:0;">
+                                <div class="table-site-name" style="font-size:0.875rem;">${escapeHtml(c.website)}</div>
+                                <div class="table-site-url">${escapeHtml(c.username)}</div>
+                            </div>
+                            <span class="cat-pill ${catClass}" style="font-size:0.65rem;">${escapeHtml(c.category)}</span>
+                        </div>
+                        <div class="mobile-cred-body">
+                            <div class="mobile-cred-row">
+                                <span class="mobile-cred-label">Password</span>
+                                <div class="table-password">
+                                    <span class="table-pw-dots" id="mpw-display-${c.id}">${revealedPasswords[c.id] || '••••••••••'}</span>
+                                    <button class="pw-toggle-btn" onclick="toggleTablePassword(${c.id}, true)">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobile-cred-actions">
+                            <button class="btn-icon" onclick="copyPassword(${c.id})" title="Copy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                            <button class="btn-icon edit-btn" onclick="openEditModal(${c.id})" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                            <button class="btn-icon delete-btn" onclick="handleDelete(${c.id})" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        async function toggleFavorite(id, currentStatus) {
+            const newStatus = currentStatus === 1 ? 0 : 1;
+            const result = await window.pywebview.api.toggle_favorite(id, newStatus);
+            if (result.success) {
+                // Update local cache and re-render
+                const cred = credentials.find(c => c.id === id);
+                if (cred) cred.is_favorite = newStatus;
+                renderTable(document.getElementById('search-input').value);
+                if (document.getElementById('section-favorites').classList.contains('active')) {
+                    loadFavorites();
+                }
+            }
+        }
+
+        async function loadFavorites() {
+            const result = await window.pywebview.api.get_favorites();
+            const favs = result.credentials || [];
+            
+            const tbody = document.getElementById('fav-table-body');
+            const mobileCards = document.getElementById('fav-mobile-cards');
+            const emptyState = document.getElementById('fav-empty');
+            const table = document.getElementById('fav-table');
+
+            if (favs.length === 0) {
+                tbody.innerHTML = '';
+                mobileCards.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                table.style.display = 'none';
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            table.style.display = '';
+
+            tbody.innerHTML = favs.map(c => {
+                const colorIdx = hashCode(c.website) % 8;
+                const initial = c.website.charAt(0).toUpperCase();
+                const catClass = getCategoryClass(c.category);
+                const revealed = revealedPasswords[c.id];
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="table-website">
+                                <div class="table-favicon avatar-${colorIdx}">${initial}</div>
+                                <div>
+                                    <div class="table-site-name">${escapeHtml(c.website)}</div>
+                                    <div class="table-site-url">${escapeHtml(c.website.toLowerCase().replace(/\s+/g, '') + '.com')}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="table-username">${escapeHtml(c.username)}</td>
+                        <td>
+                            <div class="table-password">
+                                <span class="table-pw-dots" id="pw-display-${c.id}">${revealed || '••••••••••'}</span>
+                                <button class="pw-toggle-btn" onclick="toggleTablePassword(${c.id})" title="Show/Hide">
+                                    <svg viewBox="0 0 24 24" id="pw-icon-${c.id}">
+                                        ${revealedPasswords[c.id] 
+                                            ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+                                            : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+                                        }
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                        <td><span class="cat-pill ${catClass}">${escapeHtml(c.category)}</span></td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn-icon fav-btn active" title="Remove Favorite" onclick="toggleFavorite(${c.id}, 1); loadFavorites();">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </button>
+                                <button class="btn-icon edit-btn" title="Edit" onclick="openEditModal(${c.id})">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        async function loadCategories() {
+            const result = await window.pywebview.api.get_categories_summary();
+            const categories = result.categories || {};
+            const container = document.getElementById('categories-content');
+            
+            const icons = {
+                'Social': '💬', 'Finance': '🏦', 'Work': '💼', 'Shopping': '🛍️',
+                'Email': '📧', 'Entertainment': '🎮', 'Education': '🎓', 'Other': '📦'
+            };
+
+            let html = '<div class="category-grid">';
+            for (const [cat, count] of Object.entries(categories)) {
+                const icon = icons[cat] || icons['Other'];
+                const cssClass = getCategoryClass(cat).replace('cat-', 'cat-icon-');
+                html += `
+                    <div class="category-folder" onclick="switchNav(document.querySelector('[data-nav=all]'), 'all'); filterCategory(null, '${cat.toLowerCase()}');">
+                        <div class="category-folder-icon ${cssClass}">${icon}</div>
+                        <div class="category-folder-name">${escapeHtml(cat)}</div>
+                        <div class="category-folder-count">${count} password${count !== 1 ? 's' : ''}</div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function loadSecurity() {
+            const result = await window.pywebview.api.get_security_report();
+            if (!result.success) return;
+
+            const container = document.getElementById('security-content');
+            const total = result.total || 0;
+            const strong = result.strong ? result.strong.length : 0;
+            const good = result.good ? result.good.length : 0;
+            const weak = result.weak ? result.weak.length : 0;
+
+            let html = `
+                <div class="security-summary">
+                    <div class="security-summary-card strong">
+                        <div class="security-count">${strong}</div>
+                        <div class="security-label">Strong</div>
+                    </div>
+                    <div class="security-summary-card good">
+                        <div class="security-count">${good}</div>
+                        <div class="security-label">Good</div>
+                    </div>
+                    <div class="security-summary-card weak">
+                        <div class="security-count">${weak}</div>
+                        <div class="security-label">Weak</div>
+                    </div>
+                </div>
+            `;
+
+            // Helper to render a group
+            const renderGroup = (title, items, typeClass) => {
+                if (!items || items.length === 0) return '';
+                let groupHtml = `
+                    <div class="security-group">
+                        <div class="security-group-header ${typeClass}">
+                            <div class="security-group-dot ${typeClass}"></div>
+                            <div class="security-group-title">${title}</div>
+                            <div class="security-group-count">${items.length} items</div>
+                        </div>
+                `;
+                items.forEach(c => {
+                    groupHtml += `
+                        <div class="security-item">
+                            <div class="security-item-info">
+                                <div class="security-item-site">${escapeHtml(c.website)}</div>
+                                <div class="security-item-user">${escapeHtml(c.username)}</div>
+                            </div>
+                            <div class="security-item-meta">
+                                Length: ${c.password_length}<br>
+                                <button class="btn-icon edit-btn" style="width:24px;height:24px;margin-top:4px;" title="Fix" onclick="openEditModal(${c.id})">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                groupHtml += `</div>`;
+                return groupHtml;
+            };
+
+            html += renderGroup('Weak Passwords (Needs Action)', result.weak, 'weak');
+            html += renderGroup('Good Passwords', result.good, 'good');
+            html += renderGroup('Strong Passwords', result.strong, 'strong');
+
+            container.innerHTML = html;
+        }
+
+        // Toggle password visibility in table row
+        async function toggleTablePassword(id, isMobile = false) {
+            const prefix = isMobile ? 'mpw-display-' : 'pw-display-';
+            const display = document.getElementById(prefix + id);
+
+            if (revealedPasswords[id]) {
+                // Hide
+                delete revealedPasswords[id];
+                display.textContent = '••••••••••';
+            } else {
+                // Show — decrypt from backend
+                const result = await window.pywebview.api.show_password(id);
+                if (result.success) {
+                    revealedPasswords[id] = result.password;
+                    display.textContent = result.password;
+
+                    // Also update the other view if it exists
+                    const otherPrefix = isMobile ? 'pw-display-' : 'mpw-display-';
+                    const otherDisplay = document.getElementById(otherPrefix + id);
+                    if (otherDisplay) otherDisplay.textContent = result.password;
+
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        if (revealedPasswords[id]) {
+                            delete revealedPasswords[id];
+                            display.textContent = '••••••••••';
+                            if (otherDisplay) otherDisplay.textContent = '••••••••••';
+                        }
+                    }, 10000);
+                } else {
+                    showToast('Failed to decrypt password', 'error');
+                }
+            }
+        }
+
+        async function copyPassword(id) {
+            const result = await window.pywebview.api.copy_password(id);
+            if (result.success) {
+                showToast('Password copied! Auto-clears in 15s.', 'success');
+            } else {
+                showToast('Failed to copy password', 'error');
+            }
+        }
+
+        async function copyText(text) {
+            await window.pywebview.api.copy_to_clipboard(text);
+            showToast('Copied to clipboard!', 'success');
+        }
+
+        // ==================================================================
+        // SEARCH, SORT, FILTER
+        // ==================================================================
+        function handleSearch() {
+            renderTable(document.getElementById('search-input').value);
+        }
+
+        function toggleSort() {
+            sortOrder = sortOrder === 'recent' ? 'alpha' : 'recent';
+            renderTable(document.getElementById('search-input').value);
+        }
+
+        function filterCategory(el, category) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
+            activeCategory = category;
+            renderTable(document.getElementById('search-input').value);
+        }
+
+        // ==================================================================
+        // NAV
+        // ==================================================================
+        function switchNav(el, section) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (el) el.classList.add('active');
+
+            // Hide all sections
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+
+            // Show active section
+            document.getElementById('section-' + section).classList.remove('hidden');
+
+            if (section === 'all') loadDashboard();
+            if (section === 'favorites') loadFavorites();
+            if (section === 'categories') loadCategories();
+            if (section === 'security') loadSecurity();
+
+            closeSidebar();
+        }
+
+        // ==================================================================
+        // SIDEBAR MOBILE
+        // ==================================================================
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebar-overlay').classList.add('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar-overlay').classList.remove('active');
+        }
+
+        // ==================================================================
+        // CREDENTIAL MODAL (Add/Edit)
+        // ==================================================================
+        function openAddModal() {
+            editMode = false;
+            editCredId = null;
+            document.getElementById('cred-modal-title').textContent = 'Add New Password';
+            document.getElementById('cred-save-btn').textContent = 'Save Password';
+            document.getElementById('modal-site').value = '';
+            document.getElementById('modal-user').value = '';
+            document.getElementById('modal-pass').value = '';
+            document.getElementById('cred-modal-error').textContent = '';
+            openModal('cred-modal');
+            document.getElementById('modal-site').focus();
+        }
+
+        async function openEditModal(id) {
+            editMode = true;
+            editCredId = id;
+            document.getElementById('cred-modal-title').textContent = 'Edit Credential';
+            document.getElementById('cred-save-btn').textContent = 'Save Changes';
+            document.getElementById('cred-modal-error').textContent = '';
+
+            const result = await window.pywebview.api.get_credential_detail(id);
+            if (result.success) {
+                const c = result.credential;
+                document.getElementById('modal-site').value = c.website;
+                document.getElementById('modal-user').value = c.username;
+                const pwResult = await window.pywebview.api.show_password(id);
+                document.getElementById('modal-pass').value = pwResult.success ? pwResult.password : '';
+            }
+            openModal('cred-modal');
+        }
+
+        async function handleSaveCredential() {
+            const site = document.getElementById('modal-site').value.trim();
+            const user = document.getElementById('modal-user').value.trim();
+            const pass = document.getElementById('modal-pass').value.trim();
+            const errorEl = document.getElementById('cred-modal-error');
+
+            if (!site) { errorEl.textContent = '⚠ Please enter a website or service name.'; return; }
+            if (!user) { errorEl.textContent = '⚠ Please enter a username or email.'; return; }
+            if (!pass) { errorEl.textContent = '⚠ Please enter or generate a password.'; return; }
+
+            errorEl.textContent = '';
+
+            let result;
+            if (editMode) {
+                result = await window.pywebview.api.edit_credential(editCredId, site, user, pass);
+            } else {
+                result = await window.pywebview.api.add_credential(site, user, pass);
+            }
+
+            if (result.success) {
+                closeModal('cred-modal');
+                showToast(editMode ? 'Credential updated!' : 'Credential saved!', 'success');
+                await loadDashboard();
+            } else {
+                errorEl.textContent = result.error || 'Failed to save.';
+            }
+        }
+
+        async function handleGenerate() {
+            const length = parseInt(document.getElementById('pass-length').value);
+            const result = await window.pywebview.api.generate_password(length);
+            if (result.success) {
+                document.getElementById('modal-pass').value = result.password;
+            }
+        }
+
+        // ==================================================================
+        // DELETE
+        // ==================================================================
+        async function handleDelete(id) {
+            const cred = credentials.find(c => c.id === id);
+            if (!cred) return;
+
+            const confirmed = confirm(`Delete credential for "${cred.website}"?\n\nThis action cannot be undone.`);
+            if (!confirmed) return;
+
+            const result = await window.pywebview.api.delete_credential(id);
+            if (result.success) {
+                showToast('Credential deleted.', 'success');
+                delete revealedPasswords[id];
+                await loadDashboard();
+            } else {
+                showToast('Failed to delete.', 'error');
+            }
+        }
+
+        // ==================================================================
+        // CHANGE MASTER PASSWORD
+        // ==================================================================
+        function openChangeMasterPasswordModal() {
+            document.getElementById('change-current').value = '';
+            document.getElementById('change-new').value = '';
+            document.getElementById('change-confirm').value = '';
+            document.getElementById('change-pw-error').textContent = '';
+            document.getElementById('change-strength').textContent = '';
+            document.getElementById('change-strength').className = 'strength-indicator';
+            openModal('change-pw-modal');
+            document.getElementById('change-current').focus();
+        }
+
+        async function handleChangeMasterPassword() {
+            const current = document.getElementById('change-current').value;
+            const newPw = document.getElementById('change-new').value;
+            const confirmPw = document.getElementById('change-confirm').value;
+            const errorEl = document.getElementById('change-pw-error');
+            const btn = document.getElementById('change-pw-btn');
+
+            if (!current) { errorEl.textContent = '⚠ Enter your current password.'; return; }
+            if (newPw.length < 8) { errorEl.textContent = '⚠ New password must be at least 8 characters.'; return; }
+            if (newPw !== confirmPw) { errorEl.textContent = '✕ New passwords do not match.'; return; }
+            if (current === newPw) { errorEl.textContent = '⚠ New password must be different.'; return; }
+
+            errorEl.textContent = '';
+            btn.innerHTML = '<span class="spinner"></span>&nbsp; Re-encrypting...';
+            btn.disabled = true;
+
+            const result = await window.pywebview.api.change_master_password(current, newPw);
+
+            if (result.success) {
+                closeModal('change-pw-modal');
+                showToast('Master password changed! All credentials re-encrypted.', 'success');
+            } else {
+                errorEl.textContent = result.error || 'Failed to change password.';
+            }
+
+            btn.innerHTML = '🔄&nbsp; Change Password';
+            btn.disabled = false;
+        }
+
+        // ==================================================================
+        // LOCK
+        // ==================================================================
+        async function handleLock() {
+            await window.pywebview.api.lock_vault();
+            selectedCredId = null;
+            credentials = [];
+            revealedPasswords = {};
+            showView('login-view');
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-error').textContent = '';
+            document.getElementById('login-password').focus();
+        }
+
+        // ==================================================================
+        // MODALS
+        // ==================================================================
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+                closeSidebar();
+            }
+        });
+
+        // ==================================================================
+        // TOASTS
+        // ==================================================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `${type === 'success' ? '✓' : '✕'} ${escapeHtml(message)}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ==================================================================
+        // UTILITIES
+        // ==================================================================
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function escapeAttr(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '—';
+            try {
+                const d = new Date(dateStr);
+                return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+            } catch {
+                return dateStr.substring(0, 10);
+            }
+        }
+    </script>
+</body>
+</html>
