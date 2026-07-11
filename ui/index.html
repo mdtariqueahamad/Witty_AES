@@ -8,6 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        // FOUC Prevention & Initial Theme Setup
+        (function() {
+            const savedTheme = localStorage.getItem('witty-aes-theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <style>
         /* ================================================================
            WITTY AES — Warm Cream Light Theme Design System
@@ -72,6 +83,287 @@
 
             /* Sidebar */
             --sidebar-width: 250px;
+
+            /* Extended UI Elements (Light Defaults) */
+            --bg-vault-status: #F0FAF0;
+            --border-vault-status: #D1E7D1;
+            --text-vault-status: #166534;
+            --border-light: #E2E0DA; 
+            --bg-glass-light: rgba(255, 255, 255, 0.5); 
+            --bg-th: rgba(244, 241, 235, 0.4);
+            --border-divider: #ECEAE4;
+            --border-row: #F0EEE8;
+            --bg-group: rgba(244, 241, 235, 0.5);
+            --bg-hover-soft: rgba(26, 54, 93, 0.04);
+            --bg-hover-row: rgba(26, 54, 93, 0.02);
+        }
+
+        /* ================================================================
+           CYBER DARK THEME OVERRIDES — Deep Abyssal Glassmorphism
+           ================================================================ */
+        [data-theme="dark"] {
+            /* Background & Surface — Abyssal Navy */
+            --bg-base: #050A14;
+            --bg-card: rgba(15, 25, 45, 0.4);
+            --bg-sidebar: rgba(10, 18, 35, 0.6);
+            --bg-input: rgba(255, 255, 255, 0.06);
+
+            /* Brand Colors — Electric Blue */
+            --navy: #8B9BB4;
+            --navy-light: #CBD5E1;
+            --navy-dark: #64748B;
+            --navy-hover: #A8B8D0;
+
+            /* Text — High Contrast */
+            --text-primary: #FFFFFF;
+            --text-secondary: #8B9BB4;
+            --text-muted: #5A6A80;
+            --text-light: #3D4F66;
+
+            /* Accents — Electric Blue Glow */
+            --accent-blue: #4364F7;
+            --accent-green: #34D399;
+            --accent-yellow: #FBBF24;
+            --accent-red: #F87171;
+            --accent-purple: #A78BFA;
+
+            /* Category — Dim Neon Tints */
+            --cat-social-bg: rgba(67, 100, 247, 0.12);
+            --cat-social-text: #93C5FD;
+            --cat-work-bg: rgba(167, 139, 250, 0.12);
+            --cat-work-text: #C4B5FD;
+            --cat-banking-bg: rgba(52, 211, 153, 0.12);
+            --cat-banking-text: #6EE7B7;
+            --cat-shopping-bg: rgba(251, 191, 36, 0.12);
+            --cat-shopping-text: #FDE68A;
+            --cat-email-bg: rgba(248, 113, 113, 0.12);
+            --cat-email-text: #FCA5A5;
+            --cat-other-bg: rgba(139, 155, 180, 0.1);
+            --cat-other-text: #8B9BB4;
+
+            /* Shadows — Deep Abyss */
+            --shadow-card: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-card-hover: inset 0 1px 2px rgba(255, 255, 255, 0.12), 0 16px 48px rgba(0, 0, 0, 0.6);
+            --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+            --shadow-btn: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+            /* Extended UI Elements */
+            --bg-vault-status: rgba(52, 211, 153, 0.08);
+            --border-vault-status: rgba(52, 211, 153, 0.15);
+            --text-vault-status: #34D399;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --bg-glass-light: rgba(255, 255, 255, 0.04);
+            --bg-th: rgba(255, 255, 255, 0.03);
+            --border-divider: rgba(255, 255, 255, 0.06);
+            --border-row: rgba(255, 255, 255, 0.04);
+            --bg-group: rgba(255, 255, 255, 0.04);
+            --bg-hover-soft: rgba(255, 255, 255, 0.06);
+            --bg-hover-row: rgba(255, 255, 255, 0.03);
+        }
+
+        /* ================================================================
+           DARK THEME — Component-Level Overrides
+           ================================================================ */
+
+        /* Hide light-mode textures in dark */
+        [data-theme="dark"] .bg-texture-layer,
+        [data-theme="dark"] .bg-watermarks {
+            display: none !important;
+        }
+
+        /* Auth Card — Deep Glassmorphism */
+        [data-theme="dark"] .auth-card {
+            background: rgba(15, 25, 45, 0.4);
+            backdrop-filter: blur(32px) saturate(150%);
+            -webkit-backdrop-filter: blur(32px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Lock Icon — Neon Blue Gradient in Dark */
+        [data-theme="dark"] .auth-lock-icon {
+            background: rgba(67, 100, 247, 0.08);
+            box-shadow: 0 8px 32px rgba(67, 100, 247, 0.15);
+            border: 1px solid rgba(67, 100, 247, 0.15);
+        }
+        [data-theme="dark"] .auth-lock-icon svg {
+            stroke: url(#dark-icon-gradient);
+        }
+
+        /* Auth Button — Electric Blue Gradient Glow */
+        [data-theme="dark"] .auth-btn {
+            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+            box-shadow: 0 8px 24px rgba(67, 100, 247, 0.3);
+            color: #FFFFFF;
+            border: none;
+        }
+        [data-theme="dark"] .auth-btn:hover {
+            background: linear-gradient(135deg, #0047B8, #3A58E0, #5EA0F0);
+            box-shadow: 0 12px 32px rgba(67, 100, 247, 0.45);
+        }
+
+        /* Inputs — Dark mode styling */
+        [data-theme="dark"] .input {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+        [data-theme="dark"] .input:focus {
+            border-color: rgba(67, 100, 247, 0.5);
+            box-shadow: var(--shadow-inset), 0 0 0 3px rgba(67, 100, 247, 0.15);
+        }
+        [data-theme="dark"] .input::placeholder {
+            color: #5A6A80;
+        }
+
+        /* Primary Button — Dark */
+        [data-theme="dark"] .btn-primary {
+            background: linear-gradient(135deg, #0052D4, #4364F7);
+            box-shadow: 0 4px 16px rgba(67, 100, 247, 0.25);
+        }
+        [data-theme="dark"] .btn-primary:hover {
+            background: linear-gradient(135deg, #0047B8, #3A58E0);
+            box-shadow: 0 6px 20px rgba(67, 100, 247, 0.35);
+        }
+
+        /* Ghost Button — Dark */
+        [data-theme="dark"] .btn-ghost {
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #8B9BB4;
+        }
+        [data-theme="dark"] .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+
+        /* Icon Buttons — Dark */
+        [data-theme="dark"] .btn-icon:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Sidebar — Dark */
+        [data-theme="dark"] .sidebar {
+            background: rgba(10, 18, 35, 0.6);
+            backdrop-filter: blur(32px) saturate(150%);
+            -webkit-backdrop-filter: blur(32px) saturate(150%);
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.04), 4px 0 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Nav Items — Dark */
+        [data-theme="dark"] .sidebar-nav-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        [data-theme="dark"] .sidebar-nav-item.active {
+            background: rgba(67, 100, 247, 0.12);
+            color: #FFFFFF;
+        }
+
+        /* Stat Cards — Dark */
+        [data-theme="dark"] .stat-card {
+            background: rgba(15, 25, 45, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Settings / About / Modal Cards — Dark Glass */
+        [data-theme="dark"] .settings-card,
+        [data-theme="dark"] .about-card,
+        [data-theme="dark"] .sec-dashboard-card,
+        [data-theme="dark"] .data-table {
+            background: rgba(15, 25, 45, 0.4);
+            backdrop-filter: blur(32px) saturate(150%);
+            -webkit-backdrop-filter: blur(32px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] .modal-card {
+            background: rgba(15, 25, 45, 0.7);
+            backdrop-filter: blur(32px) saturate(150%);
+            -webkit-backdrop-filter: blur(32px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 24px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Filter / Chip — Dark */
+        [data-theme="dark"] .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        [data-theme="dark"] .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        [data-theme="dark"] .chip.active {
+            background: rgba(67, 100, 247, 0.15);
+            border-color: rgba(67, 100, 247, 0.3);
+            color: #93C5FD;
+        }
+
+        /* Toast — Dark */
+        [data-theme="dark"] .toast-success {
+            background: linear-gradient(135deg, #0052D4, #4364F7);
+            color: #FFFFFF;
+        }
+
+        /* Stat Icons — Dark subdued backgrounds */
+        [data-theme="dark"] .stat-icon.blue { background: rgba(67, 100, 247, 0.12); }
+        [data-theme="dark"] .stat-icon.green { background: rgba(52, 211, 153, 0.12); }
+        [data-theme="dark"] .stat-icon.yellow { background: rgba(251, 191, 36, 0.12); }
+        [data-theme="dark"] .stat-icon.purple { background: rgba(167, 139, 250, 0.12); }
+
+        /* Security Group Headers — Dark */
+        [data-theme="dark"] .security-group-header.strong { background: rgba(52, 211, 153, 0.08); }
+        [data-theme="dark"] .security-group-header.good { background: rgba(251, 191, 36, 0.08); }
+        [data-theme="dark"] .security-group-header.weak { background: rgba(248, 113, 113, 0.08); }
+
+        /* Scrollbar — Dark */
+        [data-theme="dark"] .table-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); }
+
+        /* Mobile credential card — Dark */
+        [data-theme="dark"] .mobile-credential-card {
+            background: rgba(15, 25, 45, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Category folders — Dark */
+        [data-theme="dark"] .category-folder {
+            background: rgba(15, 25, 45, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        [data-theme="dark"] .category-folder:hover {
+            background: rgba(15, 25, 45, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Text gradient — Dark mode use electric blue */
+        [data-theme="dark"] .text-gradient {
+            -webkit-text-fill-color: #6FB1FC;
+        }
+
+        /* Auth divider — Dark */
+        [data-theme="dark"] .auth-divider svg {
+            stroke: #4364F7;
+            opacity: 0.6;
+        }
+
+        /* Footer — Dark */
+        [data-theme="dark"] .footer-text {
+            color: #3D4F66;
+        }
+
+        /* SVG icon gradient — Dark uses electric blue */
+        [data-theme="dark"] .sidebar-brand-icon svg {
+            stroke: #6FB1FC;
+        }
+
+        /* Smooth Theme Transitions */
+        body, .sidebar, .main-panel, .auth-card, .settings-card, .category-folder, .stat-card, .sec-dashboard-card, .input, .btn, .chip, .data-table, .data-table th, .data-table td, .modal-card, .filter-btn, .vault-status-card {
+            transition: background-color 0.4s ease, background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         /* --- Reset --- */
@@ -230,6 +522,7 @@
         .text-gradient {
             background: none;
             -webkit-background-clip: unset;
+            background-clip: unset;
             -webkit-text-fill-color: var(--navy);
             font-weight: 800;
             filter: none;
@@ -279,20 +572,21 @@
 
         .btn-ghost {
             background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid #E2E0DA;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+            box-shadow: none;
         }
         .btn-ghost:hover {
             background: rgba(255, 255, 255, 0.5);
             color: var(--text-primary);
-            border-color: #D1CFC9;
+            border-color: var(--border-hover);
         }
 
         .btn-danger {
             background: var(--accent-red);
             color: white;
         }
-        .btn-danger:hover { background: #DC2626; }
+        .btn-danger:hover { background: var(--accent-red-hover); }
 
         .btn-sm {
             padding: 7px 14px;
@@ -322,11 +616,11 @@
            ================================================================ */
         .input {
             width: 100%;
-            padding: 13px 16px;
+            padding: 14px 16px;
             background: var(--bg-input);
-            border: 1px solid rgba(26, 54, 93, 0.08);
+            border: 1px solid rgba(26, 54, 93, 0.1);
             border-radius: var(--radius-pill);
-            box-shadow: var(--shadow-inset);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
             color: var(--text-primary);
             font-family: inherit;
             font-size: 0.9375rem;
@@ -336,7 +630,7 @@
 
         .input:focus {
             border-color: var(--navy);
-            box-shadow: var(--shadow-inset), 0 0 0 3px rgba(26, 54, 93, 0.06);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03), 0 0 0 3px rgba(26, 54, 93, 0.08);
         }
 
         .input::placeholder {
@@ -401,9 +695,9 @@
         }
 
         .auth-card {
-            width: 460px;
+            width: 480px;
             max-width: calc(100vw - 40px);
-            padding: 48px 44px;
+            padding: 56px 48px;
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -423,24 +717,23 @@
 
         /* Padlock icon */
         .auth-lock-icon {
-            margin-bottom: 16px;
-        
             margin: 0 auto 24px auto;
             background: rgba(255, 255, 255, 0.7);
-            width: 120px;
-            height: 120px;
-            border-radius: 32px;
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
             box-shadow: 0 8px 24px rgba(26, 54, 93, 0.08);
             display: inline-flex;
             justify-content: center;
             align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .auth-lock-icon svg {
-            width: 64px;
-            height: 72px;
+            width: 56px;
+            height: 64px;
             stroke: url(#icon-gradient);
             fill: none;
-            stroke-width: 1.5;
+            stroke-width: 2.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -687,8 +980,8 @@
         .vault-status-card {
             padding: 16px;
             border-radius: var(--radius-md);
-            background: #F0FAF0;
-            border: 1px solid #D1E7D1;
+            background: var(--bg-vault-status);
+            border: 1px solid var(--border-vault-status);
             text-align: center;
             margin-bottom: 8px;
         }
@@ -707,7 +1000,7 @@
         .vault-status-title {
             font-size: 0.8125rem;
             font-weight: 600;
-            color: #166534;
+            color: var(--text-vault-status);
             margin-bottom: 2px;
         }
 
@@ -824,8 +1117,8 @@
             font-size: 0.875rem;
             padding-top: 10px;
             padding-bottom: 10px;
-            background: rgba(244, 241, 235, 0.6);
-            border: 1px solid rgba(26, 54, 93, 0.06);
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
         }
 
         .search-bar .search-icon {
@@ -848,8 +1141,8 @@
             width: 40px;
             height: 40px;
             border-radius: var(--radius-sm);
-            border: 1px solid #E2E0DA;
-            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-light);
+            background: var(--bg-glass-light);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -966,8 +1259,8 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid #E2E0DA;
-            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-light);
+            background: var(--bg-glass-light);
             color: var(--text-secondary);
             user-select: none;
             flex-shrink: 0;
@@ -998,7 +1291,7 @@
 
         .table-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
         .table-wrapper::-webkit-scrollbar-track { background: transparent; }
-        .table-wrapper::-webkit-scrollbar-thumb { background: #D1CFC9; border-radius: 3px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
 
         .data-table {
             width: 100%;
@@ -1019,8 +1312,8 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            background: rgba(244, 241, 235, 0.4);
-            border-bottom: 1px solid #ECEAE4;
+            background: var(--bg-th);
+            border-bottom: 1px solid var(--border-divider);
             white-space: nowrap;
         }
 
@@ -1030,8 +1323,8 @@
         .data-table tbody tr {
             transition: background 0.15s ease;
         }
-        .data-table tbody tr:hover { background: rgba(26, 54, 93, 0.02); }
-        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid #F0EEE8; }
+        .data-table tbody tr:hover { background: var(--bg-hover-row); }
+        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border-row); }
 
         .data-table tbody td {
             padding: 14px 18px;
@@ -1277,12 +1570,12 @@
         }
 
         .health-bar-wrapper {
-            background: rgba(244, 241, 235, 0.6);
+            background: var(--bg-th);
             border-radius: 999px;
             height: 12px;
             overflow: hidden;
             margin-bottom: 24px;
-            border: 1px solid #E2E0DA;
+            border: 1px solid var(--border-light);
         }
         .health-bar-fill {
             height: 100%;
@@ -1335,8 +1628,11 @@
 
         .modal-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 8px;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-divider);
         }
         .modal-actions .btn { flex: 1; }
 
@@ -1351,7 +1647,7 @@
             transition: background 0.2s, transform 0.2s;
         }
         .clickable-row:hover {
-            background: rgba(26, 54, 93, 0.03) !important;
+            background: var(--bg-hover-row) !important;
         }
 
         .detail-row {
@@ -1369,7 +1665,7 @@
         .detail-value-group {
             display: flex;
             align-items: center;
-            background: rgba(244, 241, 235, 0.5);
+            background: var(--bg-group);
             padding: 12px 16px;
             border-radius: var(--radius-md);
             gap: 12px;
@@ -1399,7 +1695,7 @@
             appearance: none;
             height: 4px;
             border-radius: 2px;
-            background: #E2E0DA;
+            background: var(--border-light);
             outline: none;
         }
         .slider-row input[type="range"]::-webkit-slider-thumb {
@@ -1440,7 +1736,7 @@
             animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
-        .toast-success { background: var(--navy); color: #FFFFFF; }
+        .toast-success { background: var(--navy); color: var(--bg-base); }
         .toast-error { background: var(--accent-red); color: #FFFFFF; }
 
         @keyframes toastIn {
@@ -1752,7 +2048,7 @@
             border-radius: var(--radius-sm);
             transition: background 0.2s;
         }
-        .category-detail-back:hover { background: rgba(26, 54, 93, 0.05); }
+        .category-detail-back:hover { background: var(--bg-hover-soft); }
         .category-detail-back svg {
             width: 16px; height: 16px;
             stroke: currentColor; fill: none; stroke-width: 1.5;
@@ -1851,8 +2147,8 @@
             align-items: center;
             gap: 10px;
             padding: 14px 18px;
-            background: #F0FAF0;
-            border: 1px solid #D1E7D1;
+            background: var(--bg-vault-status);
+            border: 1px solid var(--border-vault-status);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
             text-align: left;
@@ -1869,7 +2165,7 @@
 
         .about-trust-badge p {
             font-size: 0.8125rem;
-            color: #166534;
+            color: var(--text-vault-status);
             line-height: 1.4;
             font-weight: 500;
             margin: 0;
@@ -1877,7 +2173,7 @@
 
         .about-developer {
             padding-top: 16px;
-            border-top: 1px solid #ECEAE4;
+            border-top: 1px solid var(--border-divider);
         }
 
         .about-developer-name {
@@ -2022,6 +2318,11 @@
         <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop stop-color="#1A365D" offset="0%" />
           <stop stop-color="#2A4A7F" offset="100%" />
+        </linearGradient>
+        <linearGradient id="dark-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop stop-color="#0052D4" offset="0%" />
+          <stop stop-color="#4364F7" offset="50%" />
+          <stop stop-color="#6FB1FC" offset="100%" />
         </linearGradient>
       </defs>
     </svg>
@@ -2174,10 +2475,10 @@
                 <!-- Padlock Icon -->
                 <div class="auth-lock-icon">
                     <svg viewBox="0 0 64 80">
-                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="1.5"/>
-                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="1.5"/>
-                        <circle cx="32" cy="52" r="4" stroke-width="1.5"/>
-                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="1.5"/>
+                        <rect x="10" y="36" width="44" height="36" rx="6"/>
+                        <path d="M18 36V24a14 14 0 0 1 28 0v12"/>
+                        <circle cx="32" cy="52" r="3.5"/>
+                        <line x1="32" y1="55.5" x2="32" y2="62"/>
                     </svg>
                 </div>
 
@@ -2247,10 +2548,10 @@
                 <!-- Padlock Icon -->
                 <div class="auth-lock-icon">
                     <svg viewBox="0 0 64 80">
-                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="1.5"/>
-                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="1.5"/>
-                        <circle cx="32" cy="52" r="4" stroke-width="1.5"/>
-                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="1.5"/>
+                        <rect x="10" y="36" width="44" height="36" rx="6"/>
+                        <path d="M18 36V24a14 14 0 0 1 28 0v12"/>
+                        <circle cx="32" cy="52" r="3.5"/>
+                        <line x1="32" y1="55.5" x2="32" y2="62"/>
                     </svg>
                 </div>
 
@@ -2382,6 +2683,9 @@
                                 <div class="subtitle">Your complete credential vault</div>
                             </div>
                             <div class="main-header-right">
+                                <button id="theme-toggle-btn" class="filter-btn" onclick="toggleTheme()" title="Toggle Theme" style="margin-right: 12px; border-radius: var(--radius-pill); flex-shrink: 0;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"></svg>
+                                </button>
                                 <div class="search-bar">
                                     <span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
                                     <input type="text" id="search-input" class="input" placeholder="Search..." oninput="handleSearch()">
@@ -3839,6 +4143,46 @@
         }
         
         // --- Orb parallax: REMOVED (orbs no longer exist) ---
+        // ==========================================
+        // Theme Management
+        // ==========================================
+        const THEME_STORAGE_KEY = 'witty-aes-theme';
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (isDark) {
+                    // Sun icon for Dark Mode
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                } else {
+                    // Moon icon for Light Mode
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                }
+            }
+        }
+
+        // Listen for system changes if no manual preference is saved
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+                document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+                updateThemeIcon();
+            }
+        });
+
+        // Initialize icon on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcon();
+        });
     </script>
 </body>
 </html>
