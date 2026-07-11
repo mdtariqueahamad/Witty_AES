@@ -7,68 +7,68 @@
     <meta name="description" content="Witty AES: A premium offline password manager with AES-256 encryption, neumorphic design, and zero-cloud storage.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ================================================================
            WITTY AES — Premium Neumorphic Design System
            ================================================================ */
 
         :root {
-            /* Background & Surface */
-            --bg-base: #F7F6F2;
-            --bg-card: #FAFAFA;
-            --bg-sidebar: #FFFFFF;
-            --bg-input: #F0EFEB;
+            /* Background & Surface — Deep Dark Base */
+            --bg-base: #0B132B;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-sidebar: rgba(255, 255, 255, 0.03);
+            --bg-input: rgba(255, 255, 255, 0.06);
 
-            /* Brand Colors */
-            --navy: #1B365D;
-            --navy-light: #2A4A7F;
-            --navy-dark: #122541;
-            --navy-hover: #152D50;
+            /* Brand Colors — Muted Slate */
+            --navy: #94A3B8;
+            --navy-light: #CBD5E1;
+            --navy-dark: #64748B;
+            --navy-hover: #CBD5E1;
 
-            /* Text */
-            --text-primary: #1B365D;
-            --text-secondary: #6B7280;
-            --text-muted: #9CA3AF;
-            --text-light: #B0B5BD;
+            /* Text — Monochromatic */
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --text-light: #475569;
 
-            /* Accents */
-            --accent-blue: #3B82F6;
-            --accent-green: #22C55E;
-            --accent-yellow: #F59E0B;
-            --accent-red: #EF4444;
-            --accent-purple: #8B5CF6;
+            /* Accents — Desaturated */
+            --accent-blue: #60A5FA;
+            --accent-green: #4ADE80;
+            --accent-yellow: #FBBF24;
+            --accent-red: #F87171;
+            --accent-purple: #A78BFA;
 
-            /* Category Pastels */
-            --cat-social-bg: #DBEAFE;
-            --cat-social-text: #1D4ED8;
-            --cat-work-bg: #EDE9FE;
-            --cat-work-text: #6D28D9;
-            --cat-banking-bg: #D1FAE5;
-            --cat-banking-text: #059669;
-            --cat-shopping-bg: #FED7AA;
-            --cat-shopping-text: #C2410C;
-            --cat-email-bg: #FCE7F3;
-            --cat-email-text: #BE185D;
-            --cat-other-bg: #F3F4F6;
-            --cat-other-text: #4B5563;
+            /* Category — Dark Mode Subtle Tints */
+            --cat-social-bg: rgba(59, 130, 246, 0.12);
+            --cat-social-text: #93C5FD;
+            --cat-work-bg: rgba(139, 92, 246, 0.12);
+            --cat-work-text: #C4B5FD;
+            --cat-banking-bg: rgba(16, 185, 129, 0.12);
+            --cat-banking-text: #6EE7B7;
+            --cat-shopping-bg: rgba(249, 115, 22, 0.12);
+            --cat-shopping-text: #FDBA74;
+            --cat-email-bg: rgba(236, 72, 153, 0.12);
+            --cat-email-text: #F9A8D4;
+            --cat-other-bg: rgba(148, 163, 184, 0.1);
+            --cat-other-text: #94A3B8;
 
-            /* Neumorphic Shadows */
-            --shadow-card: 6px 6px 16px rgba(0, 0, 0, 0.06), -4px -4px 12px rgba(255, 255, 255, 0.9);
-            --shadow-card-hover: 8px 8px 24px rgba(0, 0, 0, 0.08), -6px -6px 16px rgba(255, 255, 255, 0.95);
-            --shadow-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.06), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
-            --shadow-btn: 4px 4px 10px rgba(0, 0, 0, 0.08), -2px -2px 6px rgba(255, 255, 255, 0.8);
-            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+            /* Shadows — Dark Mode Depth */
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.25);
+            --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.35);
+            --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.2);
 
             /* Typography */
             --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
             /* Spacing & Radius */
-            --radius-sm: 10px;
-            --radius-md: 14px;
-            --radius-lg: 20px;
-            --radius-xl: 24px;
-            --radius-pill: 50px;
+            --radius-sm: 12px;
+            --radius-md: 24px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-pill: 100px;
 
             /* Sidebar */
             --sidebar-width: 250px;
@@ -84,17 +84,13 @@
         html, body {
             height: 100%;
             overflow: hidden;
+            background: #0B132B;
         }
 
         body {
             font-family: var(--font-family);
             color: var(--text-primary);
-            /* Layer 0: Base warm gradient */
-            background:
-                /* Subtle radial vignette */
-                radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.03) 100%),
-                /* Warm directional gradient */
-                linear-gradient(160deg, #F8F7F4 0%, #F2F1ED 25%, #EBEAE5 50%, #E6E4DF 75%, #E1DFDA 100%);
+            background: #0B132B;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: relative;
@@ -106,11 +102,7 @@
            Creates that 'printed on security paper' tactile feel
            ================================================================ */
         .bg-texture-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
+            display: none;
         }
 
         /* Sub-layer 1: SVG Noise Grain (paper fiber texture) */
@@ -168,66 +160,29 @@
         }
 
         /* Sub-layer 3: Corner vignette overlay for depth */
+        /* LAYER 0b: Vignette Shadow */
         .bg-vignette {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                /* Top-left corner shadow */
-                radial-gradient(ellipse at 0% 0%, rgba(158, 155, 148, 0.08) 0%, transparent 50%),
-                /* Top-right corner shadow */
-                radial-gradient(ellipse at 100% 0%, rgba(158, 155, 148, 0.08) 0%, transparent 50%),
-                /* Bottom-left corner shadow */
-                radial-gradient(ellipse at 0% 100%, rgba(158, 155, 148, 0.1) 0%, transparent 50%),
-                /* Bottom-right corner shadow */
-                radial-gradient(ellipse at 100% 100%, rgba(158, 155, 148, 0.12) 0%, transparent 50%),
-                /* Edge fade */
-                radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.02) 100%);
+            display: none;
         }
 
         /* ================================================================
            CYBERSECURITY BACKGROUND — Mesh & Matrix Streams & Orbs
            ================================================================ */
-        .ambient-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15; /* Reduced vibrancy while keeping colors */
-            animation: floatOrb 20s infinite alternate ease-in-out;
-            transition: transform 0.1s ease-out; /* For interactive parallax */
-        }
-
-        .orb-1 { width: 600px; height: 600px; background: var(--accent-blue); top: -10%; left: -10%; animation-delay: 0s; }
-        .orb-2 { width: 500px; height: 500px; background: var(--accent-purple); bottom: -10%; right: -5%; animation-delay: -5s; }
-        .orb-3 { width: 400px; height: 400px; background: var(--accent-green); top: 40%; left: 40%; animation-delay: -10s; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 50px) scale(1.2); }
-        }
-
+        /* Orbs & mesh: REMOVED — clean dark base only */
+        .ambient-bg,
         .cyber-mesh {
-            position: fixed;
-            inset: 0;
-            z-index: 1; /* Above deep ambient bg */
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 0.06;
+            display: none !important;
         }
 
+        .orb { display: none !important; }
+
+        /* ================================================================
+           LAYER 1: Ciphertext Falling Streams (Subtle Security Watermark)
+           ================================================================ */
         .matrix-streams {
             position: fixed;
             inset: 0;
-            z-index: 2; /* Above mesh */
+            z-index: 1;
             pointer-events: none;
             user-select: none;
             overflow: hidden;
@@ -236,15 +191,16 @@
         .matrix-column {
             position: absolute;
             top: -100%;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            font-weight: bold;
-            color: rgba(27, 54, 93, 0.35); /* Softer matrix text, less aggressive */
+            font-family: 'SF Mono', 'Fira Code', 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(148, 163, 184, 0.045); /* Muted slate grey, very low contrast */
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.6;
             pointer-events: none;
             user-select: none;
             animation: matrixFall linear infinite;
+            letter-spacing: 0.05em;
         }
 
         @keyframes matrixFall {
@@ -264,9 +220,9 @@
             font-size: 0.7rem;
             color: var(--text-muted);
             font-weight: 500;
-            letter-spacing: 0.02em;
-            z-index: 10;
-            opacity: 0.7;
+            letter-spacing: 0.05em;
+            z-index: 100;
+            opacity: 0.35;
             user-select: none;
         }
 
@@ -291,9 +247,18 @@
         /* ================================================================
            TYPOGRAPHY
            ================================================================ */
-        h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
-        h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text-primary); }
-        h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
+
+        h1, h2, h3, .auth-title, .sidebar-brand-title { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -1px; }
+        .text-gradient {
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: #E2E8F0;
+            font-weight: 800;
+            filter: none;
+        }
+        h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: #E2E8F0; }
+        h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: #E2E8F0; }
+        h3 { font-size: 1.05rem; font-weight: 600; color: #E2E8F0; }
 
         /* ================================================================
            BUTTONS
@@ -305,7 +270,7 @@
             gap: 8px;
             padding: 11px 22px;
             border: none;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-pill);
             font-family: inherit;
             font-size: 0.875rem;
             font-weight: 600;
@@ -319,13 +284,14 @@
         .btn:active { transform: scale(0.97); }
 
         .btn-primary {
-            background: var(--navy);
-            color: #FFFFFF;
+            background: rgba(148, 163, 184, 0.15);
+            color: #E2E8F0;
             box-shadow: var(--shadow-btn);
+            border: 1px solid rgba(148, 163, 184, 0.2);
         }
         .btn-primary:hover {
-            background: var(--navy-hover);
-            box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -3px -3px 8px rgba(255, 255, 255, 0.7);
+            background: rgba(148, 163, 184, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .btn-pill {
@@ -337,12 +303,12 @@
         .btn-ghost {
             background: transparent;
             color: var(--text-secondary);
-            border: 1px solid #E5E7EB;
+            border: 1px solid rgba(148, 163, 184, 0.15);
         }
         .btn-ghost:hover {
-            background: #F3F4F6;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
-            border-color: #D1D5DB;
+            border-color: rgba(148, 163, 184, 0.3);
         }
 
         .btn-danger {
@@ -372,7 +338,7 @@
             align-items: center;
             justify-content: center;
         }
-        .btn-icon:hover { color: var(--text-primary); background: #F3F4F6; }
+        .btn-icon:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.06); }
 
         /* ================================================================
            INPUTS (Neumorphic Inset Style)
@@ -380,8 +346,8 @@
         .input {
             width: 100%;
             padding: 13px 16px;
-            background: var(--bg-input);
-            border: 1px solid #E8E7E3;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.12);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-inset);
             color: var(--text-primary);
@@ -392,8 +358,8 @@
         }
 
         .input:focus {
-            border-color: var(--navy);
-            box-shadow: var(--shadow-inset), 0 0 0 3px rgba(27, 54, 93, 0.08);
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: var(--shadow-inset), 0 0 0 3px rgba(148, 163, 184, 0.08);
         }
 
         .input::placeholder {
@@ -461,19 +427,16 @@
             width: 460px;
             max-width: calc(100vw - 40px);
             padding: 48px 44px;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(24px) saturate(120%);
             -webkit-backdrop-filter: blur(24px) saturate(120%);
             border-radius: var(--radius-xl);
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.06),
-                0 2px 8px rgba(0, 0, 0, 0.04),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
             text-align: center;
             animation: cardAppear 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-            border: 1px solid rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             position: relative;
-            z-index: 3;
+            z-index: 10;
         }
 
         @keyframes cardAppear {
@@ -484,13 +447,23 @@
         /* Padlock icon */
         .auth-lock-icon {
             margin-bottom: 16px;
+        
+            margin: 0 auto 24px auto;
+            background: rgba(255, 255, 255, 0.06);
+            width: 120px;
+            height: 120px;
+            border-radius: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
         }
         .auth-lock-icon svg {
             width: 64px;
             height: 72px;
-            stroke: var(--navy);
+            stroke: url(#icon-gradient);
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -498,7 +471,7 @@
         .auth-title {
             font-size: 1.85rem;
             font-weight: 700;
-            color: var(--navy);
+            color: #E2E8F0;
             margin-bottom: 4px;
         }
 
@@ -540,9 +513,9 @@
             padding: 15px 24px;
             font-size: 0.9375rem;
             border-radius: var(--radius-pill);
-            background: var(--navy);
-            color: white;
-            border: none;
+            background: rgba(148, 163, 184, 0.15);
+            color: #E2E8F0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
             font-family: inherit;
             font-weight: 600;
             cursor: pointer;
@@ -554,8 +527,8 @@
             gap: 10px;
         }
         .auth-btn:hover {
-            background: var(--navy-hover);
-            box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.1), -3px -3px 8px rgba(255, 255, 255, 0.7);
+            background: rgba(148, 163, 184, 0.25);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
         .auth-btn:active { transform: scale(0.98); }
 
@@ -564,7 +537,7 @@
             height: 18px;
             stroke: white;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         /* Auth footer */
@@ -636,11 +609,11 @@
             padding: 20px 14px;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(24px) saturate(120%);
             -webkit-backdrop-filter: blur(24px) saturate(120%);
-            border-right: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.03);
+            border-right: 1px solid rgba(148, 163, 184, 0.08);
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
             z-index: 20;
         }
 
@@ -655,9 +628,9 @@
         .sidebar-brand-icon svg {
             width: 32px;
             height: 36px;
-            stroke: var(--navy);
+            stroke: #94A3B8;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -665,7 +638,7 @@
         .sidebar-brand-title {
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--navy);
+            color: #E2E8F0;
             letter-spacing: -0.02em;
         }
 
@@ -699,13 +672,13 @@
         }
 
         .nav-item:hover {
-            background: #F5F4F0;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
         }
 
         .nav-item.active {
-            background: rgba(27, 54, 93, 0.08);
-            color: var(--navy);
+            background: rgba(148, 163, 184, 0.1);
+            color: #E2E8F0;
             font-weight: 600;
         }
 
@@ -723,7 +696,7 @@
             height: 18px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.8;
+            stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -737,8 +710,8 @@
         .vault-status-card {
             padding: 16px;
             border-radius: var(--radius-md);
-            background: #F0FAF0;
-            border: 1px solid #D1E7D1;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.15);
             text-align: center;
             margin-bottom: 8px;
         }
@@ -751,13 +724,13 @@
             height: 28px;
             stroke: var(--accent-green);
             fill: none;
-            stroke-width: 1.8;
+            stroke-width: 1.5;
         }
 
         .vault-status-title {
             font-size: 0.8125rem;
             font-weight: 600;
-            color: #166534;
+            color: #4ADE80;
             margin-bottom: 2px;
         }
 
@@ -795,7 +768,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 49;
         }
         .sidebar-overlay.active { display: block; }
@@ -811,13 +784,13 @@
             border-radius: var(--radius-sm);
             color: var(--navy);
         }
-        .hamburger-btn:hover { background: #F3F4F6; }
+        .hamburger-btn:hover { background: rgba(255, 255, 255, 0.06); }
         .hamburger-btn svg {
             width: 24px;
             height: 24px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
             stroke-linecap: round;
         }
 
@@ -874,6 +847,8 @@
             font-size: 0.875rem;
             padding-top: 10px;
             padding-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(148, 163, 184, 0.1);
         }
 
         .search-bar .search-icon {
@@ -889,15 +864,15 @@
             height: 16px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         .filter-btn {
             width: 40px;
             height: 40px;
             border-radius: var(--radius-sm);
-            border: 1px solid #E5E7EB;
-            background: white;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            background: rgba(255, 255, 255, 0.04);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -905,13 +880,13 @@
             transition: all 0.2s;
             box-shadow: var(--shadow-soft);
         }
-        .filter-btn:hover { border-color: var(--navy); }
+        .filter-btn:hover { border-color: rgba(148, 163, 184, 0.3); }
         .filter-btn svg {
             width: 18px;
             height: 18px;
             stroke: var(--text-secondary);
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         .add-btn {
@@ -928,11 +903,11 @@
         }
 
         .stat-card {
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: var(--radius-lg);
             padding: 18px 20px;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             transition: box-shadow 0.25s ease;
             display: flex;
             align-items: flex-start;
@@ -952,20 +927,20 @@
         .stat-icon svg {
             width: 22px;
             height: 22px;
-            stroke-width: 1.8;
+            stroke-width: 1.5;
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
-        .stat-icon.blue { background: #DBEAFE; }
-        .stat-icon.blue svg { stroke: #2563EB; }
-        .stat-icon.green { background: #D1FAE5; }
-        .stat-icon.green svg { stroke: #059669; }
-        .stat-icon.yellow { background: #FEF3C7; }
-        .stat-icon.yellow svg { stroke: #D97706; }
-        .stat-icon.purple { background: #EDE9FE; }
-        .stat-icon.purple svg { stroke: #7C3AED; }
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.12); }
+        .stat-icon.blue svg { stroke: #60A5FA; }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.12); }
+        .stat-icon.green svg { stroke: #4ADE80; }
+        .stat-icon.yellow { background: rgba(251, 191, 36, 0.12); }
+        .stat-icon.yellow svg { stroke: #FBBF24; }
+        .stat-icon.purple { background: rgba(139, 92, 246, 0.12); }
+        .stat-icon.purple svg { stroke: #A78BFA; }
 
         .stat-info { flex: 1; min-width: 0; }
         .stat-label {
@@ -1014,27 +989,27 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid #E5E7EB;
-            background: white;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-secondary);
             user-select: none;
             flex-shrink: 0;
         }
         .chip:hover {
-            border-color: var(--navy);
-            color: var(--navy);
+            border-color: rgba(148, 163, 184, 0.25);
+            color: var(--text-primary);
         }
         .chip.active {
-            background: var(--navy);
-            color: white;
-            border-color: var(--navy);
+            background: rgba(148, 163, 184, 0.15);
+            color: #E2E8F0;
+            border-color: rgba(148, 163, 184, 0.3);
         }
         .chip svg {
             width: 14px;
             height: 14px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         /* --- Data Table --- */
@@ -1046,17 +1021,17 @@
 
         .table-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
         .table-wrapper::-webkit-scrollbar-track { background: transparent; }
-        .table-wrapper::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.15); border-radius: 3px; }
 
         .data-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
         }
 
         .data-table thead th {
@@ -1064,11 +1039,11 @@
             text-align: left;
             font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            background: #FAFAF8;
-            border-bottom: 1px solid #EEEDE9;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
             white-space: nowrap;
         }
 
@@ -1078,8 +1053,8 @@
         .data-table tbody tr {
             transition: background 0.15s ease;
         }
-        .data-table tbody tr:hover { background: #FAFAF8; }
-        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid #F3F2EE; }
+        .data-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(148, 163, 184, 0.06); }
 
         .data-table tbody td {
             padding: 14px 18px;
@@ -1150,13 +1125,13 @@
             color: var(--text-muted);
             transition: all 0.2s;
         }
-        .pw-toggle-btn:hover { color: var(--navy); background: #F3F4F6; }
+        .pw-toggle-btn:hover { color: #E2E8F0; background: rgba(255, 255, 255, 0.06); }
         .pw-toggle-btn svg {
             width: 16px;
             height: 16px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         /* Category pills */
@@ -1197,7 +1172,7 @@
             height: 16px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.8;
+            stroke-width: 1.5;
         }
         .table-actions .btn-icon.fav-btn { color: var(--text-light); }
         .table-actions .btn-icon.fav-btn:hover { color: var(--accent-yellow); }
@@ -1221,11 +1196,11 @@
         .mobile-cred-cards { display: none; }
 
         .mobile-cred-card {
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: var(--radius-md);
             padding: 16px;
             box-shadow: var(--shadow-soft);
-            border: 1px solid #EEEDE9;
+            border: 1px solid rgba(148, 163, 184, 0.08);
             margin-bottom: 10px;
         }
 
@@ -1265,7 +1240,7 @@
             gap: 4px;
             margin-top: 8px;
             padding-top: 10px;
-            border-top: 1px solid #F3F2EE;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
             justify-content: flex-end;
         }
 
@@ -1277,7 +1252,7 @@
             position: fixed;
             inset: 0;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             align-items: center;
@@ -1295,13 +1270,13 @@
             width: 480px;
             max-width: calc(100vw - 32px);
             max-height: 90vh;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(24px) saturate(120%);
             -webkit-backdrop-filter: blur(24px) saturate(120%);
             border-radius: var(--radius-xl);
             padding: 36px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             animation: modalSlide 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
             overflow-y: auto;
         }
@@ -1325,12 +1300,12 @@
         }
 
         .health-bar-wrapper {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.06);
             border-radius: 999px;
             height: 12px;
             overflow: hidden;
             margin-bottom: 24px;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(148, 163, 184, 0.1);
         }
         .health-bar-fill {
             height: 100%;
@@ -1339,10 +1314,10 @@
         }
 
         .sec-dashboard-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             border-radius: var(--radius-lg);
             padding: 24px;
             text-align: center;
@@ -1395,7 +1370,7 @@
             transition: background 0.2s, transform 0.2s;
         }
         .clickable-row:hover {
-            background: rgba(27, 54, 93, 0.03) !important;
+            background: rgba(148, 163, 184, 0.05) !important;
         }
 
         .detail-row {
@@ -1413,7 +1388,7 @@
         .detail-value-group {
             display: flex;
             align-items: center;
-            background: var(--bg-input);
+            background: rgba(255, 255, 255, 0.05);
             padding: 12px 16px;
             border-radius: var(--radius-md);
             gap: 12px;
@@ -1443,7 +1418,7 @@
             appearance: none;
             height: 4px;
             border-radius: 2px;
-            background: #E5E7EB;
+            background: rgba(148, 163, 184, 0.15);
             outline: none;
         }
         .slider-row input[type="range"]::-webkit-slider-thumb {
@@ -1452,10 +1427,10 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: var(--navy);
+            background: #94A3B8;
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            border: 2px solid #0B132B;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         }
 
         /* ================================================================
@@ -1484,8 +1459,8 @@
             animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
-        .toast-success { background: var(--navy); color: white; }
-        .toast-error { background: var(--accent-red); color: white; }
+        .toast-success { background: rgba(15, 23, 42, 0.9); color: #E2E8F0; border: 1px solid rgba(148, 163, 184, 0.15); }
+        .toast-error { background: rgba(248, 113, 113, 0.15); color: #F87171; border: 1px solid rgba(248, 113, 113, 0.2); }
 
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -1544,13 +1519,13 @@
         }
 
         .settings-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-radius: var(--radius-xl);
             padding: 2rem;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             width: 100%;
         }
 
@@ -1564,7 +1539,7 @@
         .settings-card-header svg {
             width: 24px;
             height: 24px;
-            stroke: var(--navy);
+            stroke: #94A3B8;
             fill: none;
             stroke-width: 1.5;
         }
@@ -1603,7 +1578,7 @@
             border-radius: var(--radius-lg);
             text-align: center;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
         }
 
         .security-summary-card .security-count {
@@ -1619,25 +1594,25 @@
         }
 
         .security-summary-card.strong {
-            background: linear-gradient(135deg, #F0FFF4 0%, #DCFCE7 100%);
-            border-color: #BBF7D0;
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.15);
         }
-        .security-summary-card.strong .security-count { color: #16A34A; }
-        .security-summary-card.strong .security-label { color: #166534; }
+        .security-summary-card.strong .security-count { color: #4ADE80; }
+        .security-summary-card.strong .security-label { color: #6EE7B7; }
 
         .security-summary-card.good {
-            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-            border-color: #FDE68A;
+            background: rgba(251, 191, 36, 0.08);
+            border-color: rgba(251, 191, 36, 0.15);
         }
-        .security-summary-card.good .security-count { color: #D97706; }
-        .security-summary-card.good .security-label { color: #92400E; }
+        .security-summary-card.good .security-count { color: #FBBF24; }
+        .security-summary-card.good .security-label { color: #FDE68A; }
 
         .security-summary-card.weak {
-            background: linear-gradient(135deg, #FFF5F5 0%, #FEE2E2 100%);
-            border-color: #FECACA;
+            background: rgba(248, 113, 113, 0.08);
+            border-color: rgba(248, 113, 113, 0.15);
         }
-        .security-summary-card.weak .security-count { color: #DC2626; }
-        .security-summary-card.weak .security-label { color: #991B1B; }
+        .security-summary-card.weak .security-count { color: #F87171; }
+        .security-summary-card.weak .security-label { color: #FCA5A5; }
 
         .security-group {
             margin-bottom: 20px;
@@ -1652,9 +1627,9 @@
             border-radius: var(--radius-md);
         }
 
-        .security-group-header.strong { background: #F0FFF4; }
-        .security-group-header.good { background: #FFFBEB; }
-        .security-group-header.weak { background: #FFF5F5; }
+        .security-group-header.strong { background: rgba(16, 185, 129, 0.08); }
+        .security-group-header.good { background: rgba(251, 191, 36, 0.08); }
+        .security-group-header.weak { background: rgba(248, 113, 113, 0.08); }
 
         .security-group-dot {
             width: 10px;
@@ -1662,9 +1637,9 @@
             border-radius: 50%;
             flex-shrink: 0;
         }
-        .security-group-dot.strong { background: #22C55E; }
-        .security-group-dot.good { background: #F59E0B; }
-        .security-group-dot.weak { background: #EF4444; }
+        .security-group-dot.strong { background: #4ADE80; }
+        .security-group-dot.good { background: #FBBF24; }
+        .security-group-dot.weak { background: #F87171; }
 
         .security-group-title {
             font-weight: 600;
@@ -1683,10 +1658,10 @@
             align-items: center;
             gap: 14px;
             padding: 12px 16px;
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             margin-bottom: 8px;
         }
 
@@ -1730,11 +1705,11 @@
         }
 
         .category-folder {
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: var(--radius-lg);
             padding: 20px;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             cursor: pointer;
             transition: all 0.25s ease;
             text-align: center;
@@ -1746,8 +1721,8 @@
         }
 
         .category-folder.active-folder {
-            border-color: var(--navy);
-            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.15), var(--shadow-card);
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1), var(--shadow-card);
         }
 
         .category-folder-icon {
@@ -1796,23 +1771,23 @@
             border-radius: var(--radius-sm);
             transition: background 0.2s;
         }
-        .category-detail-back:hover { background: rgba(27, 54, 93, 0.06); }
+        .category-detail-back:hover { background: rgba(148, 163, 184, 0.08); }
         .category-detail-back svg {
             width: 16px; height: 16px;
-            stroke: currentColor; fill: none; stroke-width: 2;
+            stroke: currentColor; fill: none; stroke-width: 1.5;
         }
 
         /* ================================================================
            ABOUT CARD (Apple-style)
            ================================================================ */
         .about-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-radius: var(--radius-xl);
             padding: 2.5rem 2rem;
             box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.08);
             text-align: center;
             width: 100%;
         }
@@ -1824,15 +1799,15 @@
         .about-logo svg {
             width: 48px;
             height: 52px;
-            stroke: var(--navy);
+            stroke: #94A3B8;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         .about-app-name {
             font-size: 1.6rem;
             font-weight: 800;
-            color: var(--navy);
+            color: #E2E8F0;
             letter-spacing: -0.03em;
             margin-bottom: 4px;
         }
@@ -1872,7 +1847,7 @@
         .about-feature-icon svg {
             width: 20px;
             height: 20px;
-            stroke: var(--navy);
+            stroke: #94A3B8;
             fill: none;
             stroke-width: 1.5;
         }
@@ -1895,8 +1870,8 @@
             align-items: center;
             gap: 10px;
             padding: 14px 18px;
-            background: #F0FAF0;
-            border: 1px solid #D1E7D1;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.15);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
             text-align: left;
@@ -1905,15 +1880,15 @@
         .about-trust-badge svg {
             width: 28px;
             height: 28px;
-            stroke: #16A34A;
+            stroke: #4ADE80;
             fill: none;
-            stroke-width: 1.8;
+            stroke-width: 1.5;
             flex-shrink: 0;
         }
 
         .about-trust-badge p {
             font-size: 0.8125rem;
-            color: #166534;
+            color: #6EE7B7;
             line-height: 1.4;
             font-weight: 500;
             margin: 0;
@@ -1921,7 +1896,7 @@
 
         .about-developer {
             padding-top: 16px;
-            border-top: 1px solid #EEEDE9;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
         }
 
         .about-developer-name {
@@ -1937,7 +1912,7 @@
         }
 
         .about-developer-contact a {
-            color: var(--navy);
+            color: #94A3B8;
             text-decoration: none;
             font-weight: 500;
         }
@@ -1975,13 +1950,13 @@
             color: var(--text-muted);
             transition: all 0.15s;
         }
-        .window-btn:hover { background: #EEEDE9; color: var(--text-primary); }
+        .window-btn:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
         .window-btn svg {
             width: 14px;
             height: 14px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
         }
 
         /* Mobile FAB for add button */
@@ -1993,10 +1968,10 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: var(--navy);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 16px rgba(27, 54, 93, 0.3);
+            background: rgba(148, 163, 184, 0.15);
+            color: #E2E8F0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             z-index: 30;
             align-items: center;
@@ -2004,7 +1979,7 @@
             font-size: 1.5rem;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .mobile-fab:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(27, 54, 93, 0.4); }
+        .mobile-fab:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4); }
 
         /* ================================================================
            RESPONSIVE — MOBILE
@@ -2018,7 +1993,7 @@
                 width: 270px;
                 z-index: 50;
                 transition: left 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
             }
             .sidebar.open { left: 0; }
             .hamburger-btn { display: flex; }
@@ -2060,51 +2035,26 @@
 </head>
 <body>
 
+    <!-- SVG Definitions for Gradient Icons -->
+    <svg width="0" height="0" style="position:absolute;">
+      <defs>
+        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop stop-color="#94A3B8" offset="0%" />
+          <stop stop-color="#CBD5E1" offset="100%" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+
     <!-- ============================================================
-         LAYER 0: Paper/Linen Texture + Security Grid
+         LAYER 0: Deep Dark Base (rendered by CSS on body)
          ============================================================ -->
     <div class="bg-texture-layer"></div>
     <div class="bg-vignette"></div>
 
     <!-- ============================================================
-         CYBERSECURITY BACKGROUND — Ambient Orbs, Mesh & Matrix
+         LAYER 1: Falling Ciphertext Streams (Subtle Security Watermark)
          ============================================================ -->
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-    
-    <div class="cyber-mesh">
-        <svg width="100%" height="100%">
-            <defs>
-                <pattern id="hex-pattern" x="0" y="0" width="100" height="173.2" patternUnits="userSpaceOnUse">
-                    <path d="M50 0 L100 28.86 V86.6 L50 115.47 L0 86.6 V28.86 Z" fill="none" stroke="#1A2B4C" stroke-width="0.5" opacity="0.3"/>
-                    <circle cx="50" cy="0" r="1.5" fill="#1A2B4C" opacity="0.5"/>
-                    <circle cx="100" cy="28.86" r="1.5" fill="#1A2B4C" opacity="0.5"/>
-                    <circle cx="0" cy="28.86" r="1.5" fill="#1A2B4C" opacity="0.5"/>
-                </pattern>
-            </defs>
-            <!-- Full background hex grid -->
-            <rect width="100%" height="100%" fill="url(#hex-pattern)"></rect>
-            
-            <!-- Decentralized network nodes (scattered) -->
-            <g stroke="#1A2B4C" stroke-width="1.2" fill="none" opacity="0.6">
-                <!-- Top left cluster -->
-                <circle cx="15%" cy="20%" r="3"/>
-                <circle cx="25%" cy="15%" r="2"/>
-                <circle cx="20%" cy="30%" r="4"/>
-                <polyline points="15%,20% 25%,15% 20%,30% 15%,20%" />
-                
-                <!-- Bottom right cluster -->
-                <circle cx="85%" cy="75%" r="4"/>
-                <circle cx="75%" cy="85%" r="3"/>
-                <circle cx="80%" cy="65%" r="2"/>
-                <polyline points="85%,75% 75%,85% 80%,65% 85%,75%" />
-            </g>
-        </svg>
-    </div>
-    
     <div id="matrix-streams" class="matrix-streams">
         <!-- JS will populate this -->
     </div>
@@ -2122,14 +2072,14 @@
                 <!-- Padlock Icon -->
                 <div class="auth-lock-icon">
                     <svg viewBox="0 0 64 80">
-                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="2.5"/>
-                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="2.5"/>
-                        <circle cx="32" cy="52" r="4" stroke-width="2"/>
-                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="2"/>
+                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="1.5"/>
+                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="1.5"/>
+                        <circle cx="32" cy="52" r="4" stroke-width="1.5"/>
+                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="1.5"/>
                     </svg>
                 </div>
 
-                <h1 class="auth-title">Witty AES</h1>
+                <h1 class="auth-title">Witty <span class="text-gradient">AES</span></h1>
                 <p class="auth-subtitle">Secure Offline Vault</p>
 
                 <!-- Shield divider -->
@@ -2145,13 +2095,13 @@
                     <label class="input-label" for="setup-password">Master Password</label>
                     <div class="input-with-icons">
                         <span class="input-icon-left">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </span>
                         <input type="password" id="setup-password" class="input" placeholder="Enter master password (min 8 chars)" autocomplete="off">
                         <span class="input-icon-right" onclick="togglePasswordVisibility('setup-password', this)">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
                             </svg>
                         </span>
@@ -2163,7 +2113,7 @@
                     <label class="input-label" for="setup-confirm">Confirm Password</label>
                     <div class="input-with-icons">
                         <span class="input-icon-left">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </span>
@@ -2195,14 +2145,14 @@
                 <!-- Padlock Icon -->
                 <div class="auth-lock-icon">
                     <svg viewBox="0 0 64 80">
-                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="2.5"/>
-                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="2.5"/>
-                        <circle cx="32" cy="52" r="4" stroke-width="2"/>
-                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="2"/>
+                        <rect x="8" y="34" width="48" height="38" rx="6" stroke-width="1.5"/>
+                        <path d="M18 34V24a14 14 0 0 1 28 0v10" stroke-width="1.5"/>
+                        <circle cx="32" cy="52" r="4" stroke-width="1.5"/>
+                        <line x1="32" y1="56" x2="32" y2="62" stroke-width="1.5"/>
                     </svg>
                 </div>
 
-                <h1 class="auth-title">Witty AES</h1>
+                <h1 class="auth-title">Witty <span class="text-gradient">AES</span></h1>
                 <p class="auth-subtitle">Secure Offline Vault</p>
 
                 <!-- Shield divider -->
@@ -2217,13 +2167,13 @@
                 <div class="input-group" style="text-align: left;">
                     <div class="input-with-icons">
                         <span class="input-icon-left">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </span>
                         <input type="password" id="login-password" class="input" placeholder="Enter Master Password" autocomplete="off">
                         <span class="input-icon-right" onclick="togglePasswordVisibility('login-password', this)">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
                             </svg>
                         </span>
@@ -2260,14 +2210,14 @@
                     <div class="sidebar-brand">
                         <div class="sidebar-brand-icon">
                             <svg viewBox="0 0 36 42">
-                                <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="2"/>
-                                <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="2"/>
+                                <rect x="4" y="18" width="28" height="20" rx="4" stroke-width="1.5"/>
+                                <path d="M10 18V13a8 8 0 0 1 16 0v5" stroke-width="1.5"/>
                                 <circle cx="18" cy="28" r="2.5" stroke-width="1.5"/>
                                 <line x1="18" y1="30.5" x2="18" y2="34" stroke-width="1.5"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="sidebar-brand-title">Witty AES</div>
+                            <div class="sidebar-brand-title">Witty <span class="text-gradient">AES</span></div>
                             <div class="sidebar-brand-sub">Secure Offline Vault</div>
                         </div>
                     </div>
@@ -2307,7 +2257,7 @@
                             <div class="vault-status-sub">All data is encrypted and<br>stored only on your device.</div>
                         </div>
                         <button class="btn btn-ghost btn-sm sidebar-lock-btn" onclick="handleLock()">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                             Lock Now
                         </button>
                         <div class="sidebar-footer-stamp">
@@ -2332,10 +2282,10 @@
                             <div class="main-header-right">
                                 <div class="search-bar">
                                     <span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-                                    <input type="text" id="search-input" class="input" placeholder="Search passwords..." oninput="handleSearch()">
+                                    <input type="text" id="search-input" class="input" placeholder="Search..." oninput="handleSearch()">
                                 </div>
                                 <button class="btn btn-primary add-btn" onclick="openAddModal()">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                                     Add Password
                                 </button>
                             </div>
@@ -2574,7 +2524,7 @@
 
             <!-- Mobile FAB (floating add button) -->
             <button class="mobile-fab" onclick="openAddModal()" title="Add Password">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
             
         <!-- ============================================================
@@ -2609,7 +2559,7 @@
                     </div>
                 </div>
                 <button class="btn-icon" onclick="closeModal('detail-modal')" style="background:var(--bg-input);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
 
@@ -2618,7 +2568,7 @@
                 <div class="detail-value-group">
                     <div class="detail-value" id="detail-user">user@example.com</div>
                     <button class="btn btn-ghost btn-sm" onclick="copyDetailText('detail-user')" title="Copy Username" style="padding: 6px;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     </button>
                 </div>
             </div>
@@ -2628,17 +2578,17 @@
                 <div class="detail-value-group">
                     <div class="detail-value" id="detail-pass" style="font-family:monospace; letter-spacing:2px; font-size:1rem;">••••••••••••</div>
                     <button class="btn btn-ghost btn-sm" id="detail-show-btn" title="Show/Hide" style="padding: 6px;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
                     <button class="btn btn-ghost btn-sm" onclick="copyDetailPassword()" title="Copy Password" style="padding: 6px;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     </button>
                 </div>
             </div>
 
             <div class="modal-actions" style="margin-top: 32px;">
                 <button class="btn btn-primary" id="detail-edit-btn" style="flex:1;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     Edit Item
                 </button>
             </div>
@@ -2858,8 +2808,8 @@
             const isPassword = input.type === 'password';
             input.type = isPassword ? 'text' : 'password';
             iconEl.innerHTML = isPassword
-                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
-                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
         }
 
         // ==================================================================
@@ -2927,7 +2877,7 @@
                 showView('dashboard-view');
             } else {
                 errorEl.textContent = result.error || 'Failed to create vault.';
-                btn.innerHTML = 'Create Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+                btn.innerHTML = 'Create Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
                 btn.disabled = false;
             }
         }
@@ -2966,7 +2916,7 @@
                 }
             }
 
-            btn.innerHTML = 'Unlock Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+            btn.innerHTML = 'Unlock Vault <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" fill="none" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
             btn.disabled = false;
         }
 
@@ -3107,9 +3057,9 @@
                         </div>
                         <div class="mobile-cred-actions" onclick="event.stopPropagation()">
                             <button class="btn-icon fav-btn ${c.is_favorite ? 'active' : ''}" title="Favorite" onclick="toggleFavorite(${c.id}, ${c.is_favorite})">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                             </button>
-                            <button class="btn-icon delete-btn" onclick="handleDelete(${c.id})" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                            <button class="btn-icon delete-btn" onclick="handleDelete(${c.id})" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                         </div>
                     </div>`;
             }).join('');
@@ -3512,8 +3462,8 @@
                 let isShowing = false;
                 const showBtn = document.getElementById('detail-show-btn');
                 
-                const showIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-                const hideIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+                const showIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+                const hideIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
                 
                 showBtn.onclick = () => {
                     isShowing = !isShowing;
@@ -3786,17 +3736,7 @@
             }
         }
         
-        // --- Interactive Ambient Parallax ---
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = (e.clientX / window.innerWidth - 0.5) * 40; // Shift range
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
-            
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 0.5;
-                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
-        });
+        // --- Orb parallax: REMOVED (orbs no longer exist) ---
     </script>
 </body>
 </html>
