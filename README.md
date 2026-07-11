@@ -1,205 +1,131 @@
 # 🔐 SecureVault — Offline Password Manager
 
-A secure, offline desktop password manager with a stunning **glassmorphism** GUI. Built with Python, PyWebView, and military-grade AES-256 encryption.
+Welcome to **SecureVault**, an ultra-secure, completely offline desktop password manager that combines military-grade encryption with a stunning, premium user interface. 
+
+Built with **Python**, **PyWebView**, and **SQLite**, it never connects to the internet. Your passwords stay on your device, locked behind a single Master Password.
 
 ---
 
-## ✨ Features
+## 🌟 Why SecureVault?
 
-| Feature | Description |
-|---|---|
-| **AES-256 Encryption** | All passwords are encrypted using Fernet (AES-256-CBC + HMAC-SHA256) |
-| **PBKDF2 Key Derivation** | Master password is transformed via PBKDF2HMAC with 480,000 iterations |
-| **Zero Plaintext Storage** | Only ciphertext stored in the database — even SQLite viewers show gibberish |
-| **Glassmorphism UI** | Premium frosted glass design with animated gradients, blur effects, and micro-animations |
-| **Password Generator** | Cryptographically secure random passwords with adjustable length (8–64 chars) |
-| **Change Master Password** | Securely change your master password with full re-encryption of all stored credentials |
-| **Clipboard Auto-Clear** | Copied passwords are automatically cleared from clipboard after 15 seconds |
-| **Search & Filter** | Instantly search credentials by website or username |
-| **Brute-Force Protection** | Locks out after 5 failed login attempts |
-| **Password Strength Meter** | Real-time feedback while creating the master password |
-| **3-Panel Dashboard** | Sidebar navigation, credential list, and detail panel — like a premium app |
+Most password managers live in the cloud. While convenient, this makes them targets for massive data breaches. SecureVault takes a different approach: **100% offline storage**. 
+
+Coupled with a **Dynamic Cyber Environment**—featuring an animated Matrix-style background and premium frosted glass ("glassmorphism") UI elements—it feels like a high-end application while providing zero-knowledge security.
 
 ---
 
-## 📁 Project Structure
+## ✨ Core Features
 
-```
-Password Manager/
-├── main.py                 # Application entry point + PyWebView BackendAPI
-├── ui/
-│   └── index.html          # Glassmorphism frontend (HTML/CSS/JS)
-├── crypto_engine.py        # Encryption, decryption, key derivation
-├── database.py             # SQLite3 database operations
-├── password_generator.py   # Secure random password generation
-├── requirements.txt        # Python dependencies
-├── vault.db                # (Created at runtime) Encrypted credential store
-└── README.md               # This file
-```
+### 🛡️ Uncompromising Security
+* **AES-256-CBC Encryption:** The gold standard in cryptographic security, ensuring your data is mathematically uncrackable.
+* **Zero Plaintext Storage:** The database (`vault.db`) only stores scrambled ciphertext. Even if someone steals your computer, they cannot read your passwords.
+* **Clipboard Auto-Clear:** Copied passwords automatically vanish from your clipboard after 15 seconds to prevent accidental pasting or snooping.
+* **Brute-Force Protection:** The application locks out after 5 failed login attempts.
+
+### 💎 Premium User Experience
+* **Watery Glassmorphism UI:** A sleek, frosted glass interface (`blur(24px) saturate(120%)`) that beautifully refracts the background elements.
+* **Dynamic Cyber Environment:** A highly engineered, animated cryptographic background featuring drifting data streams and a decentralized cybersecurity SVG mesh.
+* **In-Place Dynamic Filtering:** Instantly view passwords by Category (e.g., Work, Social) or Security Tier (e.g., Weak, Reused) without clunky page reloads.
+* **Unified Detail View:** Click any password to open a smooth, expanding card overlay for a read-only detailed view.
+
+### 🛠️ Powerful Tools
+* **Built-in Password Generator:** Generate cryptographically secure passwords (8–64 characters) with a single click.
+* **Change Master Password:** Securely change your master password. The app will seamlessly re-encrypt all your stored credentials with a brand new key.
+* **Password Strength Analyzer:** Automatically categorizes your saved passwords into Strong, Good, Weak, or Reused.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 How to Get Started
 
 ### Prerequisites
-- Python 3.10+ installed
-- `pip` package manager
+Make sure you have **Python 3.10** (or newer) installed on your system.
 
-### Installation
+### 1. Installation
+Open your terminal or command prompt and run the following commands:
 
 ```bash
-# 1. Navigate to the project directory
+# 1. Navigate into the project folder
 cd "Password Manager"
 
-# 2. Create a virtual environment
+# 2. Create a virtual environment (keeps dependencies isolated)
 python -m venv venv
 
 # 3. Activate the virtual environment
-# macOS / Linux:
+# On macOS / Linux:
 source venv/bin/activate
-# Windows:
+# On Windows:
 venv\Scripts\activate
 
-# 4. Install dependencies
+# 4. Install the required packages
 pip install -r requirements.txt
+```
 
-# 5. Run the application
+### 2. Running the App
+Once installed, simply run:
+```bash
 python main.py
 ```
 
-### First Run
-1. A **"Create Your Vault"** screen will appear with a frosted glass card
-2. Set a strong Master Password (minimum 8 characters)
-3. Confirm the password and click **"Create Vault"**
-4. You're in! Start adding credentials via the **"+ Add New"** button
-
-### Subsequent Runs
-1. The **"Unlock SecureVault"** screen appears
-2. Enter your Master Password to decrypt and access your credentials
+### 3. Your First Run
+1. When the app opens, you will see a **"Create Your Vault"** screen.
+2. Enter a highly secure **Master Password**. This is the *only* password you will ever need to remember. 
+3. *Note: Because this app is completely offline, there is NO "Forgot Password" button. Do not forget your Master Password!*
+4. Click **Create Vault** and start adding your credentials!
 
 ---
 
-## 📦 Required Packages
+## 🏗️ How to Build a Standalone Executable (.exe / .app)
 
-```
-pywebview>=5.0.0            # Native desktop window with HTML/CSS/JS frontend
-cryptography>=41.0.0        # Fernet AES-256 encryption + PBKDF2
-pyperclip>=1.8.2            # Cross-platform clipboard access
-```
+If you don't want to run the app via the command line every time, you can bundle it into a standalone clickable application using PyInstaller.
 
-Install all at once:
-```bash
-pip install pywebview cryptography pyperclip
-```
+1. **Install PyInstaller:**
+   ```bash
+   pip install pyinstaller
+   ```
 
----
+2. **Build the Application:**
+   * **For Windows:**
+     ```bash
+     pyinstaller --onefile --windowed --name SecureVault --add-data "ui;ui" main.py
+     ```
+   * **For macOS / Linux (Note the colon `:` instead of semicolon):**
+     ```bash
+     pyinstaller --onefile --windowed --name SecureVault --add-data "ui:ui" main.py
+     ```
 
-## 🏗️ Building a Standalone .exe (Windows)
-
-### Install PyInstaller
-```bash
-pip install pyinstaller
-```
-
-### Build Command
-```bash
-pyinstaller --onefile --windowed --name SecureVault --add-data "ui;ui" main.py
-```
-
-> **Note (macOS/Linux):** Use a colon `:` instead of semicolon `;` as the path separator:
-> ```bash
-> pyinstaller --onefile --windowed --name SecureVault --add-data "ui:ui" main.py
-> ```
-
-**Flags explained:**
-| Flag | Purpose |
-|---|---|
-| `--onefile` | Bundle everything into a single `.exe` file |
-| `--windowed` | Suppress the console window (GUI-only) |
-| `--name SecureVault` | Name the output executable |
-| `--add-data "ui;ui"` | Include the `ui/` folder with the HTML frontend |
-
-The compiled executable will be in the `dist/` folder:
-```
-dist/
-└── SecureVault.exe
-```
-
-> **Note:** The `vault.db` file is created at runtime in the same directory as the executable. Distribute the `.exe` alone — the database is created on first launch.
+3. **Locate your App:**
+   Inside the newly created `dist/` folder, you will find your standalone `SecureVault` executable. You can move this file anywhere on your computer. The `vault.db` database will automatically be created next to wherever the executable is run.
 
 ---
 
-## 🔒 Security Architecture
+## 🔒 Under the Hood: Security Architecture
 
-```
-┌────────────────────────────────────────────────────────────┐
-│                    User enters Master Password              │
-└──────────────────────────┬─────────────────────────────────┘
-                           │
-                    ┌──────▼──────┐
-                    │  PBKDF2HMAC │  480,000 iterations
-                    │   SHA-256   │  + 16-byte random salt
-                    └──────┬──────┘
-                           │
-              ┌────────────┼────────────────┐
-              │                             │
-    ┌─────────▼─────────┐       ┌───────────▼───────────┐
-    │  Verification Hash │       │  256-bit Fernet Key    │
-    │  (stored in DB)    │       │  (held in memory only) │
-    └────────────────────┘       └───────────┬───────────┘
-                                             │
-                                    ┌────────▼────────┐
-                                    │  Fernet Engine   │
-                                    │  AES-256-CBC     │
-                                    │  + HMAC-SHA256   │
-                                    └────────┬────────┘
-                                             │
-                                    ┌────────▼────────┐
-                                    │  Encrypted       │
-                                    │  ciphertext      │
-                                    │  stored in DB    │
-                                    └─────────────────┘
-```
+Here is exactly what happens when you use SecureVault:
 
-### What's stored in `vault.db`:
-- ✅ Random salt (16 bytes)
-- ✅ Verification hash (SHA-256 of salt + master password)
-- ✅ Website names (plaintext — for search/display)
-- ✅ Usernames (plaintext — for search/display)
-- ✅ Encrypted passwords (Fernet ciphertext — unreadable without the key)
+1. **Key Derivation:** When you enter your Master Password, it is mathematically stretched 480,000 times using an algorithm called **PBKDF2HMAC** alongside a 16-byte random salt. This creates your 256-bit encryption key.
+2. **Memory Only:** This key is *only* held in your computer's temporary memory (RAM). It is never saved to a file. When you close the app, the key disappears.
+3. **Encryption:** When you save a new password, the app uses **Fernet (AES-256-CBC + HMAC-SHA256)** to scramble it using your key.
+4. **Storage:** Only the scrambled, unreadable ciphertext is saved to the SQLite database (`vault.db`).
 
-### What's NEVER stored:
-- ❌ Master password (plaintext)
-- ❌ Encryption key
-- ❌ Plaintext passwords
+### What is stored in `vault.db`?
+* ✅ The random salt (needed to rebuild the key).
+* ✅ A verification hash (so the app knows if you typed the correct Master Password).
+* ✅ Plaintext Website names and Usernames (so you can search them).
+* ✅ **Scrambled Ciphertext** (your actual passwords, completely unreadable).
+
+### What is NEVER stored?
+* ❌ Your Master Password.
+* ❌ Your Encryption Key.
+* ❌ Your actual saved passwords.
 
 ---
 
-## 🔑 Change Master Password
+## 🛡️ Best Practices for Keeping Your Data Safe
 
-The Change Master Password feature (Settings → Change Master Password) performs a **full re-encryption**:
-
-1. Verifies the current master password
-2. Derives the old decryption key
-3. Generates a NEW salt and derives a new encryption key
-4. Decrypts ALL stored passwords using the old key
-5. Re-encrypts ALL passwords using the new key
-6. Updates the database with new ciphertext, salt, and verification hash
-
-This ensures all credentials remain secure under the new master password.
+* **Choose a strong Master Password:** Use a mix of uppercase, lowercase, numbers, and symbols. Ideally, use a long "passphrase" (e.g., `Correct-Horse-Battery-Staple!`).
+* **Backup your vault:** Simply copy the `vault.db` file to a USB drive or a safe location. If your computer breaks and you don't have a backup of `vault.db`, your passwords are gone forever.
+* **Keep your computer secure:** Because the encryption key lives in your computer's memory while the app is open, make sure your computer itself is free of malware or spyware.
 
 ---
 
-## 🛡️ Security Best Practices
-
-1. **Choose a strong Master Password** — at least 12+ characters with mixed case, digits, and symbols
-2. **Don't share your Master Password** — there is no recovery mechanism
-3. **Back up `vault.db`** — losing this file means losing all stored credentials
-4. **The encryption key exists only in memory** — closing the app erases it
-5. **Passwords auto-clear from clipboard** — copied passwords are cleared after 15 seconds
-
----
-
-## 📄 License
-
-This project is provided as-is for personal and educational use.
+*Secured by WittyArtist.*

@@ -187,22 +187,49 @@
         }
 
         /* ================================================================
-           CYBERSECURITY BACKGROUND — Mesh & Matrix Streams
+           CYBERSECURITY BACKGROUND — Mesh & Matrix Streams & Orbs
            ================================================================ */
-        .cyber-mesh {
+        .ambient-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15; /* Reduced vibrancy while keeping colors */
+            animation: floatOrb 20s infinite alternate ease-in-out;
+            transition: transform 0.1s ease-out; /* For interactive parallax */
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--accent-blue); top: -10%; left: -10%; animation-delay: 0s; }
+        .orb-2 { width: 500px; height: 500px; background: var(--accent-purple); bottom: -10%; right: -5%; animation-delay: -5s; }
+        .orb-3 { width: 400px; height: 400px; background: var(--accent-green); top: 40%; left: 40%; animation-delay: -10s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        .cyber-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 1; /* Above deep ambient bg */
             pointer-events: none;
             overflow: hidden;
-            opacity: 0.04;
+            opacity: 0.06;
         }
 
         .matrix-streams {
             position: fixed;
             inset: 0;
-            z-index: 1;
+            z-index: 2; /* Above mesh */
             pointer-events: none;
+            user-select: none;
             overflow: hidden;
         }
 
@@ -212,9 +239,11 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
             font-weight: bold;
-            color: #1A2B4C;
+            color: rgba(27, 54, 93, 0.35); /* Softer matrix text, less aggressive */
             text-align: center;
             line-height: 1.5;
+            pointer-events: none;
+            user-select: none;
             animation: matrixFall linear infinite;
         }
 
@@ -244,7 +273,7 @@
         /* App container */
         .app-container {
             position: relative;
-            z-index: 2;
+            z-index: 10; /* Stacked above all background elements */
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -2038,8 +2067,14 @@
     <div class="bg-vignette"></div>
 
     <!-- ============================================================
-         CYBERSECURITY BACKGROUND — Mesh & Matrix Streams
+         CYBERSECURITY BACKGROUND — Ambient Orbs, Mesh & Matrix
          ============================================================ -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    
     <div class="cyber-mesh">
         <svg width="100%" height="100%">
             <defs>
@@ -3750,6 +3785,18 @@
                 return dateStr.substring(0, 10);
             }
         }
+        
+        // --- Interactive Ambient Parallax ---
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = (e.clientX / window.innerWidth - 0.5) * 40; // Shift range
+            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 0.5;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
     </script>
 </body>
 </html>
