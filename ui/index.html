@@ -1367,7 +1367,7 @@
         .security-warning-row {
             border-left: 3px solid #F59E0B !important;
         }
-        .security-warning-row .table-favicon {
+        .security-warning-row .service-icon-container {
             background: rgba(245, 158, 11, 0.1) !important;
             color: #F59E0B !important;
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
@@ -1385,18 +1385,33 @@
             gap: 12px;
         }
 
-        .table-favicon {
+        .service-icon-container {
             width: 36px;
             height: 36px;
-            border-radius: 10px;
+            min-width: 36px;
+            min-height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
+            border-radius: 50%;
+            overflow: hidden;
+            background: rgba(26, 54, 93, 0.05);
+            border: 1px solid rgba(26, 54, 93, 0.1);
+            color: var(--navy);
             flex-shrink: 0;
-            text-transform: uppercase;
+        }
+        
+        .service-icon-container svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+            fill: currentColor;
+        }
+        
+        [data-theme="dark"] .service-icon-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
         }
 
         .table-site-name {
@@ -2729,7 +2744,7 @@
                                 </button>
                                 <div class="search-bar">
                                     <span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-                                    <input type="text" id="search-input" class="input" placeholder="Search..." oninput="handleSearch()">
+                                    <input type="text" id="search-input" class="input" placeholder="Search credentials..." oninput="handleSearch()">
                                 </div>
                                 <button class="btn btn-primary add-btn" onclick="openAddModal()">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -3410,6 +3425,125 @@
             renderTable();
         }
 
+        // ============================================================
+        // SMART ICON ENGINE — Mega-Dictionary with Official Brand SVGs
+        // ============================================================
+        const localIconLibrary = {
+            // Tech Giants
+            google: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>`,
+            apple: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#A2AAAD"/></svg>`,
+            microsoft: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 2h9.5v9.5H2V2z" fill="#f35325"/><path d="M12.5 2H22v9.5h-9.5V2z" fill="#81bc06"/><path d="M2 12.5h9.5V22H2v-9.5z" fill="#05a6f0"/><path d="M12.5 12.5H22V22h-9.5v-9.5z" fill="#ffba08"/></svg>`,
+            amazon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.8 17.8c-1.8 1.4-4.2 2.2-6.8 2.2-3.8 0-7.2-1.7-9.4-4.4-.3-.4 0-.8.4-.6 2.6 1.2 5.7 1.9 8.9 1.9 2.5 0 5-.4 7.2-1.3.5-.2.8.3.3.7z" fill="#FF9900"/><path d="M20.2 14.7c-.4-.5-1.9-.3-2.6-.2-.3 0-.4-.3-.1-.5 1.1-.9 2.9-.6 3.3.1.4.6-.2 2.5-1.2 3.5-.2.2-.5.1-.4-.2.3-1 .9-2.2 1-2.7z" fill="#FF9900"/></svg>`,
+            github: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.47 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.22.69.82.57A12 12 0 0 0 12 .3z" fill="currentColor"/></svg>`,
+
+            // Entertainment & Social
+            netflix: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.6 24V0h4.9l7.9 15.3V0h4.8v24h-4.6L10.5 8.3V24H5.6z" fill="#E50914"/></svg>`,
+            youtube: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF"/></svg>`,
+            spotify: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.16-10.56-1.2-.42.12-.84-.12-.96-.54-.12-.42.12-.84.54-.96 4.62-1.08 8.52-.6 11.76 1.44.36.18.48.66.24 1.02zm1.44-3.3c-.3.42-.84.54-1.26.24-3.24-1.98-8.16-2.58-11.94-1.44-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.32-1.26 9.72-.6 13.5 1.68.42.24.54.84.24 1.26zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.12-1.38-.72-.18-.6.12-1.2.72-1.38 4.2-1.26 11.28-1.02 15.72 1.62.54.3.72 1.02.42 1.56-.3.54-1.02.72-1.56.42z" fill="#1DB954"/></svg>`,
+            instagram: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FEE411"/><stop offset="5%" stop-color="#FEDB16"/><stop offset="14%" stop-color="#FEC125"/><stop offset="26%" stop-color="#FE983D"/><stop offset="40%" stop-color="#FE5F5E"/><stop offset="58%" stop-color="#E53688"/><stop offset="78%" stop-color="#C220A3"/><stop offset="100%" stop-color="#9034C7"/></linearGradient></defs><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.85 3.93 2.3 7.15 2.15 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07c-4.27.2-6.78 2.71-6.98 6.98C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.27 2.71 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.27-.2 6.78-2.71 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.27-2.71-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm5.84-9.8a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z" fill="url(#ig)"/></svg>`,
+            facebook: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12a12 12 0 1 0-13.87 11.85v-8.38H7.08V12h3.05V9.56c0-3.02 1.8-4.7 4.56-4.7 1.32 0 2.7.24 2.7.24v2.96h-1.52c-1.5 0-1.97.93-1.97 1.89V12h3.35l-.54 3.47h-2.81v8.38A12 12 0 0 0 24 12z" fill="#1877F2"/><path d="M15.42 15.47l.54-3.47h-3.35V9.95c0-.96.47-1.89 1.97-1.89h1.52V5.1s-1.38-.24-2.7-.24c-2.76 0-4.56 1.68-4.56 4.7V12H7.08v3.47h3.05v8.38a12.06 12.06 0 0 0 3.74 0v-8.38h3.35z" fill="#FFFFFF"/></svg>`,
+            twitter: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"/></svg>`,
+            linkedin: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2"/></svg>`,
+
+            // Utilities & Work
+            paypal: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.982 5.05-4.348 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106H11.7l1.017-6.42c.081-.518.525-.9 1.05-.9h.61c3.784 0 6.732-1.537 7.575-5.994.172-.888.196-1.637.033-2.316.035.405.02.772-.036 1.144z" fill="#003087"/></svg>`,
+            dropbox: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.015L1.87 8.358 6.84 11.4 12 7.828l5.16 3.57 4.97-3.04L12 2.015zM1.87 14.85l5.04 3.25 5.09-3.57-4.97-3.13-5.16 3.45zm20.26 0l-5.16-3.45-4.97 3.13 5.09 3.57 5.04-3.25zM12 18.995l-4.95-3.18-2.03 1.3 6.98 4.47 6.98-4.47-2.03-1.3-4.95 3.18z" fill="#0061FF"/></svg>`,
+            reddit: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .883.175 1.195.467 1.218-.87 2.924-1.444 4.809-1.503l.904-4.234c.026-.118.136-.201.258-.201h.022l3.056.643a1.245 1.245 0 0 1 1.012-.674zm-8.291 7.214a1.458 1.458 0 0 0-1.456 1.458 1.458 1.458 0 0 0 2.912 0 1.458 1.458 0 0 0-1.456-1.458zm6.52 0a1.458 1.458 0 0 0-1.457 1.458 1.458 1.458 0 0 0 2.914 0 1.458 1.458 0 0 0-1.457-1.458zm-3.264 4.414c-1.378 0-2.313-.483-2.368-.515-.173-.102-.232-.323-.131-.497.102-.174.323-.232.497-.13.01.006.77.411 2.002.411 1.258 0 2.043-.424 2.055-.43.175-.101.396-.041.498.134.101.174.041.395-.133.497-.058.033-1.023.53-2.42.53z" fill="#FF4500"/></svg>`,
+
+            // Fallback
+            default: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#8B9BB4"/></svg>`
+        };
+
+        // Keyword-to-key mapping for cleaner fuzzy matching
+        const iconMappings = [
+            { key: 'google',    keywords: ['goog', 'gogle', 'gmail', 'gdrive'] },
+            { key: 'apple',     keywords: ['appl', 'mac', 'ios', 'icloud'] },
+            { key: 'microsoft', keywords: ['micro', 'msft', 'windows', 'xbox', 'outlook', 'hotmail'] },
+            { key: 'amazon',    keywords: ['amaz', 'amzn', 'aws', 'prim'] },
+            { key: 'github',    keywords: ['git', 'gitlab'] },
+            { key: 'netflix',   keywords: ['netf', 'ntfl'] },
+            { key: 'youtube',   keywords: ['yout', 'yt'] },
+            { key: 'spotify',   keywords: ['spot', 'sptf'] },
+            { key: 'instagram', keywords: ['inst', 'gram', 'insta'] },
+            { key: 'facebook',  keywords: ['face', 'fb', 'meta'] },
+            { key: 'twitter',   keywords: ['twit', 'tweet'] },
+            { key: 'linkedin',  keywords: ['linke', 'lnkd'] },
+            { key: 'paypal',    keywords: ['payp', 'pp'] },
+            { key: 'dropbox',   keywords: ['drop', 'dbox'] },
+            { key: 'reddit',    keywords: ['redd'] }
+        ];
+
+        function injectIconForContainer(container) {
+            if (container.hasAttribute('data-icon-loaded')) return;
+            const service = container.getAttribute('data-service');
+            if (!service) return; // Warning icon already has inline SVG
+
+            const rawName = service.toLowerCase().replace(/[^a-z]/g, '');
+            let matchedKey = 'default';
+
+            // 1. Try exact dictionary key match first
+            if (localIconLibrary[rawName]) {
+                matchedKey = rawName;
+            } else {
+                // 2. Keyword fuzzy matching via iconMappings
+                for (const mapping of iconMappings) {
+                    if (mapping.keywords.some(kw => rawName.includes(kw))) {
+                        matchedKey = mapping.key;
+                        break;
+                    }
+                }
+            }
+
+            container.innerHTML = localIconLibrary[matchedKey];
+            container.setAttribute('data-icon-loaded', 'true');
+        }
+
+        // MutationObserver — instant icon injection when DOM nodes are added
+        const iconObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes.length) {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === 1) {
+                            if (node.classList.contains('service-icon-container')) {
+                                injectIconForContainer(node);
+                            } else {
+                                node.querySelectorAll('.service-icon-container').forEach(injectIconForContainer);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // Attach observer to all dynamic list containers on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const config = { childList: true, subtree: true };
+            ['table-body', 'mobile-cred-cards', 'fav-table-body', 'fav-mobile-cards', 'list-modal-content'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) iconObserver.observe(el, config);
+            });
+            // Also observe the detail modal favicon
+            const detailFav = document.getElementById('detail-favicon');
+            if (detailFav && detailFav.parentNode) {
+                iconObserver.observe(detailFav.parentNode, config);
+            }
+            // Initial sweep
+            document.querySelectorAll('.service-icon-container').forEach(injectIconForContainer);
+        });
+
+        // Polling fallback — catches any edge-case race conditions every 300ms
+        setInterval(() => {
+            document.querySelectorAll('.service-icon-container:not([data-icon-loaded])').forEach(injectIconForContainer);
+        }, 300);
+
+        // Backward-compatible explicit call
+        function renderIcons() {
+            document.querySelectorAll('.service-icon-container').forEach(c => {
+                c.removeAttribute('data-icon-loaded');
+                injectIconForContainer(c);
+            });
+        }
+
         function renderTable(searchFilter = '') {
             let items = [...credentials];
 
@@ -3461,15 +3595,14 @@
             // Desktop table rows
             tbody.innerHTML = items.map(c => {
                 const colorIdx = hashCode(c.website) % 8;
-                const initial = c.website.charAt(0).toUpperCase();
                 const catClass = getCategoryClass(c.category);
                 const favClass = c.is_favorite ? 'active' : '';
                 const isWeak = (c.password_length || 0) < 10;
                 const rowDangerClass = isWeak ? 'security-warning-row' : '';
 
                 const avatarHTML = isWeak 
-                    ? `<div class="table-favicon"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>`
-                    : `<div class="table-favicon avatar-${colorIdx}">${initial}</div>`;
+                    ? `<div class="service-icon-container"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>`
+                    : `<div class="service-icon-container" data-service="${escapeHtml(c.website)}"></div>`;
 
                 return `
                     <tr class="clickable-row ${rowDangerClass}" onclick="openDetailModal(${c.id})">
@@ -3503,14 +3636,13 @@
             // Mobile cards
             mobileCards.innerHTML = items.map(c => {
                 const colorIdx = hashCode(c.website) % 8;
-                const initial = c.website.charAt(0).toUpperCase();
                 const catClass = getCategoryClass(c.category);
                 const isWeak = (c.password_length || 0) < 10;
                 const rowDangerClass = isWeak ? 'security-warning-row' : '';
 
                 const avatarHTML = isWeak 
-                    ? `<div class="table-favicon" style="width:36px;height:36px;"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>`
-                    : `<div class="table-favicon avatar-${colorIdx}" style="width:36px;height:36px;font-size:0.9rem;">${initial}</div>`;
+                    ? `<div class="service-icon-container"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>`
+                    : `<div class="service-icon-container" data-service="${escapeHtml(c.website)}"></div>`;
 
                 return `
                     <div class="mobile-cred-card clickable-row ${rowDangerClass}" onclick="openDetailModal(${c.id})">
@@ -3573,14 +3705,15 @@
 
             tbody.innerHTML = favs.map(c => {
                 const colorIdx = hashCode(c.website) % 8;
-                const initial = c.website.charAt(0).toUpperCase();
                 const catClass = getCategoryClass(c.category);
+
+                const avatarHTML = `<div class="service-icon-container" data-service="${escapeHtml(c.website)}"></div>`;
 
                 return `
                     <tr class="clickable-row" onclick="openDetailModal(${c.id})">
                         <td>
                             <div class="table-website">
-                                <div class="table-favicon avatar-${colorIdx}">${initial}</div>
+                                ${avatarHTML}
                                 <div>
                                     <div class="table-site-name">${escapeHtml(c.website)}</div>
                                     <div class="table-site-url">${escapeHtml(c.website.toLowerCase().replace(/\s+/g, '') + '.com')}</div>
@@ -3603,6 +3736,8 @@
                         </td>
                     </tr>`;
             }).join('');
+            
+            renderIcons();
         }
 
         function renderDynamicList(items, title) {
@@ -3631,13 +3766,13 @@
                 `;
                 html += items.map(c => {
                     const colorIdx = hashCode(c.website) % 8;
-                    const initial = c.website.charAt(0).toUpperCase();
                     const catClass = getCategoryClass(c.category);
+                    const avatarHTML = `<div class="service-icon-container" data-service="${escapeHtml(c.website)}"></div>`;
                     return `
                         <tr class="clickable-row" onclick="openDetailModal(${c.id})">
                             <td>
                                 <div class="table-website">
-                                    <div class="table-favicon avatar-${colorIdx}">${initial}</div>
+                                    ${avatarHTML}
                                     <div>
                                         <div class="table-site-name">${escapeHtml(c.website)}</div>
                                         <div class="table-site-url">${escapeHtml(c.website.toLowerCase().replace(/\s+/g, '') + '.com')}</div>
@@ -3659,12 +3794,12 @@
                 html += `<div class="mobile-cred-cards" style="margin-top: 16px; display: none;">`;
                 html += items.map(c => {
                     const colorIdx = hashCode(c.website) % 8;
-                    const initial = c.website.charAt(0).toUpperCase();
                     const catClass = getCategoryClass(c.category);
+                    const avatarHTML = `<div class="service-icon-container" data-service="${escapeHtml(c.website)}"></div>`;
                     return `
                         <div class="mobile-cred-card clickable-row" onclick="openDetailModal(${c.id})">
                             <div class="mobile-cred-header">
-                                <div class="table-favicon avatar-${colorIdx}" style="width:36px;height:36px;font-size:0.9rem;">${initial}</div>
+                                ${avatarHTML}
                                 <div style="flex:1;min-width:0;">
                                     <div class="table-site-name" style="font-size:0.875rem;">${escapeHtml(c.website)}</div>
                                     <div class="table-site-url">${escapeHtml(c.username)}</div>
@@ -3683,6 +3818,7 @@
                 }).join('');
                 html += `</div>`;
                 container.innerHTML = html;
+                renderIcons();
             }
             openModal('list-modal');
         }
@@ -3843,13 +3979,13 @@
                 const c = result.credential;
                 
                 // Set UI
-                const initial = c.website.charAt(0).toUpperCase();
-                const colorIdx = hashCode(c.website) % 8;
                 const catClass = getCategoryClass(c.category);
                 
                 const favEl = document.getElementById('detail-favicon');
-                favEl.textContent = initial;
-                favEl.className = 'table-favicon avatar-' + colorIdx;
+                favEl.textContent = '';
+                favEl.className = 'service-icon-container';
+                favEl.setAttribute('data-service', c.website);
+                renderIcons();
                 
                 document.getElementById('detail-site').textContent = c.website;
                 
